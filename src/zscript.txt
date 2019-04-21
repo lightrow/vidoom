@@ -1,0 +1,544 @@
+
+class Shrapnel : RandomSpawner
+{
+    Default
+    {
+        DropItem "Shrapnel1";
+        DropItem "Shrapnel2";
+        DropItem "Shrapnel3";
+        DropItem "Shrapnel4";
+        DropItem "Shrapnel5";
+        DropItem "Shrapnel6";
+        DropItem "Shrapnel7";
+        DropItem "Shrapnel8";
+        DropItem "Shrapnel9";
+        DropItem "Shrapnel10";
+        DropItem "Shrapnel11";
+        DropItem "Shrapnel12";
+        DropItem "Shrapnel13";
+    }
+}
+
+class ShrapnelNoBossRip : RandomSpawner
+{
+    Default
+    {
+        DropItem "Shrapnel1NoBossRip";
+        DropItem "Shrapnel2NoBossRip";
+        DropItem "Shrapnel3NoBossRip";
+        DropItem "Shrapnel4NoBossRip";
+        DropItem "Shrapnel5NoBossRip";
+        DropItem "Shrapnel6NoBossRip";
+        DropItem "Shrapnel7NoBossRip";
+        DropItem "Shrapnel8NoBossRip";
+        DropItem "Shrapnel9NoBossRip";
+        DropItem "Shrapnel10NoBossRip";
+        DropItem "Shrapnel11NoBossRip";
+        DropItem "Shrapnel12NoBossRip";
+        DropItem "Shrapnel13NoBossRip";
+    }
+}
+
+class Shrapnel1 : Actor
+{
+    Default
+    {
+        Radius 2;
+        Height 2;
+        Scale 0.25;
+        //DamageFunction (random(1,2));
+        BounceType "Doom";
+        BounceFactor 0.4;
+        WallBounceFactor 0.4;
+        Gravity 0.75;
+        Projectile;
+        +FLOORCLIP
+        -NOGRAVITY
+        -SOLID
+        +NOTELEPORT
+        +CLIENTSIDEONLY
+        +MOVEWITHSECTOR
+        +DONTBLAST
+        +DONTTHRUST
+        Gravity 0.65;
+    }
+
+    States
+    {
+    Spawn:
+        TNT1 A 0;
+        SHRP A 1 A_Jump(128,"SpawnLoop2");
+        goto SpawnLoop;
+    SpawnLoop:
+        "####" "#" 1
+        {
+              A_SetRoll(roll+10);
+
+                //  A_SpawnItemEx("ShrapnelTrail",(12*vel.x)/-50.0,-(12*vel.y)/-50.0,2+(12*vel.z)/-50.0, 0,0,0, 0, SXF_ABSOLUTEANGLE | SXF_TRANSFERSPRITEFRAME | SXF_TRANSFERROLL);
+                 // A_SpawnItemEx("ShrapnelTrail",(25*vel.x)/-50.0,-(25*vel.y)/-50.0,2+(25*vel.z)/-50.0, 0,0,0, 0, SXF_ABSOLUTEANGLE | SXF_TRANSFERSPRITEFRAME | SXF_TRANSFERROLL);
+                 // A_SpawnItemEx("ShrapnelTrail",(37*vel.x)/-50.0,-(37*vel.y)/-50.0,2+(37*vel.z)/-50.0, 0,0,0, 0, SXF_ABSOLUTEANGLE | SXF_TRANSFERSPRITEFRAME | SXF_TRANSFERROLL);
+                 // A_SpawnItemEx("ShrapnelTrail",(50*vel.x)/-50.0,-(50*vel.y)/-50.0,2+(50*vel.z)/-50.0, 0,0,0, 0, SXF_ABSOLUTEANGLE | SXF_TRANSFERSPRITEFRAME | SXF_TRANSFERROLL);
+        }
+        loop;
+    SpawnLoop2:
+        "####" "#" 1
+        {
+              A_SetRoll(roll-10);
+
+                 // A_SpawnItemEx("ShrapnelTrail",(12*vel.x)/-50.0,-(12*vel.y)/-50.0,2+(12*vel.z)/-50.0, 0,0,0, 0, SXF_ABSOLUTEANGLE | SXF_TRANSFERSPRITEFRAME | SXF_TRANSFERROLL);
+                 // A_SpawnItemEx("ShrapnelTrail",(25*vel.x)/-50.0,-(25*vel.y)/-50.0,2+(25*vel.z)/-50.0, 0,0,0, 0, SXF_ABSOLUTEANGLE | SXF_TRANSFERSPRITEFRAME | SXF_TRANSFERROLL);
+                 // A_SpawnItemEx("ShrapnelTrail",(37*vel.x)/-50.0,-(37*vel.y)/-50.0,2+(37*vel.z)/-50.0, 0,0,0, 0, SXF_ABSOLUTEANGLE | SXF_TRANSFERSPRITEFRAME | SXF_TRANSFERROLL);
+                 // A_SpawnItemEx("ShrapnelTrail",(50*vel.x)/-50.0,-(50*vel.y)/-50.0,2+(50*vel.z)/-50.0, 0,0,0, 0, SXF_ABSOLUTEANGLE | SXF_TRANSFERSPRITEFRAME | SXF_TRANSFERROLL);
+
+        }
+        loop;
+    Death:
+        "####" "#" 0 A_SetRoll(0);
+        "####" "#" 0 A_Jump(255,"Death1","Death2","Death3","Death4");
+        "####" "#" 1;
+        loop;
+    Death1:
+        "####" "#" 1 A_SetScale(-0.25,0.25);
+        goto Death0;
+    Death2:
+        "####" "#" 1 A_SetScale(0.25,0.25);
+        goto Death0;
+    Death3:
+        "####" "#" 1 A_SetScale(0.25,-0.25);
+        goto Death0;
+    Death4:
+        "####" "#" 1 A_SetScale(-0.25,-0.25);
+        goto Death0;
+    Death0:
+        "####" "#" 350;
+        "####" "#" 1 A_CheckSight("DeathNope");
+        wait;
+    DeathNope:
+        TNT1 A 1;
+        Stop;
+    }
+}
+
+class Shrapnel2 : Shrapnel1
+{
+    States
+    {
+    Spawn:
+        TNT1 A 0;
+        SHRP B 1 A_Jump(128,"SpawnLoop2");
+        goto SpawnLoop;
+    }
+}
+
+class Shrapnel3 : Shrapnel1
+{
+    States
+    {
+    Spawn:
+        TNT1 A 0;
+        SHRP C 1 A_Jump(128,"SpawnLoop2");
+        goto SpawnLoop;
+    }
+}
+
+class Shrapnel4 : Shrapnel1
+{
+    States
+    {
+    Spawn:
+        TNT1 A 0;
+        SHRP D 1 A_Jump(128,"SpawnLoop2");
+        goto SpawnLoop;
+    }
+}
+
+class Shrapnel5 : Shrapnel1
+{
+    States
+    {
+    Spawn:
+        TNT1 A 0;
+        SHRP E 1 A_Jump(128,"SpawnLoop2");
+        goto SpawnLoop;
+    }
+}
+
+class Shrapnel6 : Shrapnel1
+{
+    States
+    {
+    Spawn:
+        TNT1 A 0;
+        SHRP F 1 A_Jump(128,"SpawnLoop2");
+        goto SpawnLoop;
+    }
+}
+
+class Shrapnel7 : Shrapnel1
+{
+    States
+    {
+    Spawn:
+        TNT1 A 0;
+        SHRP G 1 A_Jump(128,"SpawnLoop2");
+        goto SpawnLoop;
+    }
+}
+
+class Shrapnel8 : Shrapnel1
+{
+    States
+    {
+    Spawn:
+        TNT1 A 0;
+        SHRP H 1 A_Jump(128,"SpawnLoop2");
+        goto SpawnLoop;
+    }
+}
+
+class Shrapnel9 : Shrapnel1
+{
+    States
+    {
+    Spawn:
+        TNT1 A 0;
+        SHRP I 1 A_Jump(128,"SpawnLoop2");
+        goto SpawnLoop;
+    }
+}
+
+class Shrapnel10 : Shrapnel1
+{
+    States
+    {
+    Spawn:
+        TNT1 A 0;
+        SHRP J 1 A_Jump(128,"SpawnLoop2");
+        goto SpawnLoop;
+    }
+}
+
+class Shrapnel11 : Shrapnel1
+{
+    States
+    {
+    Spawn:
+        TNT1 A 0;
+        SHRP K 1 A_Jump(128,"SpawnLoop2");
+        goto SpawnLoop;
+    }
+}
+
+class Shrapnel12 : Shrapnel1
+{
+    States
+    {
+    Spawn:
+        TNT1 A 0;
+        SHRP L 1 A_Jump(128,"SpawnLoop2");
+        goto SpawnLoop;
+    }
+}
+
+class Shrapnel13 : Shrapnel1
+{
+    States
+    {
+    Spawn:
+        TNT1 A 0;
+        SHRP M 1 A_Jump(128,"SpawnLoop2");
+        goto SpawnLoop;
+    }
+}
+
+class Shrapnel1NoBossRip : Shrapnel1
+{
+    Default
+    {
+        +NOBOSSRIP
+    }
+}
+
+class Shrapnel2NoBossRip : Shrapnel2
+{
+    Default
+    {
+        +NOBOSSRIP
+    }
+}
+
+class Shrapnel3NoBossRip : Shrapnel3
+{
+    Default
+    {
+        +NOBOSSRIP
+    }
+}
+
+class Shrapnel4NoBossRip : Shrapnel4
+{
+    Default
+    {
+        +NOBOSSRIP
+    }
+}
+
+class Shrapnel5NoBossRip : Shrapnel5
+{
+    Default
+    {
+        +NOBOSSRIP
+    }
+}
+
+class Shrapnel6NoBossRip : Shrapnel6
+{
+    Default
+    {
+        +NOBOSSRIP
+    }
+}
+
+class Shrapnel7NoBossRip : Shrapnel7
+{
+    Default
+    {
+        +NOBOSSRIP
+    }
+}
+
+class Shrapnel8NoBossRip : Shrapnel8
+{
+    Default
+    {
+        +NOBOSSRIP
+    }
+}
+
+class Shrapnel9NoBossRip : Shrapnel9
+{
+    Default
+    {
+        +NOBOSSRIP
+    }
+}
+
+class Shrapnel10NoBossRip : Shrapnel10
+{
+    Default
+    {
+        +NOBOSSRIP
+    }
+}
+
+class Shrapnel11NoBossRip : Shrapnel11
+{
+    Default
+    {
+        +NOBOSSRIP
+    }
+}
+
+class Shrapnel12NoBossRip : Shrapnel12
+{
+    Default
+    {
+        +NOBOSSRIP
+    }
+}
+
+class Shrapnel13NoBossRip : Shrapnel13
+{
+    Default
+    {
+        +NOBOSSRIP
+    }
+}
+
+class ShrapnelTrail : Actor
+{
+    Default
+    {
+        RenderStyle "Translucent";
+        Scale 0.25;
+        Alpha 0.25;
+        +NOINTERACTION
+        +CLIENTSIDEONLY
+        +ROLLSPRITE
+        +ROLLCENTER
+    }
+
+    States
+    {
+    Spawn:
+        "####" "#" 0;
+        "####" "#" 2;
+        stop;
+    }
+}
+
+
+class SmokeSpray : Actor
+{
+    Default
+    {
+        +NOINTERACTION
+        +ROLLSPRITE
+        +ROLLCENTER
+        RenderStyle "Add";
+        Scale 0.5;
+        Alpha 0.25;
+    }
+
+    States
+    {
+    Spawn:
+        TNT1 A 0;
+        TNT1 A 1 A_Jump(255,"SpawnA","SpawnB","SpawnC","SpawnD","SpawnE","SpawnF","SpawnG");
+        loop;
+    SpawnA:
+        MSMK A 0;
+        goto SpawnFinish;
+    SpawnB:
+        MSMK B 0;
+        goto SpawnFinish;
+    SpawnC:
+        MSMK C 0;
+        goto SpawnFinish;
+    SpawnD:
+        MSMK D 0;
+        goto SpawnFinish;
+    SpawnE:
+        MSMK E 0;
+        goto SpawnFinish;
+    SpawnF:
+        MSMK F 0;
+        goto SpawnFinish;
+    SpawnG:
+        MSMK G 0;
+        goto SpawnFinish;
+    SpawnFinish:
+        "####" "#" 0 A_SetScale(scale.x+frandom(-0.1,0.1),scale.y+frandom(-0.1,0.1));
+        "####" "#" 0 A_SetRoll(frandom(-360.0,360.0));
+        "####" "#" 1 A_Jump(255,"RollLeft","RollRight");
+        loop;
+    RollLeft:
+        "####" "#" 1 { A_SetRoll(roll-2); A_SetScale(scale.x+0.025,scale.y+0.025); A_FadeOut(0.01); }
+        loop;
+    RollRight:
+        "####" "#" 1 { A_SetRoll(roll+2); A_SetScale(scale.x+0.025,scale.y+0.025); A_FadeOut(0.01); }
+        loop;
+    }
+}
+
+class SmokeLarge : SmokeSpray
+{
+    Default
+    {
+        Scale 1.25;
+        Alpha 0.25;
+    }
+}
+
+class FloorScorch : Actor
+{
+    Default
+    {
+        +NOINTERACTION
+        +FLATSPRITE
+        +MOVEWITHSECTOR
+        RenderStyle "Shaded";
+        Scale 1.0;
+    }
+
+    States
+    {
+    Spawn:
+        GSCR A 350;
+        GSCR A 1 A_CheckSight("DeathNope");
+        wait;
+    DeathNope:
+        TNT1 A 1;
+        Stop;
+    }
+}
+
+
+class DebrisSpawner : RandomSpawner
+{
+    Default
+    {
+        DropItem "Debris1";
+        DropItem "Debris2";
+        DropItem "Debris3";
+        DropItem "Debris4";
+        DropItem "Debris5";
+    }
+}
+
+class Debris1 : actor
+{
+    Default
+    {
+        Radius 2;
+        Height 2;
+        Scale 2.0;
+        Projectile;
+        +FLOORCLIP
+        -NOGRAVITY
+        -SOLID
+        +NOTELEPORT
+        +CLIENTSIDEONLY
+        +MOVEWITHSECTOR
+        +DONTBLAST
+        +DONTTHRUST
+        Gravity 0.65;
+    }
+
+    States
+    {
+    Spawn:
+        DBRS A 1;
+        loop;
+    Death:
+        DBRS A 350;
+        DBRS A 1 A_CheckSight("DeathDie");
+        wait;
+    DeathDie:
+        TNT1 A 1;
+        stop;
+    }
+}
+
+class Debris2 : Debris1
+{
+    Default
+    {
+        Scale 1.5;
+    }
+}
+
+class Debris3 : Debris1
+{
+    Default
+    {
+        Scale 1.2;
+    }
+}
+
+class Debris4 : Debris1
+{
+    Default
+    {
+        Scale 1.0;
+    }
+}
+
+class Debris5 : Debris1
+{
+    Default
+    {
+        Scale 0.8;
+    }
+}
+

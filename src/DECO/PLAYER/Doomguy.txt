@@ -1,0 +1,79 @@
+ACTOR PerkDPlayer : Doomplayer replaces Doomplayer
+{
+	player.startitem "PerkPistol"
+	player.startitem "PerkFist"
+	Player.StartItem "Clip", 35
+	Player.WeaponSlot 1, PerkFist, Z86Chainsaw
+   	Player.WeaponSlot 2, PerkPistol, Rifle
+	Player.WeaponSlot 3, PerkShotgun, PerkSuperShotgun
+	Player.WeaponSlot 4, Z86Chaingun
+	Player.WeaponSlot 5, PerkRocketLauncher
+	Player.WeaponSlot 6, BloxPlasmaRifle
+	Player.WeaponSlot 7, Z86BFG9000
+	States
+	{
+	Death:
+		PD71 A 3
+		PD71 B 3 A_PlayerScream
+		PD71 C 3 A_NoBlocking
+		PD71 DEFGH 3
+		PD71 I -1
+		Stop	
+	}
+}
+
+ACTOR PerkBerserk : Berserk replaces Berserk
+{
+	INVENTORY.PICKUPSOUND "misc/berserk_pickup"
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		PSTR A -1
+		stop
+	64Spawn:
+		TNT1 A 0
+		BK64 A -1
+		stop
+	Pickup:
+		TNT1 A 0 A_GiveInventory("PowerStrength")
+		TNT1 A 0 HealThing(100, 0)
+		TNT1 A 0 A_SelectWeapon("PerkFist")
+		Stop
+	}
+}
+
+ACTOR CustomFunction : CustomInventory
+{
+  -COUNTITEM
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.PickupMessage ""
+  Inventory.PickupSound ""
+  States
+  {
+  Spawn:
+    TNT1 A 1
+    Stop
+  Pickup:
+    TNT1 A 0 
+	TNT1 A 0
+    Stop
+  }
+}
+
+ACTOR PistolStarter : CustomFunction
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_StopSound (5)
+    TNT1 A 0 A_StopSound (6)
+    TNT1 A 0 A_StopSound (7)
+    TNT1 A 0 A_StopSound (CHAN_WEAPON)
+    TNT1 A 0 A_GiveInventory ("PerkPistol", 1)
+    TNT1 A 0 A_GiveInventory ("PerkFist", 1)
+    TNT1 A 0 A_GiveInventory ("Clip", 35)
+    TNT1 A 0 A_SelectWeapon ("PerkPistol")
+    Stop
+  }
+}

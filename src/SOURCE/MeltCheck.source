@@ -1,0 +1,32 @@
+#library "MeltCheck"
+#include "zcommon.acs"
+
+//mega-thanks to SidDoyle for crucial insight into how to make this kind of script work
+
+script "NukeCheck" (void)
+{
+	SetResultValue(CheckActorFloorTexture(0,"NUKAGE1")||
+		CheckACtorFloorTexture(0,"NUKAGE2")||
+		CheckACtorFloorTexture(0,"NUKAGE3"));
+}
+
+script "LavaCheck" (void)
+{
+	SetResultValue(CheckActorFloorTexture(0,"NUKAGE1")||
+		CheckACtorFloorTexture(0,"LAVA1")||
+		CheckACtorFloorTexture(0,"LAVA2")||
+		CheckACtorFloorTexture(0,"LAVA3")||
+		CheckACtorFloorTexture(0,"LAVA4"));
+}
+
+script "SlimeCheck" (void)
+{
+	SetResultValue(CheckActorFloorTexture(0,"SLIME01")||
+		CheckACtorFloorTexture(0,"SLIME02")||
+		CheckACtorFloorTexture(0,"SLIME03")||
+		CheckACtorFloorTexture(0,"SLIME04")||
+		CheckACtorFloorTexture(0,"SLIME05")||
+		CheckACtorFloorTexture(0,"SLIME06")||
+		CheckACtorFloorTexture(0,"SLIME07")||
+		CheckACtorFloorTexture(0,"SLIME08"));
+}

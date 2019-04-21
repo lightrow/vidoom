@@ -1,0 +1,7 @@
+#library "rumble"
+#include "zcommon.acs"
+
+script "RumbleToggle" (void)
+{
+    SetResultValue(GetCVar("rmtoggle"));
+}

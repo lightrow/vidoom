@@ -1,0 +1,7 @@
+#library "GibToggler"
+#include "zcommon.acs"
+
+script "GibToggle" (void)
+{
+    SetResultValue(GetCVar("GBtoggle"));
+}

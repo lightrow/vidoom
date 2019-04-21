@@ -1,0 +1,363 @@
+actor sexygreenarmor : greenarmor replaces greenarmor
+{
+	INVENTORY.PICKUPSOUND "misc/armor1_pickup"
+states
+	{
+	spawn:
+	garm ab 4 bright
+	garm cdcb 4
+	loop
+	}
+}
+
+actor sexybluearmor : bluearmor replaces bluearmor
+{
+	INVENTORY.PICKUPSOUND "misc/armor2_pickup"
+states
+	{
+	spawn:
+	blar ab 4 bright
+	blar cdcb 4
+	loop
+	}
+}
+
+actor sexyflask : healthbonus replaces healthbonus
+{
+	INVENTORY.PICKUPSOUND "misc/hbonus_pickup"
+states
+	{
+	spawn:
+	bonu abcdefgfedcb 3
+	loop
+	}
+}
+
+actor sexyhelmet : armorbonus replaces armorbonus
+{
+	INVENTORY.PICKUPSOUND "misc/abonus_pickup"
+states
+	{
+	spawn: 
+	TNT1 A 0
+	HELB abcdefghgfedcb 3
+	loop
+	AltSpawn:
+	NUBO a 20
+	NUBO cdb 3
+	loop
+	}
+}
+
+actor mrsoul : soulsphere replaces soulsphere
+{
++FLOATBOB
+	INVENTORY.PICKUPSOUND "misc/soulsphere_pickup"
+states
+	{
+	spawn:
+	ZOUL abcdefgfedcb 4 bright
+	loop
+	}
+}
+
+actor megasmooth : megasphere replaces megasphere
+{
++FLOATBOB
+states
+	{
+	spawn:
+	SMEG abcdefgfedcb 4 bright
+	loop
+	}
+}
+
+actor smoothblur : blursphere replaces blursphere
+{
++FLOATBOB
+	INVENTORY.PICKUPSOUND "misc/invisibility_pickup"
+states
+	{
+	spawn:
+	NVIS abcdefgfedcb 4 bright
+	loop
+	}
+}
+
+actor smoothinvul : InvulnerabilitySphere replaces InvulnerabilitySphere
+{
++FLOATBOB
+	INVENTORY.PICKUPSOUND "misc/invulnerability_pickup"
+	Powerup.Color GoldMap
+states
+	{
+	spawn:
+	NVUL abcdefedcb 4 bright
+	loop
+	}
+}
+
+actor smoothmap : allmap replaces allmap
+{
+	INVENTORY.PICKUPSOUND "misc/map_pickup"
+states
+	{
+	spawn:
+	CMAP abcdefgh 3 bright
+	loop
+	}
+}
+
+ACTOR SmoothRedCard : redcard replaces redcard
+{
+	INVENTORY.PICKUPSOUND "misc/key1_pickup"
+  States
+  {
+  Spawn:
+	RTAT abc 3 bright
+	RTAT def 3
+	RTAT ghi 3 bright
+	RTAT jkl 3
+	loop
+  }
+}
+
+ACTOR SmoothBlueCard : bluecard replaces bluecard
+{
+	INVENTORY.PICKUPSOUND "misc/key1_pickup"
+  States
+  {
+  Spawn:
+	btat abc 3 bright
+	btat def 3
+	btat ghi 3 bright
+	btat jkl 3
+	loop
+  }
+}
+
+ACTOR SmoothYellowCard : yellowcard replaces yellowcard
+{
+	INVENTORY.PICKUPSOUND "misc/key1_pickup"
+  States
+  {
+  Spawn:
+	ytat abc 3 bright
+	ytat def 3
+	ytat ghi 3 bright
+	ytat jkl 3
+	loop
+  }
+}
+
+ACTOR SmoothSkullRed : redskull replaces redskull
+{
+ 	INVENTORY.PICKUPSOUND "misc/key2_pickup"
+ states
+  {
+  Spawn:
+	RSKY abcd 3 bright
+	RSKY efgh 3
+	loop
+  }
+}
+
+ACTOR SmoothSkullBlu : blueskull replaces blueskull
+{
+	INVENTORY.PICKUPSOUND "misc/key2_pickup"
+  states
+  {
+  Spawn:
+	BSKY abcd 3 bright
+	BSKY efgh 3
+	loop
+  }
+}
+
+ACTOR SmoothSkullYel : yellowskull replaces yellowskull
+{
+	INVENTORY.PICKUPSOUND "misc/key2_pickup"
+  states
+  {
+  Spawn:
+	YSKY abcd 3 bright
+	YSKY efgh 3
+	loop
+  }
+}
+
+ACTOR NewClip : Clip replaces Clip
+{
+	INVENTORY.PICKUPSOUND "misc/clip_pickup"
+	Inventory.Amount 7
+	States
+	{
+	Spawn:
+    TNT1 A 0
+	CL64 A -1
+    stop
+	}
+}
+
+ACTOR NewClipBox : ClipBox replaces ClipBox
+{
+	INVENTORY.PICKUPSOUND "misc/ammo_pickup"
+	Inventory.Amount 35
+	States
+	{
+	OldSpawn:
+    TNT1 A 0
+	AMMO A -1
+    stop
+	
+	Spawn:
+	AM64 A -1
+    stop
+	}
+}
+
+Actor NewShell : Shell replaces Shell
+{
+	INVENTORY.PICKUPSOUND "misc/shell_pickup"
+}
+
+ACTOR NewShellBox : ShellBox replaces ShellBox
+{
+	INVENTORY.PICKUPSOUND "misc/shellbox_pickup"
+	States
+	{
+	Spawn:
+    TNT1 A 0
+	SBOX A -1
+    stop
+	
+	64Spawn:
+	SH64 A -1
+    stop
+	}
+}
+
+Actor NewRocketAmmo : RocketAmmo replaces RocketAmmo
+{
+	INVENTORY.PICKUPSOUND "misc/rocket_pickup"
+	States
+	{
+	Spawn:
+	PGRN A -1
+	Stop
+	}
+
+}
+
+
+
+ACTOR NewRockBox : RocketBox replaces RocketBox
+{
+	INVENTORY.PICKUPSOUND "misc/rcktbox_pickup"
+	States
+	{
+	OldSpawn:
+	PGRN B -1
+    stop
+	
+	Spawn:
+	RB64 A -1
+    stop
+  }
+}
+
+ACTOR NewCell : Cell replaces Cell
+{
+	INVENTORY.PICKUPSOUND "misc/cell_pickup"
+	States
+	{
+	OldSpawn:
+	TNT1 A 0
+    CELL A -1
+    stop
+	
+	Spawn:
+	PS64 A -1
+	stop
+  }
+}
+
+ACTOR NewCellBig : CellPack replaces CellPack
+{
+	INVENTORY.PICKUPSOUND "misc/bulkcell_pickup"
+	States
+	{
+	Spawn:
+	TNT1 A 0
+    CELP A -1
+    stop
+	
+	64Spawn:
+    PL64 A -1
+    stop
+	}
+}
+
+ACTOR NewPack : Backpack replaces Backpack
+{
+	INVENTORY.PICKUPSOUND "misc/backpack_pickup"
+	States
+	{
+	Spawn:
+	TNT1 A 0
+    BPAK A -1
+    stop
+	
+	64Spawn:
+    BP64 A -1
+    stop
+	}
+}
+
+ACTOR NewStimpack : Stimpack replaces Stimpack
+{
+INVENTORY.PICKUPSOUND "misc/n_hp_pickup"
+states
+ {
+  Spawn:
+    TNT1 A 0
+	STIM A -1
+    stop
+	
+	64Spawn:
+	HS64 A -1
+    stop
+  }
+}
+  
+ACTOR NewMedkit : Medikit replaces Medikit
+{
+INVENTORY.PICKUPSOUND "misc/l_hp_pickup"
+states
+ {
+  Spawn:
+    TNT1 A 0
+	MEDI A -1
+    stop
+	
+	64Spawn:
+	HL64 A -1
+    stop
+  }
+}
+
+actor sexygoggles : infrared replaces infrared
+{
+states
+	{
+	spawn:
+	TNT1 A 0
+	SVIS abcd 3 bright
+	SVIS eeee 3
+	loop
+	64spawn:
+	VI64 abcd 3 bright
+	VI64 eeee 3
+	loop
+	}
+}

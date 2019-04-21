@@ -1,0 +1,7 @@
+gameinfo
+{
+	AddEventHandlers = "ZEvents" 
+}
+
+
+// credits picture: artist Michael Cook

@@ -1,0 +1,73 @@
+class ZEvents : EventHandler 
+{	
+
+	bool loaded;
+	TextureID barx;
+	TextureID bary;
+	bool showpic;
+	double spread;
+	int barWidth;
+	int tick;
+	void doStuff()
+	{
+		if (players[consoleplayer].ReadyWeapon == null)
+		{
+			Console.printf("Waiting for player...");
+		} else {
+			let weapPSprite = players[consoleplayer].FindPSprite(PSprite.WEAPON);
+			let flashPSprite = players[consoleplayer].FindPSprite(PSprite.FLASH);
+			let weapon = players[consoleplayer].ReadyWeapon;
+			if (weapon && flashPSprite && weapon.inStateSequence(flashPSprite.CurState, weapon.ResolveState("Flash")))
+			{
+				
+				spread = spread + (70 - spread)/4;
+			}			
+			spread = spread - (spread - 10)/5;
+		}
+		
+		if (!loaded)
+		{
+			spread = 10;
+			barWidth = 9;
+			barx = TexMan.CheckForTexture ("bar", TexMan.Type_Any);
+			bary = TexMan.CheckForTexture ("bary", TexMan.Type_Any);
+			loaded = true;
+		}
+	}
+	
+	// PLAY scope : collect data
+	override void WorldTick()	// PLAY scope
+	{	
+		if (!tick) {
+			tick = 1;
+		}
+		if( tick / 2 == 1 ) { 
+			tick = 1;
+			doStuff();
+		} else {
+			tick++;
+		}
+	}
+
+	// UI Scope: you cannot alter data here
+	override void renderOverlay(RenderEvent e) 	// UI scope
+	{	
+		int width = Screen.GetWidth();
+		int height = Screen.GetHeight();
+		double x = width * 0.5 - barWidth/2;
+		double xLeft = x - spread;
+		double xRight = x + spread;
+		double y = height * 0.5 - barWidth/2;
+		double yTop = y - spread;
+		double yBot = y + spread;
+		if (loaded)
+			Screen.DrawTexture(barx, false, xLeft, y,
+				DTA_KeepRatio, true, DTA_VirtualWidth, width, DTA_VirtualHeight, height);
+			Screen.DrawTexture(barx, false, xRight, y,
+				DTA_KeepRatio, true, DTA_VirtualWidth, width, DTA_VirtualHeight, height);
+			Screen.DrawTexture(bary, false, x, yTop,
+				DTA_KeepRatio, true, DTA_VirtualWidth, width, DTA_VirtualHeight, height);
+			Screen.DrawTexture(bary, false, x, yBot,
+				DTA_KeepRatio, true, DTA_VirtualWidth, width, DTA_VirtualHeight, height);
+	}
+}

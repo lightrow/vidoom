@@ -1,0 +1,7 @@
+#library "SSGgibs"
+#include "zcommon.acs"
+
+script "StudioGibbly" (void)
+{
+    SetResultValue(GetCVar("GGtoggle"));
+}
