@@ -1,0 +1,27 @@
+#library "cvars"
+
+#include "zcommon.acs"
+
+script "PistolStartCheck" ENTER
+{
+	If (GetCVar("pistolstart") == 1)
+	{
+        ClearInventory();
+        SetActorProperty(0,APROP_HEALTH,100);
+		GiveInventory("PistolStarter", 1);
+	}
+}
+
+// --------------------------------------------------
+// CVAR GETTERS
+// 
+
+script "sgvarianttoggle" (void)
+{
+    SetResultValue(GetCVar("sgvarianttoggle"));
+}
+
+script "sgswaptoggle" (void)
+{
+    SetResultValue(GetCVar("sgswaptoggle"));
+}

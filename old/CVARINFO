@@ -1,0 +1,6 @@
+server int sgvarianttoggle = 0; 
+server int sgswaptoggle = 0; 
+server int pistolstart = 1;
+
+server float fs_volume_mul = 1.0;
+server float fs_delay_mul = 1.0;

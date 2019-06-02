@@ -1,0 +1,17 @@
+#library "satchelCounter"
+#include "zcommon.acs"
+
+bool DoCheckReload = false;
+bool GottaReload = false;
+bool GottaAim = false;
+
+Script "CountCharges" (void) 
+{ 
+	if (ThingCount(T_NONE, 1999) > 0) {
+		SetResultValue(1);
+	} else {
+		SetResultValue(0);
+	}
+	
+}
+

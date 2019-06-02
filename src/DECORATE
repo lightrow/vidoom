@@ -23,7 +23,7 @@
 #include "deco/Player/ShotgunsSpawner.txt"
 #include "deco/Player/SSG.txt"
 #include "deco/Player/Chaingun.txt"
-#include "deco/Player/Rocket.txt"
+#include "deco/Player/Satchel.txt"
 #include "deco/Player/Plasma.txt"
 #include "deco/Player/BFG.txt"
 
@@ -45,8 +45,9 @@ Actor BulletTracer : FastProjectile
 +THRUGHOST
 alpha .75
 renderstyle add
+scale 0.8
 damage 0
-speed 120
+speed 150
 radius 4
 height 4
 seesound ""

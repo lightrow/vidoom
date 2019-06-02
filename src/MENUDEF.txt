@@ -32,16 +32,16 @@ OptionMenu "OptionsMenu"
 	Submenu "Sound Options",			"SoundOptions"
 	Submenu "Display Options",			"VideoOptions"
 	Submenu "Set video mode",			"VideoModeMenu"
-	Submenu "Smooth Options",		"SmoothDoom"
+	Submenu "Agile Armanents",		"AADoom"
 	StaticText " "
 	SafeCommand "Reset to defaults",	"reset2defaults"
 	SafeCommand	"Reset to last saved",	"reset2saved"
 	Command "Go to console",			"menuconsole"
 }
 
-OptionMenu "smoothdoom"
+OptionMenu "AADoom"
 {
-title "Smooth Options"
+title "Agile Armanents Options"
 
 StaticText " "
 StaticText " "

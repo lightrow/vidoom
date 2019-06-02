@@ -1,0 +1,1027 @@
+//Bonus Brightmaps
+brightmap sprite BONUA0
+{
+	map "brightmaps/bonus/BONUA0.png"
+}
+
+brightmap sprite BONUB0
+{
+	map "brightmaps/bonus/BONUB0.png"
+}
+
+brightmap sprite BONUC0
+{
+	map "brightmaps/bonus/BONUC0.png"
+}
+
+brightmap sprite BONUD0
+{
+	map "brightmaps/bonus/BONUD0.png"
+}
+
+brightmap sprite BONUE0
+{
+	map "brightmaps/bonus/BONUE0.png"
+}
+
+brightmap sprite BONUF0
+{
+	map "brightmaps/bonus/BONUF0.png"
+}
+
+brightmap sprite BONUG0
+{
+	map "brightmaps/bonus/BONUG0.png"
+}
+
+brightmap sprite HELBB0
+{
+	map "brightmaps/bonus/HELBB0.png"
+}
+
+brightmap sprite HELBC0
+{
+	map "brightmaps/bonus/HELBC0.png"
+}
+
+brightmap sprite HELBD0
+{
+	map "brightmaps/bonus/HELBD0.png"
+}
+
+brightmap sprite HELBE0
+{
+	map "brightmaps/bonus/HELBE0.png"
+}
+
+brightmap sprite HELBF0
+{
+	map "brightmaps/bonus/HELBF0.png"
+}
+
+brightmap sprite HELBG0
+{
+	map "brightmaps/bonus/HELBG0.png"
+}
+
+brightmap sprite HELBH0
+{
+	map "brightmaps/bonus/HELBH0.png"
+}
+
+//Zombieman brightmaps
+brightmap sprite POSSA7
+{
+	map "brightmaps/zombie/move/POSSA7.png"
+	disablefullbright
+}
+brightmap sprite POSSB7
+{
+	map "brightmaps/zombie/move/POSSB7.png"
+	disablefullbright
+}
+brightmap sprite POSSC7
+{
+	map "brightmaps/zombie/move/POSSC7.png"
+	disablefullbright
+}
+brightmap sprite POSSD7
+{
+	map "brightmaps/zombie/move/POSSD7.png"
+	disablefullbright
+}
+
+brightmap sprite POSSA8
+{
+	map "brightmaps/zombie/move/POSSA8.png"
+	disablefullbright
+}
+brightmap sprite POSSB8
+{
+	map "brightmaps/zombie/move/POSSB8.png"
+	disablefullbright
+}
+brightmap sprite POSSC8
+{
+	map "brightmaps/zombie/move/POSSC8.png"
+	disablefullbright
+}
+brightmap sprite POSSD8
+{
+	map "brightmaps/zombie/move/POSSD8.png"
+	disablefullbright
+}
+
+brightmap sprite POSSA1
+{
+	map "brightmaps/zombie/move/POSSA1.png"
+	disablefullbright
+}
+
+brightmap sprite POSSA2
+{
+	map "brightmaps/zombie/move/POSSA2.png"
+	disablefullbright
+}
+
+brightmap sprite POSSA3
+{
+	map "brightmaps/zombie/move/POSSA3.png"
+	disablefullbright
+}
+
+brightmap sprite POSSB1
+{
+	map "brightmaps/zombie/move/POSSB1.png"
+	disablefullbright
+}
+
+brightmap sprite POSSB2
+{
+	map "brightmaps/zombie/move/POSSB2.png"
+	disablefullbright
+}
+
+brightmap sprite POSSB3
+{
+	map "brightmaps/zombie/move/POSSB3.png"
+	disablefullbright
+}
+
+brightmap sprite POSSC1
+{
+	map "brightmaps/zombie/move/POSSC1.png"
+	disablefullbright
+}
+
+brightmap sprite POSSC2
+{
+	map "brightmaps/zombie/move/POSSC2.png"
+	disablefullbright
+}
+
+brightmap sprite POSSC3
+{
+	map "brightmaps/zombie/move/POSSC3.png"
+	disablefullbright
+}
+
+brightmap sprite POSSD1
+{
+	map "brightmaps/zombie/move/POSSD1.png"
+	disablefullbright
+}
+
+brightmap sprite POSSD2
+{
+	map "brightmaps/zombie/move/POSSD2.png"
+	disablefullbright
+}
+
+brightmap sprite POSSD3
+{
+	map "brightmaps/zombie/move/POSSD3.png"
+	disablefullbright
+}
+/////////firing
+
+brightmap sprite PSSAA1
+{
+	map "brightmaps/zombie/fire/PSSAA1.png"
+	disablefullbright
+}
+
+brightmap sprite PSSAB1
+{
+	map "brightmaps/zombie/fire/PSSAB1.png"
+	disablefullbright
+}
+
+brightmap sprite POSSE1
+{
+	map "brightmaps/zombie/fire/POSSE1.png"
+	disablefullbright
+}
+
+brightmap sprite POSSF1
+{
+	map "brightmaps/zombie/fire/POSSF1.png"
+	disablefullbright
+}
+brightmap sprite POSSF2
+{
+	map "brightmaps/zombie/fire/POSSF2.png"
+	disablefullbright
+}
+brightmap sprite POSSF3
+{
+	map "brightmaps/zombie/fire/POSSF3.png"
+	disablefullbright
+}
+brightmap sprite POSSF4
+{
+	map "brightmaps/zombie/fire/POSSF4.png"
+	disablefullbright
+}
+brightmap sprite POSSF5
+{
+	map "brightmaps/zombie/fire/POSSF5.png"
+	disablefullbright
+}
+brightmap sprite POSSF6
+{
+	map "brightmaps/zombie/fire/POSSF6.png"
+	disablefullbright
+}
+brightmap sprite POSSF7
+{
+	map "brightmaps/zombie/fire/POSSF7.png"
+	disablefullbright
+}
+brightmap sprite POSSF8
+{
+	map "brightmaps/zombie/fire/POSSF8.png"
+	disablefullbright
+	
+/////////idle
+	
+}
+brightmap sprite PSSSa7
+{
+	map "brightmaps/zombie/idle/PSSSa7.png"
+	disablefullbright
+}
+brightmap sprite PSSSb7
+{
+	map "brightmaps/zombie/idle/PSSSb7.png"
+	disablefullbright
+}
+brightmap sprite PSSSa8
+{
+	map "brightmaps/zombie/idle/PSSSa8.png"
+	disablefullbright
+}
+brightmap sprite PSSSb8
+{
+	map "brightmaps/zombie/idle/PSSSb8.png"
+	disablefullbright
+}
+brightmap sprite PSSSa1
+{
+	map "brightmaps/zombie/idle/PSSSa1.png"
+	disablefullbright
+}
+brightmap sprite PSSSb1
+{
+	map "brightmaps/zombie/idle/PSSSb1.png"
+	disablefullbright
+}
+brightmap sprite PSSSa2
+{
+	map "brightmaps/zombie/idle/PSSSa2.png"
+	disablefullbright
+}
+brightmap sprite PSSSb2
+{
+	map "brightmaps/zombie/idle/PSSSb2.png"
+	disablefullbright
+}
+brightmap sprite PSSSa3
+{
+	map "brightmaps/zombie/idle/PSSSa3.png"
+	disablefullbright
+}
+brightmap sprite PSSSb3
+{
+	map "brightmaps/zombie/idle/PSSSb3.png"
+	disablefullbright
+}
+
+//Zombieman VARIANT 1 brightmaps (helmet)
+brightmap sprite ZSV1F1
+{
+	map "brightmaps/zombie/V1helmet/ZSV1F1.png"
+	disablefullbright
+}
+brightmap sprite ZSV1F2
+{
+	map "brightmaps/zombie/V1helmet/ZSV1F1.png"
+	disablefullbright
+}
+brightmap sprite ZSV1F3
+{
+	map "brightmaps/zombie/V1helmet/ZSV1F1.png"
+	disablefullbright
+}
+brightmap sprite ZSV1F4
+{
+	map "brightmaps/zombie/V1helmet/ZSV1F1.png"
+	disablefullbright
+}
+brightmap sprite ZSV1F5
+{
+	map "brightmaps/zombie/V1helmet/ZSV1F1.png"
+	disablefullbright
+}
+brightmap sprite ZSV1F6
+{
+	map "brightmaps/zombie/V1helmet/ZSV1F1.png"
+	disablefullbright
+}
+brightmap sprite ZSV1F7
+{
+	map "brightmaps/zombie/V1helmet/ZSV1F1.png"
+	disablefullbright
+}
+brightmap sprite ZSV1F8
+{
+	map "brightmaps/zombie/V1helmet/ZSV1F1.png"
+	disablefullbright
+}
+//Zombieman VARIANT 2 brightmaps (jaw)
+brightmap sprite ZMV2a7
+{
+	map "brightmaps/zombie/move/POSSA7.png"
+	disablefullbright
+}
+brightmap sprite ZMV2b7
+{
+	map "brightmaps/zombie/move/POSSB7.png"
+	disablefullbright
+}
+brightmap sprite ZMV2c7
+{
+	map "brightmaps/zombie/move/POSSC7.png"
+	disablefullbright
+}
+brightmap sprite ZMV2d7
+{
+	map "brightmaps/zombie/move/POSSD7.png"
+	disablefullbright
+}
+
+brightmap sprite ZMV2a8
+{
+	map "brightmaps/zombie/move/POSSA8.png"
+	disablefullbright
+}
+brightmap sprite ZMV2b8
+{
+	map "brightmaps/zombie/move/POSSB8.png"
+	disablefullbright
+}
+brightmap sprite ZMV2c8
+{
+	map "brightmaps/zombie/move/POSSC8.png"
+	disablefullbright
+}
+brightmap sprite ZMV2d8
+{
+	map "brightmaps/zombie/move/POSSD8.png"
+	disablefullbright
+}
+
+brightmap sprite ZMV2a1
+{
+	map "brightmaps/zombie/move/POSSA1.png"
+	disablefullbright
+}
+
+brightmap sprite ZMV2a2
+{
+	map "brightmaps/zombie/move/POSSA2.png"
+	disablefullbright
+}
+
+brightmap sprite ZMV2a3
+{
+	map "brightmaps/zombie/move/POSSA3.png"
+	disablefullbright
+}
+
+brightmap sprite ZMV2b1
+{
+	map "brightmaps/zombie/move/POSSB1.png"
+	disablefullbright
+}
+
+brightmap sprite ZMV2b2
+{
+	map "brightmaps/zombie/move/POSSB2.png"
+	disablefullbright
+}
+
+brightmap sprite ZMV2b3
+{
+	map "brightmaps/zombie/move/POSSB3.png"
+	disablefullbright
+}
+
+brightmap sprite ZMV2c1
+{
+	map "brightmaps/zombie/move/POSSC1.png"
+	disablefullbright
+}
+
+brightmap sprite ZMV2c2
+{
+	map "brightmaps/zombie/move/POSSC2.png"
+	disablefullbright
+}
+
+brightmap sprite ZMV2c3
+{
+	map "brightmaps/zombie/move/POSSC3.png"
+	disablefullbright
+}
+
+brightmap sprite ZMV2d1
+{
+	map "brightmaps/zombie/move/POSSD1.png"
+	disablefullbright
+}
+
+brightmap sprite ZMV2d2
+{
+	map "brightmaps/zombie/move/POSSD2.png"
+	disablefullbright
+}
+
+brightmap sprite ZMV2d3
+{
+	map "brightmaps/zombie/move/POSSD3.png"
+	disablefullbright
+}
+
+brightmap sprite ZSV2A1
+{
+	map "brightmaps/zombie/fire/PSSAA1.png"
+	disablefullbright
+}
+
+brightmap sprite ZSV2B1
+{
+	map "brightmaps/zombie/fire/PSSAB1.png"
+	disablefullbright
+}
+
+brightmap sprite ZSV2E1
+{
+	map "brightmaps/zombie/fire/POSSE1.png"
+	disablefullbright
+}
+
+brightmap sprite ZSV2F1
+{
+	map "brightmaps/zombie/fire/POSSF1.png"
+	disablefullbright
+}
+brightmap sprite ZSV2F2
+{
+	map "brightmaps/zombie/fire/POSSF2.png"
+	disablefullbright
+}
+brightmap sprite ZSV2F3
+{
+	map "brightmaps/zombie/fire/POSSF3.png"
+	disablefullbright
+}
+brightmap sprite ZSV2F4
+{
+	map "brightmaps/zombie/fire/POSSF4.png"
+	disablefullbright
+}
+brightmap sprite ZSV2F5
+{
+	map "brightmaps/zombie/fire/POSSF5.png"
+	disablefullbright
+}
+brightmap sprite ZSV2F6
+{
+	map "brightmaps/zombie/fire/POSSF6.png"
+	disablefullbright
+}
+brightmap sprite ZSV2F7
+{
+	map "brightmaps/zombie/fire/POSSF7.png"
+	disablefullbright
+}
+brightmap sprite ZSV2F8
+{
+	map "brightmaps/zombie/fire/POSSF8.png"
+	disablefullbright
+}
+
+//////idles
+brightmap sprite ZIV2a7
+{
+	map "brightmaps/zombie/idle/PSSSa7.png"
+	disablefullbright
+}
+brightmap sprite ZIV2b7
+{
+	map "brightmaps/zombie/idle/PSSSb7.png"
+	disablefullbright
+}
+brightmap sprite ZIV2a8
+{
+	map "brightmaps/zombie/idle/PSSSa8.png"
+	disablefullbright
+}
+brightmap sprite ZIV2b8
+{
+	map "brightmaps/zombie/idle/PSSSb8.png"
+	disablefullbright
+}
+brightmap sprite ZIV2a1
+{
+	map "brightmaps/zombie/idle/PSSSa1.png"
+	disablefullbright
+}
+brightmap sprite ZIV2b1
+{
+	map "brightmaps/zombie/idle/PSSSb1.png"
+	disablefullbright
+}
+brightmap sprite ZIV2a2
+{
+	map "brightmaps/zombie/idle/PSSSa2.png"
+	disablefullbright
+}
+brightmap sprite ZIV2b2
+{
+	map "brightmaps/zombie/idle/PSSSb2.png"
+	disablefullbright
+}
+brightmap sprite ZIV2a3
+{
+	map "brightmaps/zombie/idle/PSSSa3.png"
+	disablefullbright
+}
+brightmap sprite ZIV2b3
+{
+	map "brightmaps/zombie/idle/PSSSb3.png"
+	disablefullbright
+}
+
+//Zombieman VARIANT 3 brightmaps (head)
+brightmap sprite ZSV3F1
+{
+	map "brightmaps/zombie/V3head/ZSV3F1.png"
+	disablefullbright
+}
+brightmap sprite ZSV3F2
+{
+	map "brightmaps/zombie/V3head/ZSV3F1.png"
+	disablefullbright
+}
+brightmap sprite ZSV3F3
+{
+	map "brightmaps/zombie/V3head/ZSV3F1.png"
+	disablefullbright
+}
+brightmap sprite ZSV3F4
+{
+	map "brightmaps/zombie/V3head/ZSV3F1.png"
+	disablefullbright
+}
+brightmap sprite ZSV3F5
+{
+	map "brightmaps/zombie/V3head/ZSV3F1.png"
+	disablefullbright
+}
+brightmap sprite ZSV3F6
+{
+	map "brightmaps/zombie/V3head/ZSV3F1.png"
+	disablefullbright
+}
+brightmap sprite ZSV3F7
+{
+	map "brightmaps/zombie/V3head/ZSV3F1.png"
+	disablefullbright
+}
+brightmap sprite ZSV3F8
+{
+	map "brightmaps/zombie/V3head/ZSV3F1.png"
+	disablefullbright
+}
+
+//Shotgunner Brightmaps
+
+//fire
+brightmap sprite SPOSF1
+{
+	map "brightmaps/sguy/fire/SPOSF1.png"
+	disablefullbright
+}
+brightmap sprite SPOSF2
+{
+	map "brightmaps/sguy/fire/SPOSF2.png"
+	disablefullbright
+}
+brightmap sprite SPOSF3
+{
+	map "brightmaps/sguy/fire/SPOSF3.png"
+	disablefullbright
+}
+brightmap sprite SPOSF4
+{
+	map "brightmaps/sguy/fire/SPOSF4.png"
+	disablefullbright
+}
+brightmap sprite SPOSF5
+{
+	map "brightmaps/sguy/fire/SPOSF5.png"
+	disablefullbright
+}
+brightmap sprite SPOSF6
+{
+	map "brightmaps/sguy/fire/SPOSF6.png"
+	disablefullbright
+}
+brightmap sprite SPOSF7
+{
+	map "brightmaps/sguy/fire/SPOSF7.png"
+	disablefullbright
+}
+brightmap sprite SPOSF8
+{
+	map "brightmaps/sguy/fire/SPOSF8.png"
+	disablefullbright
+}
+//move
+brightmap sprite SPOSA1
+{
+	map "brightmaps/sguy/move/SPOSA1"
+	disablefullbright
+}
+brightmap sprite SPOSA2
+{
+	map "brightmaps/sguy/move/SPOSA2"
+	disablefullbright
+}
+brightmap sprite SPOSA3
+{
+	map "brightmaps/sguy/move/SPOSA3"
+	disablefullbright
+}
+brightmap sprite SPOSB1
+{
+	map "brightmaps/sguy/move/SPOSB1"
+	disablefullbright
+}
+brightmap sprite SPOSB2
+{
+	map "brightmaps/sguy/move/SPOSB2"
+	disablefullbright
+}
+brightmap sprite SPOSB3
+{
+	map "brightmaps/sguy/move/SPOSA3"
+	disablefullbright
+}
+brightmap sprite SPOSC1
+{
+	map "brightmaps/sguy/move/SPOSC1"
+	disablefullbright
+}
+brightmap sprite SPOSC2
+{
+	map "brightmaps/sguy/move/SPOSC2"
+	disablefullbright
+}
+brightmap sprite SPOSC3
+{
+	map "brightmaps/sguy/move/SPOSC3"
+	disablefullbright
+}
+brightmap sprite SPOSD1
+{
+	map "brightmaps/sguy/move/SPOSD1"
+	disablefullbright
+}
+brightmap sprite SPOSD2
+{
+	map "brightmaps/sguy/move/SPOSD2"
+	disablefullbright
+}
+brightmap sprite SPOSD3
+{
+	map "brightmaps/sguy/move/SPOSD3"
+	disablefullbright
+}
+brightmap sprite SPOSE1
+{
+	map "brightmaps/sguy/move/SPOSE1"
+	disablefullbright
+}
+brightmap sprite SPOSE2
+{
+	map "brightmaps/sguy/move/SPOSE2"
+	disablefullbright
+}
+brightmap sprite SPOSE3
+{
+	map "brightmaps/sguy/move/SPOSE3"
+	disablefullbright
+}
+
+
+//////goggles variant
+
+brightmap sprite SMV2a1
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2a1.png"
+	disablefullbright
+}
+brightmap sprite SMV2b1
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2b1.png"
+	disablefullbright
+}
+brightmap sprite SMV2c1
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2c1.png"
+	disablefullbright
+}
+brightmap sprite SMV2d1
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2d1.png"
+	disablefullbright
+}
+brightmap sprite SMV2a2
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2a2.png"
+	disablefullbright
+}
+brightmap sprite SMV2b2
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2b2.png"
+	disablefullbright
+}
+brightmap sprite SMV2c2
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2c2.png"
+	disablefullbright
+}
+brightmap sprite SMV2d2
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2d2.png"
+	disablefullbright
+}
+brightmap sprite SMV2a3
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2a3.png"
+	disablefullbright
+}
+brightmap sprite SMV2b3
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2b3.png"
+	disablefullbright
+}
+brightmap sprite SMV2c3
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2c3.png"
+	disablefullbright
+}
+brightmap sprite SMV2d3
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2d3.png"
+	disablefullbright
+}
+brightmap sprite SMV2a7
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2a7.png"
+	disablefullbright
+}
+brightmap sprite SMV2b7
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2b7.png"
+	disablefullbright
+}
+brightmap sprite SMV2c7
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2c7.png"
+	disablefullbright
+}
+brightmap sprite SMV2d7
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2d7.png"
+	disablefullbright
+}
+brightmap sprite SMV2a8
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2a8.png"
+	disablefullbright
+}
+brightmap sprite SMV2b8
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2b8.png"
+	disablefullbright
+}
+brightmap sprite SMV2c8
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2c8.png"
+	disablefullbright
+}
+brightmap sprite SMV2d8
+{
+	map "brightmaps/sguy/v2gogs/move/SMV2d8.png"
+	disablefullbright
+}
+
+// goggles fire
+brightmap sprite SSV2A1.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2A1"
+	disablefullbright
+}
+brightmap sprite SSV2A2.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2A2.png"
+	disablefullbright
+}
+brightmap sprite SSV2A3.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2A3.png"
+	disablefullbright
+}
+brightmap sprite SSV2A7.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2A7.png"
+	disablefullbright
+}
+brightmap sprite SSV2A8.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2A8.png"
+	disablefullbright
+}
+brightmap sprite SSV2B1.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2B1"
+	disablefullbright
+}
+brightmap sprite SSV2B2.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2B2.png"
+	disablefullbright
+}
+brightmap sprite SSV2b32.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2b3.png"
+	disablefullbright
+}
+brightmap sprite SSV2B7.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2B7.png"
+	disablefullbright
+}
+brightmap sprite SSV2B8.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2B8.png"
+	disablefullbright
+}
+brightmap sprite SSV2E1.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2E1"
+	disablefullbright
+}
+brightmap sprite SSV2E2.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2E2.png"
+	disablefullbright
+}
+brightmap sprite SSV2E3.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2E3.png"
+	disablefullbright
+}
+brightmap sprite SSV2E7.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2E7.png"
+	disablefullbright
+}
+brightmap sprite SSV2E8.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2E8.png"
+	disablefullbright
+}
+brightmap sprite SSV2F1.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2F1"
+	disablefullbright
+}
+brightmap sprite SSV2F2.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2F2.png"
+	disablefullbright
+}
+brightmap sprite SSV2F3.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2F3.png"
+	disablefullbright
+}
+brightmap sprite SSV2F4.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2F4.png"
+	disablefullbright
+}
+brightmap sprite SSV2F6.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2F6.png"
+	disablefullbright
+}
+brightmap sprite SSV2F7.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2F7.png"
+	disablefullbright
+}
+brightmap sprite SSV2F8.png
+{
+	map "brightmaps/sguy/v2gogs/fire/SSV2F8.png"
+	disablefullbright
+}
+
+brightmap sprite HEADA1.png
+{
+	map "brightmaps/caco/HEADA1.png"
+	disablefullbright
+}
+brightmap sprite HEADA2A8.png
+{
+	map "brightmaps/caco/HEADA2A8.png"
+	disablefullbright
+}
+brightmap sprite HEADA3A7.png
+{
+	map "brightmaps/caco/HEADA3A7.png"
+	disablefullbright
+}
+
+//Barrel Brightmaps
+
+brightmap sprite BAR1A0
+{
+	map "brightmaps/barrel/BAR1A0.png"
+	disablefullbright
+}
+brightmap sprite BAR1B0
+{
+	map "brightmaps/barrel/BAR1B0.png"
+	disablefullbright
+}
+brightmap sprite BAR1C0
+{
+	map "brightmaps/barrel/BAR1C0.png"
+	disablefullbright
+}
+brightmap sprite BAR1D0
+{
+	map "brightmaps/barrel/BAR1D0.png"
+	disablefullbright
+}
+brightmap sprite BAR1e0
+{
+	map "brightmaps/barrel/BAR1e0.png"
+	disablefullbright
+}
+brightmap sprite BAR1f0
+{
+	map "brightmaps/barrel/BAR1f0.png"
+	disablefullbright
+}
+brightmap sprite BAR1g0
+{
+	map "brightmaps/barrel/BAR1g0.png"
+	disablefullbright
+}
+brightmap sprite BAR1h0
+{
+	map "brightmaps/barrel/BAR1h0.png"
+	disablefullbright
+}
+brightmap sprite BAR1i0
+{
+	map "brightmaps/barrel/BAR1i0.png"
+	disablefullbright
+}
+brightmap sprite BAR1j0
+{
+	map "brightmaps/barrel/BAR1j0.png"
+	disablefullbright
+}
+brightmap sprite BAR1k0
+{
+	map "brightmaps/barrel/BAR1k0.png"
+	disablefullbright
+}
+brightmap sprite BAR1l0
+{
+	map "brightmaps/barrel/BAR1l0.png"
+	disablefullbright
+}
+brightmap sprite BAR1m0
+{
+	map "brightmaps/barrel/BAR1m0.png"
+	disablefullbright
+}

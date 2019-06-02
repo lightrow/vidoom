@@ -1,0 +1,106 @@
+ACTOR WeaponPickup : CustomInventory // Copied from Laundry 3 because I'm lazy
+{
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.NEVERRESPAWN
+  +FORCEXYBILLBOARD
+  Radius 16
+  Height 14
+  Inventory.Amount 0
+  Inventory.PickupMessage ""
+  Inventory.PickupSound "misc/w_pkup"
+  States
+  {
+  Spawn:
+    CLIP A -1
+    Stop
+  Pickup:
+    TNT1 A 0 A_GiveInventory ("HealthBonus", 1)
+    TNT1 A 0 A_Log("Wait, that wasn't a gun.")
+    Stop
+  Nope:
+    TNT1 A 0
+    Fail
+  }
+}
+
+ACTOR SuperShotgunPickup : WeaponPickup replaces SuperShotgun
+{
+  Tag "Super Shotgun Pickup"
+  States
+  {
+  Spawn:
+	TNT1 A 0
+	TNT1 A 0 A_JumpIf(CallACS("sgswaptoggle") == 1, "DoubleSpawn")
+	TNT1 A 0 A_JumpIf(CallACS("sgvarianttoggle") == 1, "SmagSpawn")
+    SG6P A -1
+	Stop
+  SmagSpawn:
+    SMAP A -1
+	Stop
+  DoubleSpawn:
+	SBSH Y -1
+	Stop
+  Pickup:
+	TNT1 A 0 A_JumpIf(CallACS("sgswaptoggle") == 1, "DoublePickup")
+	TNT1 A 0 A_JumpIf(CallACS("sgvarianttoggle") == 1, "SmagPickup")
+	TNT1 A 0 A_JumpifInventory("PumpShotgun",1,"JustAmmo")
+	TNT1 A 0 A_GiveInventory("PumpShotgun",1)
+	Stop
+  SmagPickup:
+	TNT1 A 0 A_JumpifInventory("SmagShotgun",1,"JustAmmo")
+	TNT1 A 0 A_GiveInventory("SmagShotgun",1)
+	Stop
+  DoublePickup:
+  	TNT1 A 0 A_JumpifInventory("PerkSuperShotgun",1,"JustAmmo")
+	TNT1 A 0 A_GiveInventory("PerkSuperShotgun",1)
+	Stop
+  JustAmmo:
+	TNT1 A 0 A_GiveInventory("Shell", 4)
+	Stop
+}
+}
+
+ACTOR ShotgunPickup : WeaponPickup replaces Shotgun
+{
+  Tag "Shotgun Pickup"
+  States
+  {
+  Spawn:
+	TNT1 A 0
+	TNT1 A 0 A_JumpIf(CallACS("sgswaptoggle") == 1, "SmagSpawn")
+	SBSH Y -1
+	Stop
+  SmagSpawn:
+	TNT1 A 0 A_JumpIf(CallACS("sgvarianttoggle") == 0, "PumpSpawn")
+    SMAP A -1
+	Stop
+  PumpSpawn:
+    SG6P A -1
+	Stop
+  Pickup:
+	TNT1 A 0 A_JumpIf(CallACS("sgswaptoggle") == 1, "SmagPickup")
+  	TNT1 A 0 A_JumpifInventory("PerkSuperShotgun",1,"JustAmmo")
+	TNT1 A 0 A_GiveInventory("PerkSuperShotgun",1)
+	Stop
+  SmagPickup:
+	TNT1 A 0 A_JumpIf(CallACS("sgvarianttoggle") == 0, "PumpPickup")
+	TNT1 A 0 A_JumpifInventory("SmagShotgun",1,"JustAmmo")
+	TNT1 A 0 A_GiveInventory("SmagShotgun",1)
+	Stop
+  PumpPickup:
+	TNT1 A 0 A_JumpifInventory("PumpShotgun",1,"JustAmmo")
+	TNT1 A 0 A_GiveInventory("PumpShotgun",1)
+	Stop
+  JustAmmo:
+	TNT1 A 0 A_GiveInventory("Shell", 4)
+	Stop
+}
+}
+
+
+
+
+
+
+
+

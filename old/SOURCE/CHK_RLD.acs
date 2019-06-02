@@ -1,0 +1,56 @@
+#library "ReloadQueue"
+#include "zcommon.acs"
+
+int WannaReload = 0;
+int GottaReload = 0;
+int GottaAim = 0;
+
+Script "CheckReloadButton" (int VarFromDecorate) 
+{
+	WannaReload = VarFromDecorate;
+	while (WannaReload == 1 && GottaReload == 0 || WannaReload == 1 && GottaAim == 0)
+	{
+		int buttons = GetPlayerInput(-1, INPUT_BUTTONS);
+		if (buttons & BT_RELOAD) 
+		{
+			GottaReload = 1;
+			WannaReload = 0;
+
+		}
+		if (buttons & BT_ALTATTACK) 
+		{
+			GottaAim = 1;
+			WannaReload = 0;
+
+		}
+		Delay(1);
+	}
+}
+
+Script "WasReloadPressed" (void)
+{
+	if ( GottaReload == 1 )
+	{
+		GottaReload = 0;
+		SetResultValue(1);
+	}
+	else
+	{
+		SetResultValue(0);
+		WannaReload = 0;
+	}
+}
+
+Script "WasAimPressed" (void)
+{
+	if ( GottaAim == 1 )
+	{
+		GottaAim = 0;
+		SetResultValue(1);
+	}
+	else
+	{
+		SetResultValue(0);
+		WannaReload = 0;
+	}
+}

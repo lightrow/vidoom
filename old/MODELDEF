@@ -1,0 +1,22 @@
+Model BulletTracer
+{
+	Path "models"
+	Model 0 "tracer.md3"
+	Skin 0 "tracer1.png"
+	Scale 1.0 1.0 1.0
+	PITCHFROMMOMENTUM
+	
+	FrameIndex PUFF A 0 0
+}
+
+
+Model RicochetBullet
+{
+	Path "models"
+	Model 0 "tracer.md3"
+	Skin 0 "tracer1.png"
+	Scale 0.3 0.9 0.9
+	PITCHFROMMOMENTUM
+	
+	FrameIndex PUFF A 0 0
+}

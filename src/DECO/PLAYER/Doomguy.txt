@@ -7,7 +7,7 @@ ACTOR PerkDPlayer : Doomplayer replaces Doomplayer
    	Player.WeaponSlot 2, PerkPistol, Rifle
 	Player.WeaponSlot 3, PerkShotgun, PerkSuperShotgun
 	Player.WeaponSlot 4, Z86Chaingun
-	Player.WeaponSlot 5, PerkRocketLauncher
+	Player.WeaponSlot 5, Satchel
 	Player.WeaponSlot 6, BloxPlasmaRifle
 	Player.WeaponSlot 7, Z86BFG9000
 	States

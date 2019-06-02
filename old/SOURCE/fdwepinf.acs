@@ -1,0 +1,73 @@
+#library "fdwepinf"
+#include "zcommon.acs"
+
+str pref[19] = {
+   "FDPlut",   "FD_Plut_",   "PL",
+   "FDTNT",    "FD_TNT_",    "TN",
+   "FDDoom2",  "FD_Doom2_",  "D2",
+   "FDAliens", "FD_Aliens_", "AA",
+   "FDJPCP",   "FD_JPCP_",   "JP",
+   "FDBTSX",   "FD_BTSX_",   "BX",
+   ""
+};
+
+function int FD_WeaponEntry(int graphic, int long, int shrt, int wep)
+{
+   if(graphic)
+      return StrParam(s:shrt, s:StrLeft(wep, 6));
+   return StrParam(s:long, s:wep, s:"Info");
+}
+
+function int FD_GetWeaponEntry(int graphic)
+{
+   str wep = GetWeapon();
+
+   if(wep == "FDJPCPFist" && CheckInventory("FDGotChainsaw"))
+      return FD_WeaponEntry(graphic, "FD_JPCP_", "JP", "Chainsaw");
+
+   for(int i = 0; pref[i] != ""; i += 3)
+   {
+      int len = StrLen(pref[i]);
+      if(StrICmp(wep, pref[i], len) == 0)
+         return FD_WeaponEntry(graphic, pref[i+1], pref[i+2],
+            StrMid(wep, len, 32767));
+   }
+
+   return "";
+}
+
+script "FD_WeaponInfo" enter
+{
+   int alpha = 0.0;
+
+   SetHudSize(320, 240, false);
+
+   while(true)
+   {
+      if(GetPlayerInput(-1, MODINPUT_BUTTONS) & BT_RELOAD)
+         alpha += 0.1;
+      else
+         alpha -= 0.1;
+
+           if(alpha < 0.0) alpha = 0.0;
+      else if(alpha > 1.0) alpha = 1.0;
+
+      if(alpha)
+      {
+         str wep = FD_GetWeaponEntry(false);
+         str gfx = FD_GetWeaponEntry(true);
+
+         SetFont("SMALLFNT");
+         HudMessage(l:wep; HUDMSG_ALPHA, 0x42666, CR_WHITE, 160.0, 130.1,
+            0.029, alpha);
+         
+         Setfont(gfx);
+         HudMessage(c:'A'; HUDMSG_ALPHA, 0x42667, 0, 160.0, 110.0,
+            0.029, alpha);
+      }
+
+      Delay(1);
+   }
+}
+
+// EOF

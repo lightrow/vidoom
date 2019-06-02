@@ -1,0 +1,225 @@
+Actor Z86BFG9000 : BFG9000 replaces BFG9000
+{	
+	Weapon.BobStyle Alpha
+	Weapon.BobSpeed 2.5
+	Weapon.BobRangeX 0.2
+	Weapon.BobRangeY 0.5
+	Weapon.UpSound "weapons/bfgup"
+	States
+	{
+	Ready:
+		BFGG A 1 A_WeaponReady
+		TNT1 A 0 A_PlaySound("weapons/bfgidle", 7, 1, 1, 1.4)
+		Loop
+	Select:
+		BFGG A 1 Offset(67, 100)
+		BFGG A 1 Offset(54, 81)
+		BFGG A 1 Offset(32, 69)
+		BFGG A 1 Offset(22, 58)
+		BFGG A 1 Offset(10, 47)
+		BFGG A 1 Offset(7, 39)
+		BFGG A 1 Offset(2, 34)
+		BFGG A 1 A_Raise
+		Wait
+	Deselect:
+		BFGG A 1 Offset(2, 34)
+		BFGG A 1 Offset(7, 39)
+		BFGG A 1 Offset(10, 47)
+		BFGG A 1 Offset(22, 58)
+		BFGG A 1 Offset(32, 69)
+		BFGG A 1 Offset(54, 81)
+		BFGG A 1 Offset(67, 100)
+		TNT1 A 0 A_StopSound(7)
+		BFGG A 1 A_Lower
+		Wait 
+    Fire: 
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		BFGG A 15 A_PlaySound("weapons/bfgcharge",6,1,0)
+		BFGG A 1 Offset (-1,0) A_SetAngle(angle-0.3)
+		TNT1 A 0 a_setpitch(pitch-0.0)
+		BFGG A 1 Offset (1,0) A_SetAngle(angle+0.3)
+		TNT1 A 0 a_setpitch(pitch-0.0)
+		BFGG A 1 Offset (-1,31) A_SetAngle(angle-0.3)
+		TNT1 A 0 a_setpitch(pitch+0.2)
+		BFGG A 1 Offset (2,33) A_SetAngle(angle+0.3)
+		TNT1 A 0 a_setpitch(pitch-0.2)
+		BFGG A 1 Offset (-2,33) A_SetAngle(angle-0.5)
+		TNT1 A 0 a_setpitch(pitch-0.1)
+		BFGG A 1 Offset (2,31) A_SetAngle(angle+0.5)
+		TNT1 A 0 a_setpitch(pitch+0.2)
+		BFGG A 1 Offset (-3,33) A_SetAngle(angle-0.7)
+		TNT1 A 0 a_setpitch(pitch-0.5)
+		BFGG A 1 Offset (3,30) A_SetAngle(angle+0.7)
+		TNT1 A 0 a_setpitch(pitch+0.5)
+		BFGG A 1 Offset (-3,31) A_SetAngle(angle-1.0)
+		TNT1 A 0 a_setpitch(pitch-0.1)
+		BFGG A 1 Offset (3,34) A_SetAngle(angle+1.0)
+		TNT1 A 0 a_setpitch(pitch+0.9)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+    	BFGG A 1 Offset (-3,34) A_GunFlash
+		TNT1 A 0 A_SetAngle(angle-1.5) 
+		TNT1 A 0 a_setpitch(pitch+0.4)
+		BFGG A 1 Offset (4,31) A_SetAngle(angle+1.5)
+		TNT1 A 0 a_setpitch(pitch-1.0)
+		BFGG A 0 A_BFGSound
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		BFGN A 1 Offset (-4,27) A_SetAngle(angle-2.0) 
+		TNT1 A 0 a_setpitch(pitch-0.5)
+		BFGN A 1 Offset (4,31) A_SetAngle(angle+2.0) 
+		TNT1 A 0 a_setpitch(pitch+0.4)
+		BFGN A 1 Offset (-5,36) A_SetAngle(angle-2.0) 
+		TNT1 A 0 a_setpitch(pitch-2.0)
+		BFGN A 1 Offset (5,29) A_SetAngle(angle+2.0) 
+		TNT1 A 0 a_setpitch(pitch+1.0)
+		BFGN A 1 Offset (-5,32) A_SetAngle(angle-3.0) 
+		TNT1 A 0 a_setpitch(pitch-2.0)
+		BFGN A 1 Offset (6,32) A_SetAngle(angle+3.0) 
+		TNT1 A 0 a_setpitch(pitch+0.6)
+		BFGN A 1 Offset (-6,45) A_SetAngle(angle-4.0) 
+		TNT1 A 0 a_setpitch(pitch+2.0)
+		BFGN A 1 Offset (6,45) A_SetAngle(angle+3.0) 
+		TNT1 A 0 a_setpitch(pitch-1.0)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG D 1 Offset(0,50) A_FireBFG
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG D 1 Offset(0,50) a_setpitch(pitch-2.0)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG E 1 Offset(0,50) a_setpitch(pitch-1.6)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG E 1 Offset(0,45) a_setpitch(pitch+0.6)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG D 1 Offset(0,45) a_setpitch(pitch+0.6)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG D 1 Offset(0,45) a_setpitch(pitch+0.6)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG C 1 Offset(0,40) a_setpitch(pitch+0.6)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG C 1 Offset(0,40) a_setpitch(pitch+0.4)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG B 1 Offset(0,36) a_setpitch(pitch+0.4)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG A 1 Offset(0,36) a_setpitch(pitch+0.4)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		BFGG A 20 A_ReFire
+    	goto Ready
+	Hold:
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		BFGG A 1 A_PlaySound("weapons/bfgcharge",6,1,0)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		BFGG A 9
+		BFGG A 1 Offset (-1,0) A_SetAngle(angle-0.3)
+		TNT1 A 0 a_setpitch(pitch-0.0)
+		BFGG A 1 Offset (1,0) A_SetAngle(angle+0.3) 
+		TNT1 A 0 a_setpitch(pitch-0.0)
+		BFGG A 1 Offset (-1,31) A_SetAngle(angle-0.3)
+		TNT1 A 0 a_setpitch(pitch+0.2)
+		BFGG A 1 Offset (2,33) A_SetAngle(angle+0.3)
+		TNT1 A 0 a_setpitch(pitch-0.2)
+		BFGG A 1 Offset (-2,33) A_SetAngle(angle-0.5)
+		TNT1 A 0 a_setpitch(pitch-0.1)
+		BFGG A 1 Offset (2,31) A_SetAngle(angle+0.5)
+		TNT1 A 0 a_setpitch(pitch+0.2)
+		BFGG A 1 Offset (-3,33) A_SetAngle(angle-0.7)
+		TNT1 A 0 a_setpitch(pitch-0.5)
+		BFGG A 1 Offset (3,30) A_SetAngle(angle+0.7)
+		TNT1 A 0 a_setpitch(pitch+0.5)
+		BFGG A 1 Offset (-3,31) A_SetAngle(angle-1.0)
+		TNT1 A 0 a_setpitch(pitch-0.1)
+		BFGG A 1 Offset (3,34) A_SetAngle(angle+1.0)
+		TNT1 A 0 a_setpitch(pitch+0.9)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+    	BFGG A 1 Offset (-3,34) A_GunFlash
+    	TNT1 A 0 A_SetAngle(angle-1.5)
+    	TNT1 A 0 a_setpitch(pitch+0.4)
+		BFGG A 1 Offset (4,31) A_SetAngle(angle+1.5)
+		TNT1 A 0 a_setpitch(pitch-1.0)		BFGG A 0 A_BFGSound
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		BFGN A 1 Offset (-4,27) A_SetAngle(angle-2.0)
+		TNT1 A 0 a_setpitch(pitch-0.5)
+		BFGN A 1 Offset (4,31) A_SetAngle(angle+2.0)
+		TNT1 A 0 a_setpitch(pitch+0.4)
+		BFGN A 1 Offset (-5,36) A_SetAngle(angle-2.0)
+		TNT1 A 0 a_setpitch(pitch-2.0)
+		BFGN A 1 Offset (5,29) A_SetAngle(angle+2.0)
+		TNT1 A 0 a_setpitch(pitch+1.0)
+		BFGN A 1 Offset (-5,32) A_SetAngle(angle-3.0)
+		TNT1 A 0 a_setpitch(pitch-2.0)
+		BFGN A 1 Offset (6,32) A_SetAngle(angle+3.0)
+		TNT1 A 0 a_setpitch(pitch+0.6)
+		BFGN A 1 Offset (-6,45) A_SetAngle(angle-4.0)
+		TNT1 A 0 a_setpitch(pitch+2.0)
+		BFGN A 1 Offset (6,45) A_SetAngle(angle+3.0)
+		TNT1 A 0 a_setpitch(pitch-1.0)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+    	SBFG D 1 Offset(0,50) A_FireBFG
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG D 1 Offset(0,50) a_setpitch(pitch-2.0)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG E 1 Offset(0,50) a_setpitch(pitch-1.6)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG E 1 Offset(0,45) a_setpitch(pitch+0.6)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG D 1 Offset(0,45) a_setpitch(pitch+0.6)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG D 1 Offset(0,45) a_setpitch(pitch+0.6)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG C 1 Offset(0,40) a_setpitch(pitch+0.6)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG C 1 Offset(0,40) a_setpitch(pitch+0.4)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG B 1 Offset(0,36) a_setpitch(pitch+0.4)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		SBFG A 1 Offset(0,36) a_setpitch(pitch+0.4)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		BFGG A 20 A_ReFire
+    	goto Ready
+    Flash:
+		TNT1 A 0 A_AlertMonsters
+	    BFGW A 2 bright
+    	BFGX HGFE 1 bright A_Light2
+		BFGX DCBA 1 bright A_Light2
+		TNT1 A 0 A_Light0
+    	Goto LightDone
+	64muzzleflash:
+		TNT1 A 0 A_AlertMonsters
+	    BFGW A 2 bright
+    	6BGX HGFE 1 bright A_Light2
+		6BGX DCBA 1 bright A_Light2
+		TNT1 A 0 A_Light0
+    	Goto LightDone	
+	}
+}
+
+
+ACTOR smoothBFGball : BFGball replaces BFGball
+{
+decal BFGlightning
+SeeSound "weapons/bfgloop"
+DeathSound "weapons/bfgx"
+
+states
+{
+	spawn:
+	TNT1 A 0
+	FUCK abcd 2 bright A_SpawnItemEx("GreenSparkle", random(-40, 40), random(-40, 40), random(0, 30))
+	loop
+	death:
+	expl d 0 a_quake (3,10,0,750,0)
+	expl d 0 a_quake (1,25,0,1000,0)
+	BFGB abcde 2 bright
+	BFGB f 1 bright
+	BFGB f 3 bright a_BFGspray
+	BFGB ghijk 3 bright
+	stop
+	}
+}
+
+ACTOR smoothBFGextra : BFGextra replaces BFGextra
+{
+states
+	{
+	spawn:
+	BFEX abcdefghijklmno 2 bright
+	stop
+	}
+}

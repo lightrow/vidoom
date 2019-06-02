@@ -1,56 +1,75 @@
 #library "ReloadQueue"
 #include "zcommon.acs"
 
-int WannaReload = 0;
-int GottaReload = 0;
-int GottaAim = 0;
+bool DoCheckReload = false;
+bool GottaReload = false;
+bool GottaAim = false;
 
-Script "CheckReloadButton" (int VarFromDecorate) 
-{
-	WannaReload = VarFromDecorate;
-	while (WannaReload == 1 && GottaReload == 0 || WannaReload == 1 && GottaAim == 0)
+Script "CheckReloadButton" (void) 
+{ 
+	DoCheckReload = true;
+	while (DoCheckReload)
 	{
 		int buttons = GetPlayerInput(-1, INPUT_BUTTONS);
 		if (buttons & BT_RELOAD) 
 		{
-			GottaReload = 1;
-			WannaReload = 0;
+			GottaReload = true;
+			DoCheckReload = false;
 
 		}
 		if (buttons & BT_ALTATTACK) 
 		{
-			GottaAim = 1;
-			WannaReload = 0;
-
+			GottaAim = true;
+			DoCheckReload = false;
 		}
 		Delay(1);
 	}
 }
 
+Script "CheckFireReload" (void) 
+{
+	Delay(10);
+	DoCheckReload = true;
+	while (DoCheckReload)
+	{
+		int buttons = GetPlayerInput(-1, INPUT_BUTTONS);
+		if (buttons & BT_ATTACK) 
+		{
+			GottaReload = true;
+			DoCheckReload = false;
+		}
+		Delay(1);
+	}
+}
+
+Script "StopCheckingReload" (void) 
+{
+	DoCheckReload = false;
+}
+
 Script "WasReloadPressed" (void)
 {
-	if ( GottaReload == 1 )
+	if ( GottaReload )
 	{
-		GottaReload = 0;
+		GottaReload = false;
 		SetResultValue(1);
 	}
 	else
 	{
 		SetResultValue(0);
-		WannaReload = 0;
 	}
 }
 
 Script "WasAimPressed" (void)
 {
-	if ( GottaAim == 1 )
+	if ( GottaAim)
 	{
-		GottaAim = 0;
+		GottaAim = false;
 		SetResultValue(1);
 	}
 	else
 	{
 		SetResultValue(0);
-		WannaReload = 0;
 	}
 }
+

@@ -239,6 +239,7 @@ ACTOR NewShellBox : ShellBox replaces ShellBox
 
 Actor NewRocketAmmo : RocketAmmo replaces RocketAmmo
 {
+	Inventory.Amount 2
 	INVENTORY.PICKUPSOUND "misc/rocket_pickup"
 	States
 	{
@@ -253,6 +254,7 @@ Actor NewRocketAmmo : RocketAmmo replaces RocketAmmo
 
 ACTOR NewRockBox : RocketBox replaces RocketBox
 {
+	Inventory.Amount 10
 	INVENTORY.PICKUPSOUND "misc/rcktbox_pickup"
 	States
 	{

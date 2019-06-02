@@ -1,0 +1,7 @@
+#library "Bobbles"
+#include "zcommon.acs"
+
+script "BobToggle" (void)
+{
+    SetResultValue(GetCVar("bbtoggle"));
+}
