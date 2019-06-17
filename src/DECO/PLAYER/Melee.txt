@@ -1,131 +1,163 @@
-ACTOR PerkFist : Fist replaces Fist
+Actor Whetstone replaces Chainsaw
+{
+
+}
+
+Actor Whetstone2: Whetstone replaces Berserk
+{
+
+}
+
+ACTOR FireAxe : Fist replaces Fist
 {
 	Weapon.BobStyle Alpha
 	Weapon.BobSpeed 2.5
 	Weapon.BobRangeX 0.2
 	Weapon.BobRangeY 0.5
+	+WEAPON.AXEBLOOD
+	DamageType Extreme
+	+NOAUTOFIRE
 	States
 	{
 	Ready:
-		bkfs A 1 A_WeaponReady
+		AXEG A 1 A_WeaponReady
 		Loop
-    Deselectbad:
-		bkfs A 1 Offset(2, 34)
-		bkfs A 1 Offset(7, 39)
-		bkfs A 1 Offset(10, 47)
-		bkfs A 1 Offset(22, 58)
-		bkfs A 1 Offset(32, 69)
-		bkfs A 1 Offset(54, 81)
-		bkfs A 1 Offset(67, 100)
-		bkfs A 1 A_Lower
-		Wait
    Deselect: 
       TNT1 AAAAAAAAAAAAAAAA 0 A_Lower
       TNT1 AAAAAAA 1 A_Lower
       Loop
-
     Select:
-		bkfs A 1 Offset(67, 100)
-		bkfs A 1 Offset(54, 81)
-		bkfs A 1 Offset(32, 69)
-		bkfs A 1 Offset(22, 58)
-		bkfs A 1 Offset(10, 47)
-		bkfs A 1 Offset(7, 39)
-		bkfs A 1 Offset(2, 34)
-		bkfs A 1 A_Raise
+		AXEG A 1 Offset(67, 100)
+		AXEG A 1 Offset(54, 81)
+		AXEG A 1 Offset(32, 69)
+		AXEG A 1 Offset(22, 58)
+		AXEG A 1 Offset(10, 47)
+		AXEG A 1 Offset(7, 39)
+		AXEG A 1 Offset(2, 34)
+		AXEG A 1 A_Raise
 		Wait
 	Fire:
+		TNT1 A 0 A_Jump(100,"Fire2")
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		bKFS L 1
+		AXEA A 2 
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		bkfs B 1
+		TNT1 A 0 A_SetPitch(pitch-0.4)
+		TNT1 A 0 A_SetRoll(roll- 0.4)
+		TNT1 A 0 A_SetAngle(angle-0.4)
+		AXEA B 2
+		TNT1 A 0 A_SetPitch(pitch-0.4)
+		TNT1 A 0 A_SetRoll(roll- 0.4)
+		TNT1 A 0 A_SetAngle(angle-0.8)
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		bkfs C 1
+		AXEA C 3
+		TNT1 A 0 A_SetAngle(angle-0.2)
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		bkfs D 1
+		AXEA D 1 
+		TNT1 A 0 A_SetPitch(pitch+0.4)
+		TNT1 A 0 A_SetRoll(roll+ 0.4)
+		TNT1 A 0 A_SetAngle(angle+0.4)
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		bKFS E 2 A_Punch
+		TNT1 A 0 A_SetPitch(pitch+0.8)
+		TNT1 A 0 A_SetRoll(roll+ 0.8)
+		TNT1 A 0 A_SetAngle(angle+1)
+		AXEA E 1 A_CustomPunch(150, TRUE, CPF_NORANDOMPUFFZ, "BulletPuffGibby", 64)
+		TNT1 A 0 A_Explode(80,128,XF_NOTMISSILE)
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		bKFS F 2
+		TNT1 A 0 A_SetPitch(pitch+0.6)
+		TNT1 A 0 A_SetRoll(roll+ 0.6)
+		TNT1 A 0 A_SetAngle(angle+1)
+		AXEA F 1
+		TNT1 A 0 A_SetPitch(pitch+0.2)
+		TNT1 A 0 A_SetRoll(roll+ 0.2)
+		TNT1 A 0 A_SetAngle(angle+0.2)
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		bkfs G 2
+		TNT1 A 2
+		TNT1 A 0 A_SetPitch(pitch-0.2)
+		TNT1 A 0 A_SetRoll(roll-0.2)
+		TNT1 A 0 A_SetAngle(angle-0.4)
+		TNT1 A 2
+		TNT1 A 0 A_SetPitch(pitch-0.4)
+		TNT1 A 0 A_SetRoll(roll-0.4)
+		TNT1 A 0 A_SetAngle(angle-0.6)
+		TNT1 A 2
+		TNT1 A 0 A_SetPitch(pitch-0.4)
+		TNT1 A 0 A_SetRoll(roll-0.4)
+		TNT1 A 0 A_SetAngle(angle-0.2)
+		TNT1 A 2
+		TNT1 A 0 A_SetPitch(pitch-0.2)
+		TNT1 A 0 A_SetRoll(roll-0.2)
+		TNT1 A 2
+		Goto Reset
+	Fire2:
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		bkfs H 2
+		AXEB A 2
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		bkfs I 2
+		AXEB B 1
+		TNT1 A 0 A_SetRoll(roll+0.4)
+		TNT1 A 0 A_SetAngle(angle+0.4)
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		bKFS J 2
+		AXEB C 1
+		TNT1 A 0 A_SetPitch(pitch-0.2)
+		TNT1 A 0 A_SetRoll(roll+0.4)
+		TNT1 A 0 A_SetAngle(angle+0.4)
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		bkfs K 2
+		AXEB D 2
+		TNT1 A 0 A_SetPitch(pitch-0.6)
+		TNT1 A 0 A_SetRoll(roll+0.4)
+		TNT1 A 0 A_SetAngle(angle+0.6)
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		bkfs L 1
+		AXEB E 2 
+		TNT1 A 0 A_SetPitch(pitch-0.6)
+		TNT1 A 0 A_SetRoll(roll+0.2)
+		TNT1 A 0 A_SetAngle(angle+0.4)
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		bkfs A 5 A_ReFire
-		Goto Ready
-	}
-}
+		AXEB F 1
+		TNT1 A 0 A_SetPitch(pitch+0.6)
+		TNT1 A 0 A_SetRoll(roll-0.4)
+		TNT1 A 0 A_SetAngle(angle-0.6)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		AXEB G 1 A_CustomPunch(150, TRUE, CPF_NORANDOMPUFFZ, "BulletPuffGibby", 64)
+		TNT1 A 0 A_Explode(100,128,XF_NOTMISSILE)
+		TNT1 A 0 A_SetPitch(pitch+0.8)
+		TNT1 A 0 A_SetRoll(roll- 0.6)
+		TNT1 A 0 A_SetAngle(angle-1.2)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		AXEB H 1
+		TNT1 A 0 A_SetPitch(pitch+1)
+		TNT1 A 0 A_SetRoll(roll-0.4)
+		TNT1 A 0 A_SetAngle(angle-1)
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
+		TNT1 A 2
+		TNT1 A 0 A_SetPitch(pitch+0.2)
+		TNT1 A 0 A_SetRoll(roll-0.2)
+		TNT1 A 0 A_SetAngle(angle-0.4)
+		TNT1 A 2
+		TNT1 A 0 A_SetPitch(pitch-0.4)
+		TNT1 A 0 A_SetRoll(roll+0.2)
+		TNT1 A 0 A_SetAngle(angle+0.4)
+		TNT1 A 2
+		TNT1 A 0 A_SetPitch(pitch-0.6)
+		TNT1 A 0 A_SetAngle(angle+0.6)
+		TNT1 A 2
+		TNT1 A 0 A_SetPitch(pitch-0.2)
+		TNT1 A 0 A_SetAngle(angle+0.4)
+		TNT1 A 2
+		Goto Reset
 
-
-ACTOR Z86Chainsaw : Chainsaw replaces Chainsaw
-{
-	Weapon.UpSound "weapons/sawup"
-	States
-	{
-	Spawn:
-		CSAW A 2
-		loop	
-	Ready:
-		TNT1 A 0 A_playsound("weapons/sawidle", 3, TRUE)
-		BAWG CCDDEEFF 1 A_WeaponReady 
-		Loop
-	Deselectbad:
-		TNT1 A 0 A_StopSound(3)
-		NULL A 0 A_PlaySound("weapons/sawdown",6,1,0)
-		NULL A 0 A_PlaySound("weapons/putaway",7,1,0)
-		BAWG C 1 Offset(2, 34)
-		BAWG C 1 Offset(7, 39)
-		BAWG C 1 Offset(10, 47)
-		BAWG C 1 Offset(22, 58)
-		BAWG C 1 Offset(32, 69)
-		BAWG C 1 Offset(54, 81)
-		BAWG C 1 Offset(67, 100)
-		BAWG C 1 A_Lower
-		Wait
-	   Deselect: 
-		TNT1 A 0 A_StopSound(3)
-		NULL A 0 A_PlaySound("weapons/sawdown",6,1,0)
-		NULL A 0 A_PlaySound("weapons/putaway",7,1,0)
-      TNT1 AAAAAAAAAAAAAAAA 0 A_Lower
-      TNT1 AAAAAAA 1 A_Lower
-      Loop
-	Select:
-		NULL A 0 A_PlaySound("weapons/sawupup",6,1,0)
-		BAWG C 1 Offset(67, 100)
-		BAWG C 1 Offset(54, 81)
-		BAWG C 1 Offset(32, 69)
-		BAWG C 1 Offset(22, 58)
-		BAWG C 1 Offset(10, 47)
-		BAWG C 1 Offset(7, 39)
-		BAWG C 1 Offset(2, 34)
-		BAWG C 1 A_Raise
-		Wait
-	Fire:
-		TNT1 A 0 A_playsound("weapons/sawfull", 3, 0.7, 1, 0.9)
-		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		BAWG A 2 A_Saw ("")
-		BAWG A 0 a_setpitch(pitch-0.4)
-		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		BAWG B 1 a_setpitch(pitch+0.2)
-		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		BAWG B 1 a_setpitch(pitch+0.2)
-		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		BAWG A 2 A_Saw ("")
-		BAWG A 0 a_setpitch(pitch-0.4)
-		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		BAWG B 1 a_setpitch(pitch+0.2)
-		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch)
-		BAWG B 1 a_setpitch(pitch+0.2)
-    	BAWG B 0 A_ReFire
-    	Goto Ready
+	Reset:
+		AXEG A 1 Offset(-67, 100) 
+		TNT1 A 0 A_WeaponReady
+		AXEG A 1 Offset(-54, 81)
+		TNT1 A 0 A_WeaponReady
+		AXEG A 1 Offset(-32, 69)
+		TNT1 A 0 A_WeaponReady
+		AXEG A 1 Offset(-22, 58)
+		TNT1 A 0 A_WeaponReady
+		AXEG A 1 Offset(-10, 47)
+		TNT1 A 0 A_WeaponReady
+		AXEG A 1 Offset(-7, 39)
+		TNT1 A 0 A_WeaponReady
+		AXEG A 1 Offset(-2, 34)
+		goto Ready
 	}
 }

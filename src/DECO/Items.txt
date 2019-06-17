@@ -108,83 +108,6 @@ states
 	}
 }
 
-ACTOR SmoothRedCard : redcard replaces redcard
-{
-	INVENTORY.PICKUPSOUND "misc/key1_pickup"
-  States
-  {
-  Spawn:
-	RTAT abc 3 bright
-	RTAT def 3
-	RTAT ghi 3 bright
-	RTAT jkl 3
-	loop
-  }
-}
-
-ACTOR SmoothBlueCard : bluecard replaces bluecard
-{
-	INVENTORY.PICKUPSOUND "misc/key1_pickup"
-  States
-  {
-  Spawn:
-	btat abc 3 bright
-	btat def 3
-	btat ghi 3 bright
-	btat jkl 3
-	loop
-  }
-}
-
-ACTOR SmoothYellowCard : yellowcard replaces yellowcard
-{
-	INVENTORY.PICKUPSOUND "misc/key1_pickup"
-  States
-  {
-  Spawn:
-	ytat abc 3 bright
-	ytat def 3
-	ytat ghi 3 bright
-	ytat jkl 3
-	loop
-  }
-}
-
-ACTOR SmoothSkullRed : redskull replaces redskull
-{
- 	INVENTORY.PICKUPSOUND "misc/key2_pickup"
- states
-  {
-  Spawn:
-	RSKY abcd 3 bright
-	RSKY efgh 3
-	loop
-  }
-}
-
-ACTOR SmoothSkullBlu : blueskull replaces blueskull
-{
-	INVENTORY.PICKUPSOUND "misc/key2_pickup"
-  states
-  {
-  Spawn:
-	BSKY abcd 3 bright
-	BSKY efgh 3
-	loop
-  }
-}
-
-ACTOR SmoothSkullYel : yellowskull replaces yellowskull
-{
-	INVENTORY.PICKUPSOUND "misc/key2_pickup"
-  states
-  {
-  Spawn:
-	YSKY abcd 3 bright
-	YSKY efgh 3
-	loop
-  }
-}
 
 ACTOR NewClip : Clip replaces Clip
 {
@@ -202,7 +125,8 @@ ACTOR NewClip : Clip replaces Clip
 ACTOR NewClipBox : ClipBox replaces ClipBox
 {
 	INVENTORY.PICKUPSOUND "misc/ammo_pickup"
-	Inventory.Amount 35
+	Inventory.Amount 28
+	scale 0.5
 	States
 	{
 	OldSpawn:
@@ -218,12 +142,14 @@ ACTOR NewClipBox : ClipBox replaces ClipBox
 
 Actor NewShell : Shell replaces Shell
 {
+	Inventory.Amount 2
 	INVENTORY.PICKUPSOUND "misc/shell_pickup"
 }
 
 ACTOR NewShellBox : ShellBox replaces ShellBox
 {
 	INVENTORY.PICKUPSOUND "misc/shellbox_pickup"
+	Inventory.Amount 8 
 	States
 	{
 	Spawn:
@@ -239,31 +165,45 @@ ACTOR NewShellBox : ShellBox replaces ShellBox
 
 Actor NewRocketAmmo : RocketAmmo replaces RocketAmmo
 {
-	Inventory.Amount 2
-	INVENTORY.PICKUPSOUND "misc/rocket_pickup"
+	Inventory.Amount 1
+	INVENTORY.PICKUPSOUND "weapons/c4pick"
+	  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.NEVERRESPAWN
+  +FORCEXYBILLBOARD
+	scale 0.7
 	States
 	{
 	Spawn:
-	PGRN A -1
-	Stop
+		TNT1 A 0
+		TNT1 A 5 A_Jump(128,"SpawnAmmo")
+		goto Shit
+	SpawnAmmo:
+		PGRN A -1
+		Stop
+	Shit:
+		TNT1 A 0
+		Stop
 	}
-
 }
+
+
 
 
 
 ACTOR NewRockBox : RocketBox replaces RocketBox
 {
-	Inventory.Amount 10
+	Inventory.Amount 3
 	INVENTORY.PICKUPSOUND "misc/rcktbox_pickup"
+	scale 0.8
 	States
 	{
 	OldSpawn:
-	PGRN B -1
+	RB64 B -1
+	
     stop
 	
 	Spawn:
-	RB64 A -1
+	PGRN B -1
     stop
   }
 }

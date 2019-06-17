@@ -27,13 +27,8 @@
 #include "deco/Player/Plasma.txt"
 #include "deco/Player/BFG.txt"
 
-//#include "deco/Projectiles.txt"
 #include "deco/Particles.txt"
-//#include "deco/Gore.txt"
-//#include "deco/Decorations.txt"
 #include "deco/Items.txt"
-//#include "deco/liquids.txt"
-//#include "deco/variants.txt"
 
 
 Actor BulletTracer : FastProjectile

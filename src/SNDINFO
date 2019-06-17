@@ -1,3 +1,339 @@
+//===========================================================================
+//
+// Doom-specific player sounds
+//
+//===========================================================================
+
+$random player/death	{ pdth1 pdth2 pdth3 pdth4 }
+pdth1 pldeath1
+pdth2 pldeath2
+pdth3 pldeath3
+pdth4 pldeath4
+$playeralias    player  male    *death      player/death
+
+player/xdeath pldeathh
+$playeralias    player  male    *death      player/xdeath
+
+$random player/pain100	{ pp11 pp12 pp13 }
+pp11 pp100_1
+pp12 pp100_2
+pp13 pp100_3
+$playeralias    player  male    *pain100    player/pain100
+
+$random player/pain75	{ pp21 pp22 pp23 }
+pp21 pp75_1
+pp22 pp75_2
+pp23 pp75_3
+$playeralias    player  male    *pain75    player/pain75
+
+$random player/pain50	{ pp31 pp32 pp33 }
+pp31 pp50_1
+pp32 pp50_2
+pp33 pp50_3
+$playeralias    player  male    *pain50    player/pain50
+
+$random player/pain25	{ pp41 pp42 pp43 }
+pp41 pp25_1
+pp42 pp25_2
+pp43 pp25_3
+$playeralias    player  male    *pain25    player/pain25
+
+$random player/jump	{ pjmp1 pjmp2 }
+pjmp1 pjump1
+pjmp2 pjump2
+$playeralias    player  male    *jump    player/jump
+
+$random player/land1	{ plnd11 plnd12 plnd13 }
+plnd11 plands1
+plnd12 plands2
+plnd13 plands3
+$playeralias    player  male    *grunt    player/land1
+
+$random player/land2	{ plnd21 plnd22 plnd23 }
+plnd21 plandl1
+plnd22 plandl2
+plnd23 plandl3
+$playeralias    player  male    *land    player/land1
+
+$random player/push	{ ppush1 ppush2 ppush3 ppush4 }
+ppush1 ppush1
+ppush2 ppush2
+ppush3 ppush3
+ppush4 ppush4
+$playeralias    player  male    *usefail    player/push
+
+
+//
+// Weapons
+//
+
+weapons/putaway			putaway
+weapons/putaway1		putaway1
+weapons/putaway2		putaway2
+weapons/putaway3		putaway3
+weapons/putaway4		putaway4
+weapons/putaway5		putaway5
+weapons/putaway6		putaway6
+
+$random weapons/fistwhoosh { fwh1 fwh2 fwh3 fwh4 }
+
+fwh1			fistwh1
+fwh2			fistwh2
+fwh3			fistwh3
+fwh4			fistwh4
+
+$random weapons/fisthit { fht1 fht2 fht3 }
+
+fht1			melee_1
+fht2			melee_2
+fht3			melee_3
+$volume weapons/fisthit 0.75
+
+$random weapons/fisthitwall { fhw1 fhw2 fhw3 fhw4 fhw5 }
+
+fhw1			fimpact1
+fhw2			fimpact2
+fhw3			fimpact3
+fhw4			fimpact4
+fhw5			fimpact5
+$volume weapons/fisthitwall 1.95
+
+$pitchshiftrange 3
+weapons/sawupup			csup
+weapons/sawup			cspull
+weapons/sawidle			csidle
+weapons/sawfull			csattack
+weapons/sawfullz		csattack
+weapons/sawdown			csstop
+
+$random weapons/sawhit	{ cs1 cs2 cs3 cs4 cs5 cs6 cs7 cs8 cs9 }
+cs1				cshit01
+cs2				cshit02
+cs3				cshit03
+cs4				cshit04
+cs5				cshit05
+cs6				cshit06
+cs7				cshit07
+cs8				cshit08
+cs9				cshit09
+$volume weapons/sawhit 1.9
+
+$random weapons/sawhitwall	{ csw1 csw2 csw3 csw4 }
+csw1			csmiss01
+csw2			csmiss02
+csw3			csmiss03
+csw4			csmiss04
+$volume weapons/sawhitwall 0.85
+
+$pitchshiftrange 4
+
+$random weapons/pistol	{ pist1 pist2 pist3 }
+pist1			mgfire1
+pist2			mgfire2
+pist3			mgfire3
+
+weapons/pistol_slidebac	slidebac
+weapons/pistol_slidefor slidefor
+weapons/pistol_clipout	clipout
+weapons/pistol_clipin	clipin
+weapons/pistol_sliderel	sliderel
+
+weapons/1911	kimono
+
+weapons/pistolup pistol_u
+
+$random weapons/shotgf	{ shot11 shot12 shot13 }
+shot11			sgfire1
+shot12			sgfire2
+shot13			sgfire3
+
+weapons/shotgf2 ASHTFIRE
+
+$random weapons/shotsmag	{ shotsmag1 shotsmag2 shotsmag3 shotsmag4}
+shotsmag1			TSSGFIR1
+shotsmag2			TSSGFIR2
+shotsmag3			TSSGFIR3
+shotsmag4			TSSGFIR4
+
+$random weapons/pumpfire	{ m901 m902 m903 }
+m901			m901
+m902			m902
+m903			m903
+
+weapons/shotgr			sgcockft
+weapons/shotgup			sgcocksl
+
+weapons/pumpdown1						PSHTPD1
+weapons/pumpdown2						PSHTPD2
+weapons/pumpdown3						PSHTPD3
+weapons/pumpdown4						PSHTPD4
+$random weapons/pumpdown { weapons/pumpdown1 weapons/pumpdown2 weapons/pumpdown3 weapons/pumpdown4 }
+weapons/pumpup1							PSHTPU1
+weapons/pumpup2							PSHTPU2
+weapons/pumpup3							PSHTPU3
+weapons/pumpup4							PSHTPU4
+$random weapons/pumpup { weapons/pumpup1 weapons/pumpup2 weapons/pumpup3 weapons/pumpup4 }
+
+
+weapons/smagup PSSGCLOS
+
+weapons/ssgup			ssgup
+weapons/sshotf			ssgfire
+$random weapons/tfsnf	{tfsn1 tfsn2 tfsn3 tfsn4 tfsn5}
+tfsn1	tfsn1
+tfsn2	tfsn2
+tfsn3	tfsn3
+tfsn4	tfsn4
+tfsn5	tfsn5
+
+weapons/sshoto			click_01
+weapons/sshotc			clack_01
+
+
+$random weapons/sshotl	{ ins1 ins2 ins3 }
+ins1			INSERT1
+ins2			INSERT2
+ins3			INSERT3
+
+/*
+$random weapons/chngun	{ cgf1 cgf2 cgf3 cgf4 }
+cgf1			cgfire1
+cgf2			cgfire2
+cgf3			cgfire3
+cgf4			cgfire4
+*/
+weapons/chngun			AK47FIRE
+weapons/akclick			DRYFIRE
+
+weapons/chaingunup		cg_use
+weapons/cgwindup		cg_windu
+weapons/cgwinddwn		cg_windd
+weapons/cgloop			cg_motor
+
+weapons/glauget			glauget
+weapons/glauuse 		glauuse
+weapons/glauload 		glauload
+
+weapons/glaufire1 glaufir1
+weapons/glaufire2 glaufir2
+
+$random weapons/glaubounce	{ bounce1 bounce2 bounce3 }
+bounce1			GLAUBOU1
+bounce2			GLAUBOU2
+bounce3			GLAUBOU3
+
+weapons/c4pick c4pick
+
+$random weapons/rocklx	{ rktexp1 rktexp2 rktexp3 }
+rktexp1			bigexpl1
+rktexp2			bigexpl2
+rktexp3			bigexpl3
+
+$random weapons/rocklff	{ rktf1 rktf2 rktf3 rktf4 }
+rktf1			rocketl1
+rktf2			rocketl2
+rktf3			rocketl3
+rktf4			rocketl4
+
+weapons/rocklf			rktloop
+
+weapons/rocketup		rktraise
+weapons/rocketloop		rktloop
+
+weapons/plzstart plzstart
+weapons/plzend plzend
+
+$random weapons/plzfire { plzfire1 plzfire2 }
+plzfire1 plzfire1
+plzfire2 plzfire2
+
+
+weapons/plzcool plzcool
+
+weapons/plzclick plzclick
+
+weapons/plzbeep plzbeep
+
+weapons/plzhot plzhot
+
+weapons/plzdown plzdown
+
+
+$random weapons/plasmaf	{ plaf1 plaf2 plaf3 }
+plaf1			plsgf1
+plaf2			plsgf2
+plaf3			plsgf3
+
+$random weapons/plasmax	{ plax1 plax2 plax3 }
+plax1			plasmai1
+plax2			plasmai2
+plax3			plasmai3
+
+weapons/plasmaup		plasma_u
+weapons/plasmaloop		plasmalp
+
+weapons/bfgidle			bfg_idle
+weapons/bfgcharge		bfg_chrg
+weapons/bfgf			bfg_fire
+weapons/bfgup			bfgraise
+weapons/bfgloop			bfg_fly
+
+weapons/bfgx			plasexpl
+$volume weapons/bfgx 2
+
+// Problem: weapons/rocklx needs to be unlimited but
+// is also used for the MAP30 brain explosion.
+// This alias remaps to the original but has its own limit
+// attached so that it doesn't become too loud.
+$alias misc/brainexplode weapons/rocklx
+$limit misc/brainexplode 4
+
+$limit weapons/plasmaf 0
+$limit weapons/chngun 0
+$limit weapons/rocklf 0		// because normal running is almost as fast as a rocket
+$limit weapons/rocklx 0		// and the cyberdemon shoots 3 at once
+
+//===========================================================================
+//
+// MISCELLANEOUS SOUNDS
+//
+//===========================================================================
+
+
+misc/w_pkup			weapon_p	// Pickup weapon
+misc/p_pkup			powerup  	// Pickup powerup
+misc/i_pkup			itemup2 	// Pickup item
+misc/k_pkup			dsitemup	// Pickup key
+misc/spawn			dsitmbk		// Item respawn
+misc/chat			dsradio		// Doom 2 chat sound
+misc/chat2			dstink		// Chat sound for everything else
+
+$limit misc/i_pkup		1
+$limit misc/k_pkup		1
+$limit misc/w_pkup		1
+$limit misc/p_pkup		1
+$pitchshift misc/i_pkup		0
+$pitchshift misc/k_pkup		0
+$pitchshift misc/chat2		0
+/*
+switches/normbutn		dsswtchn
+switches/exitbutn		dsswtchx
+*/
+misc/teleport			teleport
+
+menu/activate			dsswtchn	// Activate a new menu
+menu/backup			dsswtchn	// Backup to previous menu
+menu/prompt			dsswtchn	// Activate a prompt "menu"
+menu/cursor			dspstop		// Move cursor up/down
+menu/change			dsstnmov	// Select new value for option
+menu/invalid			dsoof		// Menu not available
+menu/dismiss			dsswtchx	// Dismiss a prompt message
+menu/choose			dspistol	// Choose a menu item
+menu/clear			dsswtchx	// Close top menu
+
+
+
+
 $random weapons/tracerwhizz { weapons/tracerwhizz1 weapons/tracerwhizz2 weapons/tracerwhizz3 }
 $limit weapons/tracerwhizz 2
 weapons/tracerwhizz1	TRACER1

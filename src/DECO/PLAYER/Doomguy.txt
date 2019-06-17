@@ -1,15 +1,22 @@
-ACTOR PerkDPlayer : Doomplayer replaces Doomplayer
+ACTOR AgileDoomer : Doomplayer replaces Doomplayer
 {
-	player.startitem "PerkPistol"
-	player.startitem "PerkFist"
+	player.startitem "Handcannon"
+	player.startitem "FireAxe"
 	Player.StartItem "Clip", 35
-	Player.WeaponSlot 1, PerkFist, Z86Chainsaw
-   	Player.WeaponSlot 2, PerkPistol, Rifle
-	Player.WeaponSlot 3, PerkShotgun, PerkSuperShotgun
-	Player.WeaponSlot 4, Z86Chaingun
+	Player.StartItem "PistolLoad", 7
+	Player.StartItem "Satchel"
+	Player.StartItem "RocketAmmo", 3
+	Player.StartItem "ChargeHealth",40
+	Player.StartItem "Charges",4
+	Player.WeaponSlot 1, FireAxe
+   	Player.WeaponSlot 2, Handcannon
+	Player.WeaponSlot 3, SmagShotgun, PumpShotgun, BuffaloRifle
+	Player.WeaponSlot 4, AutoRifle
 	Player.WeaponSlot 5, Satchel
-	Player.WeaponSlot 6, BloxPlasmaRifle
+	Player.WeaponSlot 6, PlasmaCannon
 	Player.WeaponSlot 7, Z86BFG9000
+	Player.ForwardMove 1
+    Player.SideMove 1
 	States
 	{
 	Death:
@@ -19,27 +26,6 @@ ACTOR PerkDPlayer : Doomplayer replaces Doomplayer
 		PD71 DEFGH 3
 		PD71 I -1
 		Stop	
-	}
-}
-
-ACTOR PerkBerserk : Berserk replaces Berserk
-{
-	INVENTORY.PICKUPSOUND "misc/berserk_pickup"
-	States
-	{
-	Spawn:
-		TNT1 A 0
-		PSTR A -1
-		stop
-	64Spawn:
-		TNT1 A 0
-		BK64 A -1
-		stop
-	Pickup:
-		TNT1 A 0 A_GiveInventory("PowerStrength")
-		TNT1 A 0 HealThing(100, 0)
-		TNT1 A 0 A_SelectWeapon("PerkFist")
-		Stop
 	}
 }
 
@@ -70,10 +56,13 @@ ACTOR PistolStarter : CustomFunction
     TNT1 A 0 A_StopSound (6)
     TNT1 A 0 A_StopSound (7)
     TNT1 A 0 A_StopSound (CHAN_WEAPON)
-    TNT1 A 0 A_GiveInventory ("PerkPistol", 1)
-    TNT1 A 0 A_GiveInventory ("PerkFist", 1)
+    TNT1 A 0 A_GiveInventory ("Handcannon", 1)
+    TNT1 A 0 A_GiveInventory ("FireAxe", 1)
     TNT1 A 0 A_GiveInventory ("Clip", 35)
-    TNT1 A 0 A_SelectWeapon ("PerkPistol")
+    TNT1 A 0 A_GiveInventory ("PistolLoad", 7)
+    TNT1 A 0 A_GiveInventory ("Satchel")
+    TNT1 A 0 A_GiveInventory ("RocketAmmo", 2)
+    TNT1 A 0 A_SelectWeapon ("Handcannon")
     Stop
   }
 }

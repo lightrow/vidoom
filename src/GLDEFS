@@ -67,7 +67,7 @@ flickerlight ROCKET_X3
     chance 0.3
 }
 
-object GLGrenade
+object Charge
 {
     frame MISLA { light ROCKET    }
 

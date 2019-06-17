@@ -50,6 +50,8 @@ ACTOR SmoothBulletPuff Replaces BulletPuff
 	}
 }
 
+
+
 ACTOR PainlessBulletPuff: SmoothBulletPuff
 {
 	+PAINLESS
@@ -58,6 +60,8 @@ ACTOR PainlessBulletPuff: SmoothBulletPuff
 ACTOR BulletPuffGibby : SmoothBulletPuff
 {
   DamageType GibbyHaynes
+  +EXTREMEDEATH
+  -NOEXTREMEDEATH
   }
 
 ACTOR PuffParticles: ExplosionFire

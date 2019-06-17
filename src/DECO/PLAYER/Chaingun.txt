@@ -1,4 +1,4 @@
-ACTOR AK47 : Chaingun replaces Chaingun
+ACTOR AutoRifle : Chaingun replaces Chaingun
 {
 	Weapon.BobStyle Alpha
 	Weapon.BobSpeed 2.5
@@ -7,60 +7,63 @@ ACTOR AK47 : Chaingun replaces Chaingun
 	Weapon.SlotNumber 4
 	Weapon.UpSound "weapons/putaway3"
 	decal bulletchip
+	scale 0.65
 	States
 	{
 	Spawn:
-		AK4I A -1
+		RPDP A -1
 		Stop
 	Fire:
 		TNT1 A 0 A_AlertMonsters
 		TNT1 A 0 A_PlaySound("weapons/akclick",0,1.5)
-		AKMF A 1 Offset(0,36)
+		RPDG B 1 Offset(0,34)
+		TNT1 A 0 A_ZoomFactor(0.998,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
 		TNT1 A 0 A_GunFlash
-		TNT1 A 0 A_FireBullets(5.6, 4, 1, random(6,9), "BulletPuff")
+		TNT1 A 0 A_FireBullets(5.6, 4, 1, random(5,8), "BulletPuff")
 		TNT1 A 0 A_PlaySound("weapons/chngun", CHAN_WEAPON)
 		TNT1 A 0 A_spawnitemex ("bulletcasing", 40, 0, 15, random(5,7), random(7,8), random(7,10), 0)
 		TNT1 A 0 A_FireCustomMissile("BulletTracer",0,0,0,0)
-		TNT1 A 0 A_ZoomFactor(0.997,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
-		AKMF B 1 Offset(0,36) a_setpitch(pitch-0.3)
+		TNT1 A 0 a_setpitch(pitch-0.2)
+		RPDG C 1 Offset(0,33) 
+		TNT1 A 0 a_setpitch(pitch+0.2)
 		TNT1 A 0 A_ZoomFactor(1,ZOOM_NOSCALETURNING)
-		AKMG A 1 Offset(0,34) a_setpitch(pitch+0.3)
-		//AKMF B 1 Offset(0,34) a_setpitch(pitch+0.1)
-		AKMF A 1 Offset(0,40)
+		RPDG A 1 Offset(0,32)
+		RPDG B 1 Offset(0,37)
+		TNT1 A 0 A_ZoomFactor(0.998,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
 	    TNT1 A 0 A_GunFlash
-		TNT1 A 0 A_FireBullets(5.6, 4, 1, random(6,9), "PainlessBulletPuff")
+		TNT1 A 0 A_FireBullets(5.6, 4, 1, random(5,8), "PainlessBulletPuff")
 		TNT1 A 0 A_PlaySound("weapons/chngun")
 		TNT1 A 0 A_spawnitemex ("bulletcasing", 40, 0, 15, random(5,7), random(7,8), random(7,10), 0)
 		TNT1 A 0 A_FireCustomMissile("BulletTracer",0,0,0,0)
-		TNT1 A 0 A_ZoomFactor(0.997,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
-		AKMF B 1 Offset(0,40) a_setpitch(pitch-0.3)
+		TNT1 A 0 a_setpitch(pitch-0.2)
+		RPDG C 1 Offset(0,36) 
+		TNT1 A 0 a_setpitch(pitch+0.2)
 		TNT1 A 0 A_ZoomFactor(1,ZOOM_NOSCALETURNING)
-		AKMG A 1 Offset(0,38) a_setpitch(pitch+0.3)
-		//AKMF B 1 Offset(0,38) a_setpitch(pitch+0.1)
-		AKMG A 1 Offset(0,38) A_ReFire
-		AKMG A 1 Offset(0,36) A_Weaponready(WRF_NOBOB)
-		AKMG A 1 Offset(0,36) A_Weaponready(WRF_NOBOB)
-		AKMG A 1 Offset(0,34) A_Weaponready(WRF_NOBOB)
-		AKMG A 1 Offset(0,34) A_Weaponready(WRF_NOBOB)
-		AKMG A 1 Offset(0,33) A_Weaponready(WRF_NOBOB)
-		AKMG A 1 Offset(0,32) A_Weaponready(WRF_NOBOB)
-		AKMG A 1 A_Weaponready
+		RPDG A 1 Offset(0,35) 
+		RPDG A 1 Offset(0,38) A_ReFire
+		RPDG A 1 Offset(0,36) A_Weaponready(WRF_NOBOB)
+		RPDG A 1 Offset(0,36) A_Weaponready(WRF_NOBOB)
+		RPDG A 1 Offset(0,34) A_Weaponready(WRF_NOBOB)
+		RPDG A 1 Offset(0,34) A_Weaponready(WRF_NOBOB)
+		RPDG A 1 Offset(0,33) A_Weaponready(WRF_NOBOB)
+		RPDG A 1 Offset(0,32) A_Weaponready(WRF_NOBOB)
+		RPDG A 1 A_Weaponready
 		Goto Ready
 	Hold:
 		TNT1 A 0 a_jump(255,"Fire2")
 		Goto Ready
 	Ready:
-		AKMG A 1 A_WeaponReady
+		RPDG A 1 A_WeaponReady
 		Loop
    Deselectbad:
-		AKMG A 1 Offset(2, 34)
-		AKMG A 1 Offset(7, 39)
-		AKMG A 1 Offset(10, 47)
-		AKMG A 1 Offset(22, 58)
-		AKMG A 1 Offset(32, 69)
-		AKMG A 1 Offset(54, 81)
-		AKMG A 1 Offset(67, 100)
-		AKMG A 1 A_Lower
+		RPDG A 1 Offset(2, 34)
+		RPDG A 1 Offset(7, 39)
+		RPDG A 1 Offset(10, 47)
+		RPDG A 1 Offset(22, 58)
+		RPDG A 1 Offset(32, 69)
+		RPDG A 1 Offset(54, 81)
+		RPDG A 1 Offset(67, 100)
+		RPDG A 1 A_Lower
 		Wait
 	   Deselect: 
       TNT1 AAAAAAAAAAAAAAAA 0 A_Lower
@@ -68,50 +71,53 @@ ACTOR AK47 : Chaingun replaces Chaingun
       Loop
 
    Select:
-		AKMG A 1 Offset(67, 100)
-		AKMG A 1 Offset(54, 81)
-		AKMG A 1 Offset(32, 69)
-		AKMG A 1 Offset(22, 58)
-		AKMG A 1 Offset(10, 47)
-		AKMG A 1 Offset(7, 39)
-		AKMG A 1 Offset(2, 34)
-		AKMG A 1 A_Raise
+		RPDG A 1 Offset(67, 100)
+		RPDG A 1 Offset(54, 81)
+		RPDG A 1 Offset(32, 69)
+		RPDG A 1 Offset(22, 58)
+		RPDG A 1 Offset(10, 47)
+		RPDG A 1 Offset(7, 39)
+		RPDG A 1 Offset(2, 34)
+		RPDG A 1 A_Raise
 		Wait
 	Fire2:
-		AKMF A 1 Offset(0,43)
+		RPDG B 1 Offset(0,40)
+		TNT1 A 0 A_ZoomFactor(0.998,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
 		TNT1 A 0 A_GunFlash
-		TNT1 A 0 A_FireBullets(8.6, 5, 1, random(6,9), "BulletPuff")
+		TNT1 A 0 A_FireBullets(8.6, 5, 1, random(5,8), "BulletPuff")
 		TNT1 A 0 A_PlaySound("weapons/chngun", CHAN_WEAPON)
 		TNT1 A 0 A_spawnitemex ("bulletcasing", 40, 0, 15, random(5,7), random(7,8), random(7,10), 0)
 		TNT1 A 0 A_FireCustomMissile("BulletTracer",random(-3,3),0,0,random(-5,5))
-		TNT1 A 0 A_ZoomFactor(0.997,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
-		AKMF B 1 Offset(0,43) a_setpitch(pitch-0.3)
+		TNT1 A 0 a_setpitch(pitch-0.2)
+		RPDG A 1 Offset(0,38) 
+		TNT1 A 0 a_setpitch(pitch+0.2)
 		TNT1 A 0 A_ZoomFactor(1,ZOOM_NOSCALETURNING)
-		AKMG A 1 Offset(0,41) a_setpitch(pitch+0.3)
-		//AKMF B 1 Offset(0,41) a_setpitch(pitch+0.1)
-		AKMF A 1 Offset(0,43)
+		RPDG C 1 Offset(0,37)
+		RPDG B 1 Offset(0,40)
+		TNT1 A 0 A_ZoomFactor(0.998,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
 		TNT1 A 0 A_GunFlash
-		TNT1 A 0 A_FireBullets(8.6, 5, 1, random(6,9), "PainlessBulletPuff") // fake bullet
+		TNT1 A 0 A_FireBullets(8.6, 5, 1, random(5,8), "PainlessBulletPuff") // fake bullet
 		TNT1 A 0 A_PlaySound("weapons/chngun", CHAN_WEAPON)
 		TNT1 A 0 A_spawnitemex ("bulletcasing", 40, 0, 15, random(5,7), random(7,8), random(7,10), 0)
 		TNT1 A 0 A_FireCustomMissile("BulletTracer",random(-3,3),0,0,random(-5,5))
-		TNT1 A 0 A_ZoomFactor(0.997,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
-		AKMF B 1 Offset(0,43) a_setpitch(pitch-0.3)
+		TNT1 A 0 a_setpitch(pitch-0.2)
+		RPDG A 1 Offset(0,38) 
+		TNT1 A 0 a_setpitch(pitch+0.2)
 		TNT1 A 0 A_ZoomFactor(1,ZOOM_NOSCALETURNING)
-		AKMG A 1 Offset(0,41) a_setpitch(pitch+0.3)
-		//AKMF B 1 Offset(0,41) a_setpitch(pitch+0.1)
-		AKMG A 1 Offset(0,39) A_ReFire 
-		AKMG A 1 Offset(0,36) A_Weaponready(WRF_NOBOB)
-		AKMG A 1 Offset(0,36) A_Weaponready(WRF_NOBOB)
-		AKMG A 1 Offset(0,34) A_Weaponready(WRF_NOBOB)
-		AKMG A 1 Offset(0,33) A_Weaponready(WRF_NOBOB)
-		AKMG A 1 Offset(0,32) A_Weaponready(WRF_NOBOB)
-		AKMG A 1 A_Weaponready
+		RPDG C 1 Offset(0,37) 
+		RPDG A 1 Offset(0,37) A_ReFire 
+		RPDG A 1 Offset(0,36) A_Weaponready(WRF_NOBOB)
+		RPDG A 1 Offset(0,36) A_Weaponready(WRF_NOBOB)
+		RPDG A 1 Offset(0,34) A_Weaponready(WRF_NOBOB)
+		RPDG A 1 Offset(0,33) A_Weaponready(WRF_NOBOB)
+		RPDG A 1 Offset(0,32) A_Weaponready(WRF_NOBOB)
+		RPDG A 1 A_Weaponready
 		goto Ready
 
 	Flash:
 		TNT1 A 0
-		TNT1 A 2 A_Light1
+		RPDM A 1 bright A_Light1
+		RPDM B 1 bright A_Light2
 		Goto LightDone
 	}
 }
