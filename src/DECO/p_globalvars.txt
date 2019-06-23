@@ -1,0 +1,103 @@
+Actor MobilityStamina : Inventory
+{
+
+	Inventory.MaxAmount 100
+
+}
+
+Actor SpectreSlide : Inventory
+{
+	
+	Inventory.MaxAmount 1
+
+}
+
+Actor SpectreHop : Inventory
+{
+
+	Inventory.MaxAmount 1
+
+}
+
+Actor SpectreSliding : Inventory
+{
+
+	Inventory.MaxAmount 30
+
+}
+
+Actor SpectreSlideCam : Inventory
+{
+
+}
+
+Actor SpectreLatcher : FastProjectile
+{
+	Speed 2
+	Radius 2
+	Height 2
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+NOTELEPORT
+	
+	States
+	{
+		Spawn:
+			SHOT A 1
+			stop
+	
+		Death:
+			TNT1 A 1 A_GiveInventory("SpectreLatched",1,AAPTR_TARGET)
+			stop
+	
+		XDeath:
+		Crash:
+			TNT1 A 1
+			stop
+		
+	}
+}
+
+Actor SpectreLatched : Inventory
+{
+
+	Inventory.MaxAmount 1
+
+}
+
+Actor SpectreHit : Inventory
+{
+
+	Inventory.MaxAmount 1
+
+}
+
+//actions
+
+Actor SpectreSlideAttempt : CustomInventory
+{
+	
+	Inventory.MaxAmount 1
+	-INVBAR
+	States
+	{
+		Use:
+			TNT1 A 0 A_GiveInventory("SpectreSlide")
+			fail
+	}
+
+}
+
+Actor SpectreSlideCancel : CustomInventory
+{
+	
+	Inventory.MaxAmount 1
+	-INVBAR
+	States
+	{
+		Use:
+			TNT1 A 1 A_TakeInventory("SpectreSlide")
+			fail
+	}
+
+}

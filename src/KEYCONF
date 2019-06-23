@@ -1,2 +1,8 @@
 clearplayerclasses
 addplayerclass AgileDoomer
+
+addkeysection "AADooom JPMobility" jpmobkeys
+
+addmenukey "Rad Ass Slide" +jpmobslide
+alias +jpmobslide "use SpectreSlideAttempt"
+alias -jpmobslide "use SpectreSlideCancel"

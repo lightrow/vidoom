@@ -5,18 +5,20 @@ ACTOR AgileDoomer : Doomplayer replaces Doomplayer
 	Player.StartItem "Clip", 35
 	Player.StartItem "PistolLoad", 7
 	Player.StartItem "Satchel"
-	Player.StartItem "RocketAmmo", 3
+	Player.StartItem "RocketAmmo", 2
 	Player.StartItem "ChargeHealth",40
-	Player.StartItem "Charges",4
+	Player.StartItem "Sharpness",7
 	Player.WeaponSlot 1, FireAxe
    	Player.WeaponSlot 2, Handcannon
-	Player.WeaponSlot 3, SmagShotgun, PumpShotgun, BuffaloRifle
+	Player.WeaponSlot 3, BuffaloRifle, SmagShotgun, PumpShotgun
 	Player.WeaponSlot 4, AutoRifle
 	Player.WeaponSlot 5, Satchel
 	Player.WeaponSlot 6, PlasmaCannon
 	Player.WeaponSlot 7, Z86BFG9000
+	Player.DamageScreenColor "cc 00 11"
 	Player.ForwardMove 1
     Player.SideMove 1
+	DamageFactor "AxeSlash", 0.0
 	States
 	{
 	Death:
@@ -62,6 +64,7 @@ ACTOR PistolStarter : CustomFunction
     TNT1 A 0 A_GiveInventory ("PistolLoad", 7)
     TNT1 A 0 A_GiveInventory ("Satchel")
     TNT1 A 0 A_GiveInventory ("RocketAmmo", 2)
+    TNT1 A 0 A_GiveInventory ("Sharpness", 7)
     TNT1 A 0 A_SelectWeapon ("Handcannon")
     Stop
   }

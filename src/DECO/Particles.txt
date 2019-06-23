@@ -51,6 +51,115 @@ ACTOR SmoothBulletPuff Replaces BulletPuff
 }
 
 
+// *******  te13  ****** //
+actor AkzeSmoke
+{
+    Scale 0.4
+    Alpha 0.175
+    RenderStyle Translucent
+    +NOINTERACTION
+    +CLIENTSIDEONLY
+    States
+    {
+    Spawn:
+        TNT1 A 0
+        TNT1 A 1
+        TNT1 A 0 A_Jump(255,"Spawn1","Spawn2","Spawn3","Spawn4","Spawn5","Spawn6","Spawn7","Spawn8")
+    Spawn1:
+        SMOK A 2 A_Fadeout(0.01)
+        loop
+    Spawn2:
+        SMOK B 2 A_Fadeout(0.01)
+        loop
+    Spawn3:
+        SMOK C 2 A_Fadeout(0.01)
+        loop
+    Spawn4:
+        SMOK D 2 A_Fadeout(0.01)
+        loop
+    Spawn5:
+        SMOK E 2 A_Fadeout(0.01)
+        loop
+    Spawn6:
+        SMOK F 2 A_Fadeout(0.01)
+        loop
+    Spawn7:
+        SMOK G 2 A_Fadeout(0.01)
+        loop
+    Spawn8:
+        SMOK H 2 A_Fadeout(0.01)
+        loop
+    }
+}
+
+ACTOR AkzePuff
+{
+    +NOINTERACTION
+    +CLIENTSIDEONLY
+    States
+    {
+    Spawn:
+        TNT1 A 0
+        TNT1 A 1
+        TNT1 AAA 0 A_SpawnItemEx("SlugShard",random(-100,100)/100.00,random(-100,100)/100.00,random(-100,100)/100.00,random(-400,400)/100.00,random(-400,400)/100.00,random(-100,800)/100.00,random(-180,180),160,96)
+        TNT1 AA 0 A_SpawnItemEx("SlugShard2",random(-100,100)/100.00,random(-100,100)/100.00,random(-100,100)/100.00,random(-400,400)/100.00,random(-400,400)/100.00,random(-100,800)/100.00,random(-180,180),160,96)
+        TNT1 A 0 A_SpawnItemEx("SlugShard3",random(-100,100)/100.00,random(-100,100)/100.00,random(-100,100)/100.00,random(-400,400)/100.00,random(-400,400)/100.00,random(-100,800)/100.00,random(-180,180),160,96)
+        TNT1 A 1
+        Stop
+    }
+}
+
+ACTOR SlugShard
+{
+    Radius 3
+    Height 6
+    Scale 0.1
+    Mass 0
+    BounceFactor 0.55
+    WallBounceFactor 1.1
+    BounceCount 6
+    +MISSILE
+    +DOOMBOUNCE
+    +FLOORCLIP
+    -DONTSPLASH
+    +NOTELEPORT
+    -SOLID
+    +CLIENTSIDEONLY
+    States
+    {
+    Spawn:
+        SHRD NLMNLMNLMNLMNLMNLMLMNLMNLMNLMNLMNLMNLM 2
+        goto Death
+    Death:
+        TNT1 A 0
+        TNT1 A 0 A_Jump(255,"Death1","Death2","Death3")
+        SHRD N 1
+        loop
+    Death1:
+        SHRD NNNNNNNNNN 1 A_FadeOut(0.1)
+        TNT1 A 0
+        Stop
+    Death2:
+        SHRD MMMMMMMMMM 1 A_FadeOut(0.1)
+        TNT1 A 0
+        Stop
+    Death3:
+        SHRD LLLLLLLLLL 1 A_FadeOut(0.1)
+        TNT1 A 0
+        Stop
+    }
+}
+
+Actor SlugShard2: SlugShard
+{
+	scale 0.2
+}
+
+Actor SlugShard3: SlugShard
+{
+	scale 0.3
+}
+// ************** //
 
 ACTOR PainlessBulletPuff: SmoothBulletPuff
 {

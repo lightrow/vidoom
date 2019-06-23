@@ -22,7 +22,7 @@ states
 	}
 }
 
-actor sexyflask : healthbonus replaces healthbonus
+actor sexyflask : healthbonus
 {
 	INVENTORY.PICKUPSOUND "misc/hbonus_pickup"
 states
@@ -32,6 +32,19 @@ states
 	loop
 	}
 }
+
+actor HealthSpray : healthbonus replaces healthbonus
+{
+	INVENTORY.PICKUPSOUND "misc/hbonus_pickup"
+	scale 0.6
+states
+	{
+	spawn:
+	SPRY a -1
+	stop
+	}
+}
+
 
 actor sexyhelmet : armorbonus replaces armorbonus
 {
@@ -144,6 +157,15 @@ Actor NewShell : Shell replaces Shell
 {
 	Inventory.Amount 2
 	INVENTORY.PICKUPSOUND "misc/shell_pickup"
+	scale 0.2
+		States
+	{
+	Spawn:
+    TNT1 A 0
+	SHLL A -1
+    stop
+	}
+
 }
 
 ACTOR NewShellBox : ShellBox replaces ShellBox
@@ -259,15 +281,12 @@ ACTOR NewPack : Backpack replaces Backpack
 ACTOR NewStimpack : Stimpack replaces Stimpack
 {
 INVENTORY.PICKUPSOUND "misc/n_hp_pickup"
+scale 0.7
 states
  {
   Spawn:
     TNT1 A 0
-	STIM A -1
-    stop
-	
-	64Spawn:
-	HS64 A -1
+	HL64 B -1
     stop
   }
 }
@@ -275,14 +294,11 @@ states
 ACTOR NewMedkit : Medikit replaces Medikit
 {
 INVENTORY.PICKUPSOUND "misc/l_hp_pickup"
+scale 0.9
 states
  {
   Spawn:
     TNT1 A 0
-	MEDI A -1
-    stop
-	
-	64Spawn:
 	HL64 A -1
     stop
   }

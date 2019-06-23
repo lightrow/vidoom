@@ -1,3 +1,17 @@
+Decal AxeDecal
+{
+    pic SCRATCHB
+    x-scale 1
+    y-scale 0.20
+}
+ 
+Decal AxeDecalBig
+{
+    pic SCRATCHB
+    x-scale 2
+    y-scale 0.25
+}
+
 /*
  * Blood splats just stick to the walls.
  * Blood smears crawl down walls a bit like in Blood.
@@ -6,6 +20,7 @@
  * when something bleeds. If a blood color is set, the shade color will be ignored,
  * and the actor's blood color will be used instead.
  */
+
 decal BlueBloodSplat1
 {
 	pic BSPLAT1

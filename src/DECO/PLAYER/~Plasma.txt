@@ -1,3 +1,7 @@
+// i put a lot of time into this but in the end
+// it just doesnt feel right... SAD!
+// It's fully functional, just missing reload/recharge sounds
+
 ACTOR PlasmaCannon : PlasmaRifle replaces PlasmaRifle
 {
 	Weapon.BobStyle Alpha

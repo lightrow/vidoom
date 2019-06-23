@@ -1,3 +1,100 @@
+MOBILITY/SLIDE PSLIDE
+MOBILITY/DOUBLE PDJUMP
+MOBILITY/CLING PCLING
+
+misc/ninjaslide ninjdodg
+
+// health pickups
+misc/L_HP_pickup L_HEALTH
+misc/N_HP_pickup N_HEALTH
+
+
+
+// ammo clip
+misc/clip_pickup FDCLIPPK
+
+// ammo box
+misc/ammo_pickup  FDCBOXPK
+
+// 2 shell
+misc/shell_pickup FDSHELPK
+
+// shell box
+misc/shellbox_pickup FDSHBXPK
+
+// 1 rocket
+misc/rocket_pickup FDGRENPK
+
+// rocket box
+misc/rcktbox_pickup FDGRENPK
+
+// cell
+misc/cell_pickup BATTERY
+
+// bulk cell
+misc/bulkcell_pickup cell_pak
+
+
+
+// backpack
+misc/backpack_pickup FDBACKPK
+
+
+
+// green armor
+misc/armor1_pickup FDARMOR1
+
+// blue armor
+misc/armor2_pickup FDARMOR2
+
+
+
+// base key
+misc/key1_pickup CARDRED
+
+// skull key
+misc/key2_pickup SKULRED
+
+
+
+// rad suit
+misc/radsuit_pickup FDSUITPK
+
+// health bonus
+$random misc/hbonus_pickup	{spray1 spray2 spray3 spray4 spray5 spray6 }
+spray1 spray1
+spray2 spray2
+spray3 spray3
+spray4 spray4
+spray5 spray5
+spray6 spray6
+$volume misc/hbonus_pickup 2
+
+// armor bonus
+misc/abonus_pickup FDABONPK
+
+// berserk
+misc/berserk_pickup ADRENALI
+
+// automap
+misc/map_pickup FDCOMPPK
+
+// visor
+misc/light_pickup FDINFRPK
+
+// soulsphere
+misc/soulsphere_pickup FDSOULPK
+
+// megasphere
+misc/megasphere FDMEGAPK
+
+// invisibility
+misc/invisibility_pickup FDBLURPK
+
+// invulnerability
+misc/invulnerability_pickup FDINVUPK
+
+
 //===========================================================================
 //
 // Doom-specific player sounds
@@ -87,7 +184,15 @@ $random weapons/fisthit { fht1 fht2 fht3 }
 fht1			melee_1
 fht2			melee_2
 fht3			melee_3
-$volume weapons/fisthit 0.75
+$volume weapons/fisthit 1
+
+$random weapons/axehitwall {JFISWAL1 JFISWAL2 JFISWAL3 JFISWAL4}
+JFISWAL1 JFISWAL1
+JFISWAL2 JFISWAL2
+JFISWAL3 JFISWAL3
+JFISWAL4 JFISWAL4
+
+weapons/axeching JFISIAI3
 
 $random weapons/fisthitwall { fhw1 fhw2 fhw3 fhw4 fhw5 }
 
