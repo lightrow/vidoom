@@ -13,37 +13,6 @@
 #include "deco/Items.txt"
 
 
-// JP MOBILITY
-#include "deco/p_globalvars.txt"
-#include "deco/p_fx.txt"
-
-actor DuckOn : CustomInventory
-{
-    -INVBAR
-    +AUTOACTIVATE
-    States
-    {
-    Pickup:
-    Use:
-        TNT1 A 0 A_SetSize(16,20)
-        stop
-    }
-}
-
-actor DuckOff : CustomInventory
-{
-    -INVBAR
-    +AUTOACTIVATE
-    States
-    {
-    Pickup:
-    Use:
-        TNT1 A 0 A_SetSize(16,56)
-        stop
-    }
-}
-
-
 Actor BulletTracer : FastProjectile
 {
 -ACTIVATEIMPACT
@@ -98,7 +67,7 @@ alpha 0.8
 states
 	{
 	Spawn:
-		TNT1 A 0 A_PlaySound("weapons/ricochet")
+		TNT1 A 0 A_PlaySound("weapons/ricochet",7)
 		PUFF A 2
 		stop
 	}

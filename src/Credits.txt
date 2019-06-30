@@ -2,31 +2,33 @@
 
 Gifty's Smooth Doom 
     - bullet and plasma puffs, BFG sprites, 
-	- doom64 shotguns sprites and muzzleflashes
+	- doom64 ssg as base for buffallo rifle + muzzleflashes
 	- water splashes
 	- blood decals
 	- GLDEFS
-	- item sprites
+	- smooth armor, spheres, map, bullet casings sprites
 TerminusEst
-  	- Demonsteele sword puffs and decals, secret sound
+  	- Demonsteele sword puffs and decals, secret sfx
+Nash 
+    - gore
+Iron Duke
+	- Crouch-sliding from Dusk Movement
+id 
+    - some doom3 sfx, plasmarifle model
+valve + gamebanana community
+    - some sfx
+Sgt. Shivers, Yholl and other Final Doomer contributors
+	- some item pickup sfx
+Beautiful Doom
+    - bullet tracers
 ?????????
     - footsteps module
 ?????????
-    - JPMobility
-?????????
-    - bullet tracers
-Nash 
-    - gore
+    - SPAS sprite
 ?????????
     - SMAG sprite( Autoshotgun )
 ?????????
     - ammo box sprite
-id 
-    - some doom3 sounds, plasmarifle model
-valve + gamebanana community
-    - some sounds
-Sgt. Shivers, Yholl and other Final Doomer contributors
-	- some item pickup sounds
 ????????? unused, to be cleaned up
 	- grenade launcher sprite
 	- huge fuckton pile of sounds

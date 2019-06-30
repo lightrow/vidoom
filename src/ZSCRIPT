@@ -1,0 +1,301 @@
+Version "3.8"
+
+// Dusk Movement - Ivory Duke
+
+Class DuskGal : DoomPlayer replaces DoomPlayer
+{
+	const CROUCHSPEED = (1./8);
+	int tickCount;
+	bool playRelief;
+	
+	//Crouch Slide
+	bool	SlideInProgress;		//From the beginning of a slide until some tics later you cannot slide again (no spam plz)
+	uint 	CrouchTimeHeld;			//Checks for how long you are holding the crouch button, needed to determine when crouchslide should end
+	double 	MaximumGroundSpeed;		//The maximum speed player can reach why running on the ground, calculated depending on the chosen settings
+	int lastHealth;
+	vector2	MoveVec;
+	Default
+	{
+	player.startitem "Handcannon";
+	player.startitem "FireAxe";
+	Player.StartItem "Clip", 35;
+	Player.StartItem "PistolLoad", 7;
+	Player.StartItem "Satchel";
+	Player.StartItem "RocketAmmo", 2;
+	Player.StartItem "ChargeHealth",40;
+	Player.StartItem "Sharpness",7;
+	Player.WeaponSlot 1, "FireAxe";
+   	Player.WeaponSlot 2, "Handcannon";
+	Player.WeaponSlot 3, "BuffaloRifle", "SmagShotgun", "PumpShotgun";
+	Player.WeaponSlot 4, "AutoRifle";
+	Player.WeaponSlot 5, "Satchel";
+	Player.WeaponSlot 6, "PlasmaCannon";
+	Player.WeaponSlot 7, "Z86BFG9000";
+	Player.DamageScreenColor "cc 00 11";
+	Player.ForwardMove 1;
+    Player.SideMove 1;
+	DamageFactor "AxeSlash", 0.0;
+	//No Touchy
+	//Now you can touch
+	Player.DisplayName "HonHon";
+	PainChance 255;
+	}
+	States
+	{
+	Death:
+		PD71 A 3;
+		PD71 B 3 A_PlayerScream;
+		PD71 C 3 A_NoBlocking;
+		PD71 DEFGH 3;
+		PD71 I -1;
+		Stop;
+	XDeath:
+		PD71 A 3;
+		PD71 B 3 A_PlayerScream;
+		PD71 C 3 A_NoBlocking;
+		PD71 DEFGH 3;
+		PD71 I -1;
+		Stop;
+	}
+
+	
+	override void BeginPlay() {
+		lastHealth = health;
+		tickCount = 0;
+		playRelief = false;
+		Super.BeginPlay();
+	}
+	
+	override void Tick()
+	{
+		if (player != NULL && player.mo == self && player.playerstate != PST_DEAD)
+		{
+			Height = FullHeight * player.crouchfactor;
+		}
+		else
+		{
+			if (health > 0) Height = FullHeight;
+		}
+		tickCount++;
+		if (tickCount > 14) {
+			tickCount = 0;
+			int diff = lastHealth - health;
+			if (playRelief) {
+				A_PlaySound("player/relief",5);
+				playRelief = false;
+			}
+			if (diff < -40) {
+				playRelief = true;
+			}
+			if (diff > 40 && health > 0) {
+				A_PlaySound("player/breath",5);
+			}
+			lastHealth = health;
+		}
+		
+		Super.Tick();
+	}
+	
+	
+	override void CrouchMove(int direction)
+	{
+		let player = self.player;
+		
+		double defaultheight = FullHeight;
+		double savedheight = Height;
+		double crouchspeed = direction * CROUCHSPEED;
+		double oldheight = player.viewheight;
+
+		player.crouchdir = direction;
+		player.crouchfactor += crouchspeed ;
+
+		// check whether the move is ok
+		Height  = defaultheight * player.crouchfactor;
+		if (!TryMove(Pos.XY, false, NULL))
+		{
+			Height = savedheight;
+			if (direction > 0)
+			{
+				// doesn't fit
+				player.crouchfactor -= crouchspeed;
+				return;
+			}
+		}
+		Height = savedheight;
+
+		player.crouchfactor = clamp(player.crouchfactor, 0.2, 1.);
+		player.viewheight = ViewHeight * player.crouchfactor;
+		player.crouchviewdelta = player.viewheight - ViewHeight;
+
+		// Check for eyes going above/below fake floor due to crouching motion.
+		CheckFakeFloorTriggers(pos.Z + oldheight, true);
+	}
+
+
+
+	Override void CheckCrouch(bool totallyfrozen)
+	{
+		let player = self.player;
+		UserCmd cmd = player.cmd;
+		
+		if (cmd.buttons & BT_JUMP)
+		{
+			cmd.buttons &= ~BT_CROUCH;
+		}
+		if (player.health > 0) //Screw you Boom mapsets crouch is always allowed
+		{
+			if (!totallyfrozen)
+			{
+				int crouchdir = player.crouching;
+
+				if (crouchdir == 0)
+				{
+					crouchdir = (cmd.buttons & BT_CROUCH) ? -1 : 1;
+				}
+				else if (cmd.buttons & BT_CROUCH)
+				{
+					player.crouching = 0;
+				}
+				
+				if(!(cmd.buttons & BT_CROUCH))
+				{
+					//Crouchslide is not allowed again until you let go of the crouch button
+					//and you are fully uncrouched
+					if(CrouchTimeHeld && !Player.OnGround)
+					SlideInProgress = True;
+					else
+					SlideInProgress = False;
+				}
+				
+				if (crouchdir == 1 && player.crouchfactor < 1 && pos.Z + height < ceilingz)
+				{
+					CrouchMove(1);
+				}
+				else if (crouchdir == -1 && player.crouchfactor > 0.5)
+				{
+					CrouchMove(-1);
+				}
+			}
+		}
+		else
+		{
+			player.Uncrouch();
+		}
+
+		player.crouchoffset = -50 + -(ViewHeight) * (1 - player.crouchfactor);
+	}
+	
+	
+	Override void MovePlayer()
+	{
+		let player = self.player;
+		UserCmd cmd = player.cmd;
+
+		// [RH] 180-degree turn overrides all other yaws
+		if (player.turnticks)
+		{
+			player.turnticks--;
+			Angle += (180. / TURN180_TICKS);
+		}
+		else
+		{
+			Angle += cmd.yaw * (360./65536.);
+		}
+
+		player.onground = (pos.z <= floorz) || bOnMobj || bMBFBouncer || (player.cheats & CF_NOCLIP2);
+
+		//Wherever the slide should end or can continue
+		bool BlockSlide;
+		//Imput conditions necessary to activate crouch slide. Slide needs to be started on the ground but can continue mid air
+		Bool CrouchSlide;
+		
+		if(!CrouchTimeHeld)
+		CrouchSlide = Player.OnGround && (player.cmd.buttons & BT_CROUCH) && (cmd.forwardmove || cmd.sidemove);
+		else
+		CrouchSlide = (player.cmd.buttons & BT_CROUCH) && (cmd.forwardmove || cmd.sidemove) && Vel.Length() > 0.64 * MaximumGroundSpeed;
+		
+
+
+		// killough 10/98:
+		//
+		// We must apply thrust to the player and bobbing separately, to avoid
+		// anomalies. The thrust applied to bobbing is always the same strength on
+		// ice, because the player still "works just as hard" to move, while the
+		// thrust applied to the movement varies with 'movefactor'.
+
+		if (cmd.forwardmove | cmd.sidemove)
+		{
+			double forwardmove, sidemove;
+			double bobfactor;
+			double friction, movefactor;
+			double fm, sm;
+
+			[friction, movefactor] = GetFriction();
+			bobfactor = friction < ORIG_FRICTION ? movefactor : ORIG_FRICTION_FACTOR;
+			if (!player.onground && !bNoGravity && !waterlevel)
+			{
+				// [RH] allow very limited movement if not on ground.
+				movefactor *= level.aircontrol;
+				bobfactor*= level.aircontrol;
+			}
+
+			fm = cmd.forwardmove;
+			sm = cmd.sidemove;
+			[fm, sm] = TweakSpeeds (fm, sm);
+			fm *= Speed / 256;
+			sm *= Speed / 256;
+
+			If(Player.CrouchFactor != 1)
+			{
+				if(CrouchTimeHeld <= 19)
+				CrouchTimeHeld++;
+				
+				if(CrouchTimeHeld == 1 && CrouchSlide)
+				{
+					A_PlaySound("Slide",CHAN_BODY);
+				}
+				
+				//We make sure that even if player is holding sprint the crouch speed is unchanged
+				//Slide is less powerful if player is not on the ground anymore
+				MoveFactor *= CrouchTimeHeld <= (Player.OnGround ? 18 : 12) && CrouchSlide ? 3.6 - CrouchTimeHeld / (Player.OnGround ? 5 : 3) : 0.7;
+			}
+			else
+			{
+				//If you are in the air after a crouch slide
+				if(SlideInProgress && Vel.Length() > MaximumGroundSpeed)
+				{
+					Vel.XY *= 0.95;
+				}
+				else
+				CrouchTimeHeld = 0;
+			}
+
+			forwardmove = fm * movefactor * (35 / TICRATE);
+			sidemove = sm * movefactor * (35 / TICRATE);
+
+			if (forwardmove)
+			{
+				Bob(Angle, cmd.forwardmove * bobfactor / 256., true);
+				ForwardThrust(forwardmove, Angle);
+			}
+			if (sidemove)
+			{
+				let a = Angle - 90;
+				Bob(a, cmd.sidemove * bobfactor / 256., false);
+				Thrust(sidemove, a);
+			}
+
+			if (!(player.cheats & CF_PREDICTING) && (forwardmove != 0 || sidemove != 0))
+			{
+				PlayRunning ();
+			}
+
+			if (player.cheats & CF_REVERTPLEASE)
+			{
+				player.cheats &= ~CF_REVERTPLEASE;
+				player.camera = player.mo;
+			}
+		}
+	}		
+	
+}

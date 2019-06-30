@@ -32,7 +32,7 @@ ACTOR SuperShotgunPickup : WeaponPickup replaces SuperShotgun
 	TNT1 A 0
 	TNT1 A 0 A_JumpIf(CallACS("sgswaptoggle") == 1, "DoubleSpawn")
 	TNT1 A 0 A_JumpIf(CallACS("sgvarianttoggle") == 1, "SmagSpawn")
-    SG6P A -1
+    SGDR P -1
 	Stop
   SmagSpawn:
     SMAP A -1
@@ -75,7 +75,7 @@ ACTOR ShotgunPickup : WeaponPickup replaces Shotgun
     SMAP A -1
 	Stop
   PumpSpawn:
-    SG6P A -1
+    SGDR P -1
 	Stop
   Pickup:
 	TNT1 A 0 A_JumpIf(CallACS("sgswaptoggle") == 1, "SmagPickup")

@@ -5,10 +5,10 @@ MOBILITY/CLING PCLING
 misc/ninjaslide ninjdodg
 
 // health pickups
-misc/L_HP_pickup L_HEALTH
-misc/N_HP_pickup N_HEALTH
+misc/L_HP_pickup BOTLBIG
+misc/N_HP_pickup BOTLSML
 
-
+// misc/secret		DSSECRET
 
 // ammo clip
 misc/clip_pickup FDCLIPPK
@@ -61,17 +61,20 @@ misc/key2_pickup SKULRED
 misc/radsuit_pickup FDSUITPK
 
 // health bonus
-$random misc/hbonus_pickup	{spray1 spray2 spray3 spray4 spray5 spray6 }
-spray1 spray1
-spray2 spray2
-spray3 spray3
-spray4 spray4
-spray5 spray5
-spray6 spray6
-$volume misc/hbonus_pickup 2
+// $random misc/hbonus_pickup	{spray1 spray2 spray3 spray4 spray5 spray6 }
+// spray1 spray1
+// spray2 spray2
+// spray3 spray3
+// spray4 spray4
+// spray5 spray5
+// spray6 spray6
+// $volume misc/hbonus_pickup 2
+misc/hbonus_pickup VIALUP
 
 // armor bonus
-misc/abonus_pickup FDABONPK
+$random misc/abonus_pickup {viar1 viar2}
+viar1 VIARUP
+viar2 VIAR2UP	
 
 // berserk
 misc/berserk_pickup ADRENALI
@@ -101,64 +104,112 @@ misc/invulnerability_pickup FDINVUPK
 //
 //===========================================================================
 
-$random player/death	{ pdth1 pdth2 pdth3 pdth4 }
-pdth1 pldeath1
-pdth2 pldeath2
-pdth3 pldeath3
-pdth4 pldeath4
+player/death death1
 $playeralias    player  male    *death      player/death
 
-player/xdeath pldeathh
-$playeralias    player  male    *death      player/xdeath
+player/xdeath death2
+$playeralias    player  male    *xdeath      player/xdeath
 
 $random player/pain100	{ pp11 pp12 pp13 }
-pp11 pp100_1
-pp12 pp100_2
-pp13 pp100_3
+pp11 light1
+pp12 light2
+pp13 light3
 $playeralias    player  male    *pain100    player/pain100
 
 $random player/pain75	{ pp21 pp22 pp23 }
-pp21 pp75_1
-pp22 pp75_2
-pp23 pp75_3
-$playeralias    player  male    *pain75    player/pain75
+pp21 med1
+pp22 med2
+pp23 med3
+$playeralias    player  male    *pain75   player/pain75
+
 
 $random player/pain50	{ pp31 pp32 pp33 }
-pp31 pp50_1
-pp32 pp50_2
-pp33 pp50_3
+pp31 high1
+pp32 high2
+pp32 high3
 $playeralias    player  male    *pain50    player/pain50
 
 $random player/pain25	{ pp41 pp42 pp43 }
-pp41 pp25_1
-pp42 pp25_2
-pp43 pp25_3
+pp41 crit1
+pp42 crit2
+pp43 crit3
 $playeralias    player  male    *pain25    player/pain25
 
+
 $random player/jump	{ pjmp1 pjmp2 }
-pjmp1 pjump1
-pjmp2 pjump2
+pjmp1 grunt1
+pjmp2 grunt3
 $playeralias    player  male    *jump    player/jump
 
 $random player/land1	{ plnd11 plnd12 plnd13 }
-plnd11 plands1
-plnd12 plands2
-plnd13 plands3
+plnd11 grunt1
+plnd12 grunt2
+plnd13 grunt3
 $playeralias    player  male    *grunt    player/land1
 
 $random player/land2	{ plnd21 plnd22 plnd23 }
-plnd21 plandl1
-plnd22 plandl2
-plnd23 plandl3
+plnd21 grunt4
+plnd22 grunt5
+plnd23 grunt6
 $playeralias    player  male    *land    player/land1
 
-$random player/push	{ ppush1 ppush2 ppush3 ppush4 }
-ppush1 ppush1
-ppush2 ppush2
-ppush3 ppush3
-ppush4 ppush4
+Slide	Slide
+
+$random player/push	{ppush1 ppush2 ppush2 ppush3 ppush4 ppush5 ppush6 ppush6 ppush6 ppush7 ppush7 ppush7 ppush8 ppush8 ppush8 ppush9 ppush9 ppush9 ppush10 ppush10 ppush10 }
+ppush1 huh1 // qua
+ppush2 huh2
+ppush3 huh3	// egal
+ppush4 huh4 // qua
+ppush5 huh5 // eeeeh
+ppush6 huh6
+ppush7 huh7
+ppush8 huh8 // no
+ppush9 huh9 // no
+ppush10 huh10 // uf
 $playeralias    player  male    *usefail    player/push
 
+
+$random player/perfect {pf1 pf2 pf3 pf4 pf5 pf6 pf7 pf8}
+pf1 perfect1
+pf2 perfect2
+pf3 perfect3
+pf4 perfect4
+pf5 perfect5
+pf6 perfect6
+pf7 perfect7
+pf8 perfect8
+
+$random misc/secret	 {pf1 pf2 pf3 pf4 pf5 pf6 pf7 pf8}
+pf1 perfect1
+pf2 perfect2
+pf3 perfect3
+pf4 perfect4
+pf5 perfect5
+pf6 perfect6
+pf7 perfect7
+pf8 perfect8
+
+$random player/greet {gr2 gr3 gr4 gr6 gr7 gr8 gr9 gr11}
+// gr1 greet1
+gr2 greet2
+gr3 greet3
+gr4 greet4
+//gr5 greet5
+gr6 greet6
+gr7 greet7
+gr8 greet8
+gr9 greet9
+//gr10 greet10
+gr11 greet11
+
+player/relief relief
+
+$random player/breath {br1 br2 br3}
+br1 breath1
+br2 breath2
+br3 breath3
+
+player/tene tene
 
 //
 // Weapons
@@ -247,10 +298,12 @@ weapons/1911	kimono
 
 weapons/pistolup pistol_u
 
-$random weapons/shotgf	{ shot11 shot12 shot13 }
+$random weapons/sgfire	{ shot11 shot12 shot12 shot13 shot13} 	
 shot11			sgfire1
 shot12			sgfire2
 shot13			sgfire3
+
+weapons/drrrnk drrrnk
 
 weapons/shotgf2 ASHTFIRE
 
@@ -264,6 +317,11 @@ $random weapons/pumpfire	{ m901 m902 m903 }
 m901			m901
 m902			m902
 m903			m903
+
+weapons/cockup cockup
+weapons/cockdown cockdown
+$volume weapons/cockup 0.8
+$volume weapons/cockdown 0.6
 
 weapons/shotgr			sgcockft
 weapons/shotgup			sgcocksl
@@ -330,9 +388,9 @@ bounce3			GLAUBOU3
 weapons/c4pick c4pick
 
 $random weapons/rocklx	{ rktexp1 rktexp2 rktexp3 }
-rktexp1			bigexpl1
-rktexp2			bigexpl2
-rktexp3			bigexpl3
+rktexp1			boom1
+rktexp2			boom2
+rktexp3			boom3
 
 $random weapons/rocklff	{ rktf1 rktf2 rktf3 rktf4 }
 rktf1			rocketl1
@@ -444,9 +502,6 @@ $limit weapons/tracerwhizz 2
 weapons/tracerwhizz1	TRACER1
 weapons/tracerwhizz2	TRACER2
 weapons/tracerwhizz3	TRACER3
-
-
-misc/secret		DSSECRET
 
 ///////////
 //CASINGS//

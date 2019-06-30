@@ -749,77 +749,50 @@ object smoothblur
 	frame NVISG { light BLURSPHERE2 }
 }
 
-// Health Potion
 pulselight HEALTHPOTION
 {
-    color 0.0 0.0 0.6
-    size 10
+    color 0.9 0.0 0.1
+    size 14
     secondarySize 18
-    interval 2.0
+    interval 3.0
 }
 
-object sexyflask
+pulselight HEALTHPOTIONBIG
 {
-    frame BONU { light HEALTHPOTION }
+    color 0.9 0.0 0.1
+    size 22
+    secondarySize 26
+    interval 3.0
 }
 
-// Armour Helmet
-pointlight ARMORBONUSx1
+object healthvial
 {
-    color 0.0 0.6 0.0
-    size 5
-}
-pointlight ARMORBONUSx2
-{
-    color 0.0 0.6 0.0
-    size 7
-}
-pointlight ARMORBONUSx3
-{
-    color 0.0 0.6 0.0
-    size 9
-}
-pointlight ARMORBONUSx4
-{
-    color 0.0 0.6 0.0
-    size 11
-}
-pointlight ARMORBONUSx5
-{
-    color 0.0 0.6 0.0
-    size 13
-}
-pointlight ARMORBONUSx6
-{
-    color 0.0 0.6 0.0
-    size 15
-}
-pointlight ARMORBONUSx7
-{
-    color 0.0 0.6 0.0
-    size 17
-}
-pointlight ARMORBONUSx8
-{
-    color 0.0 0.6 0.0
-    size 19
+    frame VIHL { light HEALTHPOTION }
 }
 
-object sexyhelmet
+
+object bighealth
 {
-    frame HELBa { light ARMORBONUSx1 }
-	frame HELBb { light ARMORBONUSx2 }
-	frame HELBc { light ARMORBONUSx3 }
-	frame HELBd { light ARMORBONUSx4 }
-	frame HELBe { light ARMORBONUSx5 }
-	frame HELBf { light ARMORBONUSx6 }
-	frame HELBg { light ARMORBONUSx7 }
-	frame HELBh { light ARMORBONUSx8 }
-	//alternate sprites
-	frame NUBOa { light ARMORBONUSx1 }
-	frame NUBOc { light ARMORBONUSx3 }
-	frame NUBOd { light ARMORBONUSx5 }
-	frame NUBOb { light ARMORBONUSx6 }
+    frame VILH { light HEALTHPOTIONBIG }
+}
+
+object mediumhealth
+{
+    frame VIBH { light HEALTHPOTIONBIG }
+}
+
+
+pulselight ARMORPOTION
+{
+    color 0.0 0.6 0.1
+    size 8
+    secondarySize 10
+    interval 3.0
+}
+
+object armorvial
+{
+	frame VIAR { light ARMORPOTION }
 }
 
 

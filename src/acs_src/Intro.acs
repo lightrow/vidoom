@@ -1,0 +1,14 @@
+#library "Intro"
+#include "zcommon.acs"
+
+script "HONHON_ENTER" ENTER
+{
+	int IntroChance;
+	FadeRange(0,0,0,1.00,0,0,0,0,2.0);
+	// LocalAmbientSound("level/intro",127);
+	
+	IntroChance = random(0,3);
+	if (IntroChance == 3) { LocalAmbientSound("player/greet",127); }
+
+
+}

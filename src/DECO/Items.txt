@@ -1,3 +1,26 @@
+Actor Toolbox: Berserk replaces Berserk
+{
+scale 1
+Inventory.PickupSound none
+States{
+	Spawn:
+    BK64 A -1
+    Stop
+	Pickup:
+	TNT1 A 0 
+ 	TNT1 A 1 A_PlaySound("weapons/axeching",5,0.6)
+	TNT1 A 0 A_GiveInventory("Sharpness",50)
+    TNT1 A 0 HealThing(100, 0)
+    TNT1 A 0 A_SelectWeapon("FireAxe")
+	TNT1 A 5
+    Stop
+	}
+}
+
+Actor ToolBox2: Toolbox replaces Chainsaw
+{
+}
+
 actor sexygreenarmor : greenarmor replaces greenarmor
 {
 	INVENTORY.PICKUPSOUND "misc/armor1_pickup"
@@ -22,42 +45,28 @@ states
 	}
 }
 
-actor sexyflask : healthbonus
+
+actor healthvial : healthbonus replaces healthbonus
 {
 	INVENTORY.PICKUPSOUND "misc/hbonus_pickup"
+	scale 0.25
 states
 	{
 	spawn:
-	bonu abcdefgfedcb 3
+	VIHL ABCDEFGHIJ 5 bright
 	loop
 	}
 }
 
-actor HealthSpray : healthbonus replaces healthbonus
-{
-	INVENTORY.PICKUPSOUND "misc/hbonus_pickup"
-	scale 0.6
-states
-	{
-	spawn:
-	SPRY a -1
-	stop
-	}
-}
 
-
-actor sexyhelmet : armorbonus replaces armorbonus
+actor armorvial : armorbonus replaces armorbonus
 {
 	INVENTORY.PICKUPSOUND "misc/abonus_pickup"
+	scale 0.4
 states
 	{
 	spawn: 
-	TNT1 A 0
-	HELB abcdefghgfedcb 3
-	loop
-	AltSpawn:
-	NUBO a 20
-	NUBO cdb 3
+	VIAR ABCDEFGH 5 bright
 	loop
 	}
 }
@@ -278,29 +287,28 @@ ACTOR NewPack : Backpack replaces Backpack
 	}
 }
 
-ACTOR NewStimpack : Stimpack replaces Stimpack
+ACTOR MediumHealth : Stimpack replaces Stimpack
 {
 INVENTORY.PICKUPSOUND "misc/n_hp_pickup"
-scale 0.7
+scale 0.3
 states
  {
   Spawn:
     TNT1 A 0
-	HL64 B -1
-    stop
+	VIBH GHIJKLMNOABCDEF 4 bright
+    loop
   }
 }
   
-ACTOR NewMedkit : Medikit replaces Medikit
+ACTOR BigHealth : Medikit replaces Medikit
 {
 INVENTORY.PICKUPSOUND "misc/l_hp_pickup"
-scale 0.9
+scale 0.4
 states
  {
   Spawn:
-    TNT1 A 0
-	HL64 A -1
-    stop
+	VILH ABCDEFGHIJKLM 5 bright
+    loop
   }
 }
 

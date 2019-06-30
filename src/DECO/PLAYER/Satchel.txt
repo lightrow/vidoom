@@ -14,6 +14,7 @@ ACTOR Satchel : Weapon replaces RocketLauncher
 	Weapon.SelectionOrder 5
 	+WEAPON.NOAUTOAIM 
 	+WEAPON.AMMO_CHECKBOTH
+	+WEAPON.NOALERT
 	States
 	{
 	Spawn:
@@ -143,6 +144,8 @@ ACTOR Satchel : Weapon replaces RocketLauncher
 		TNT1 A 0 A_JumpIfInventory("RocketAmmo", 1, "ChargeDrawWith")
 		goto Ready
 	Altfire:
+	TNT1 A 0 
+	TNT1 A 0 A_AlertMonsters
 		TNT1 A 0 A_JumpIfInventory("ThrownCharge",1,"AltFireDetonator")
 		goto Ready
 	AltFireBoth:
@@ -190,30 +193,34 @@ ACTOR ThrownCharge: Ammo
 
 ACTOR Charge
 {
-    PROJECTILE
-    -NOGRAVITY
-    +HEXENBOUNCE
-    +SHOOTABLE
-    -NOBLOCKMAP
-    +CORPSE
-    +GHOST
-    -NOLIFTDROP
-    -SOLID
-    +THRUGHOST
-    +NOBLOOD
-    +EXTREMEDEATH
-    +BOUNCEONACTORS
-    Health 1
+	Projectile
+	+SHOOTABLE
+	+THRUGHOST
+	+THRUSPECIES
+	+BOUNCEONWALLS
+	+BOUNCEONFLOORS
+	+BOUNCEONCEILINGS
+	+ALLOWBOUNCEONACTORS
+	-NOGRAVITY
+	+MOVEWITHSECTOR
+	+EXTREMEDEATH
+	+USEBOUNCESTATE
+	+BOUNCEONACTORS
+	+CANBOUNCEWATER
+	+DONTBLAST
+	+DONTTHRUST
+	Species "Player"
+	Health 100
     Damage 0
     Speed 30
     Scale 0.6
-    BounceFactor 0.4
+	Friction 1
+	BounceType Hexen
+    BounceFactor 0.3
     WallBounceFactor 0.2
-    Radius 10
-    Height 8
+    Radius 2
+    Height 4
     DontHurtShooter
-    ExplosionDamage 285
-    ExplosionRadius 233
     Renderstyle Normal
     States
     {

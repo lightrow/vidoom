@@ -52,35 +52,6 @@ StaticText " "
 option "Don't swap shotgun spawns", "sgswaptoggle","SwapShotguns"
 StaticText " "
 StaticText " "
-Submenu "JPMobility Options", "JPMobilityOptions"
 
 }
 
-
-OptionMenu "JPMobilityOptions"
-{
-
-	Title "JPMOBILITY OPTIONS"
-
-	StaticText " "
-	StaticText "TOGGLES", 2
-	StaticText " "
-	
-	Option "Allow Sliding", "jpm_enable_slide", "OnOff"
-	Option "Allow Double Jumping", "jpm_enable_djump", "OnOff"
-	Option "Allow Wall Latching", "jpm_enable_latch", "OnOff"
-	
-	StaticText " "
-	StaticText "MOBILITY PREFERENCES", 2
-	StaticText " "
-	Slider "Slide Starting Velocity", "jpm_pref_slidevel", 1, 30, 30
-	
-	StaticText " "
-	StaticText "HUD PREFERENCES", 2
-	StaticText " "
-	
-	Option "Display Stamina Bar", "jpm_draw_staminabar", "OnOff"
-	
-
-}
-	

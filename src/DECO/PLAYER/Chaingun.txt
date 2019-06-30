@@ -15,12 +15,12 @@ ACTOR AutoRifle : Chaingun replaces Chaingun
 		Stop
 	Fire:
 		TNT1 A 0 A_AlertMonsters
-		TNT1 A 0 A_PlaySound("weapons/akclick",0,1.5)
+		//TNT1 A 0 A_PlaySound("weapons/akclick",CHAN_WEAPON,1.5)
 		RPDG B 1 Offset(0,34)
 		TNT1 A 0 A_ZoomFactor(0.998,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
 		TNT1 A 0 A_GunFlash
 		TNT1 A 0 A_FireBullets(5.6, 4, 1, random(5,8), "BulletPuff")
-		TNT1 A 0 A_PlaySound("weapons/chngun", CHAN_WEAPON)
+		TNT1 A 0 A_PlaySound("weapons/chngun", CHAN_WEAPON|CHAN_NOPAUSE)
 		TNT1 A 0 A_spawnitemex ("bulletcasing", 40, 0, 15, random(5,7), random(7,8), random(7,10), 0)
 		TNT1 A 0 A_FireCustomMissile("BulletTracer",0,0,0,0)
 		TNT1 A 0 a_setpitch(pitch-0.2)
@@ -32,7 +32,7 @@ ACTOR AutoRifle : Chaingun replaces Chaingun
 		TNT1 A 0 A_ZoomFactor(0.998,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
 	    TNT1 A 0 A_GunFlash
 		TNT1 A 0 A_FireBullets(5.6, 4, 1, random(5,8), "PainlessBulletPuff")
-		TNT1 A 0 A_PlaySound("weapons/chngun")
+		TNT1 A 0 A_PlaySound("weapons/chngun", CHAN_WEAPON|CHAN_NOPAUSE)
 		TNT1 A 0 A_spawnitemex ("bulletcasing", 40, 0, 15, random(5,7), random(7,8), random(7,10), 0)
 		TNT1 A 0 A_FireCustomMissile("BulletTracer",0,0,0,0)
 		TNT1 A 0 a_setpitch(pitch-0.2)
@@ -85,7 +85,7 @@ ACTOR AutoRifle : Chaingun replaces Chaingun
 		TNT1 A 0 A_ZoomFactor(0.998,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
 		TNT1 A 0 A_GunFlash
 		TNT1 A 0 A_FireBullets(8.6, 5, 1, random(5,8), "BulletPuff")
-		TNT1 A 0 A_PlaySound("weapons/chngun", CHAN_WEAPON)
+		TNT1 A 0 A_PlaySound("weapons/chngun", CHAN_WEAPON|CHAN_NOPAUSE)
 		TNT1 A 0 A_spawnitemex ("bulletcasing", 40, 0, 15, random(5,7), random(7,8), random(7,10), 0)
 		TNT1 A 0 A_FireCustomMissile("BulletTracer",random(-3,3),0,0,random(-5,5))
 		TNT1 A 0 a_setpitch(pitch-0.2)
@@ -97,7 +97,7 @@ ACTOR AutoRifle : Chaingun replaces Chaingun
 		TNT1 A 0 A_ZoomFactor(0.998,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
 		TNT1 A 0 A_GunFlash
 		TNT1 A 0 A_FireBullets(8.6, 5, 1, random(5,8), "PainlessBulletPuff") // fake bullet
-		TNT1 A 0 A_PlaySound("weapons/chngun", CHAN_WEAPON)
+		TNT1 A 0 A_PlaySound("weapons/chngun", CHAN_WEAPON|CHAN_NOPAUSE)
 		TNT1 A 0 A_spawnitemex ("bulletcasing", 40, 0, 15, random(5,7), random(7,8), random(7,10), 0)
 		TNT1 A 0 A_FireCustomMissile("BulletTracer",random(-3,3),0,0,random(-5,5))
 		TNT1 A 0 a_setpitch(pitch-0.2)
