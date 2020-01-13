@@ -1,0 +1,142 @@
+
+
+
+
+Class newmegasphere : custominventory replaces megasphere
+{
+	Default
+	{
+	+FLOATBOB;
+	floatBobStrength 0.2;
+	inventory.pickupmessage "megasphere";
+	Inventory.PickupSound "none";
+	scale 0.5;
+	}
+	states
+	{
+		spawn:
+			CYNS ABCDEFGHIJKLMNOPQRSTUVWX 3 BRIGHT; //A_PlaySound("misc/megasphere_loop", 7, 1, 1.2)
+			loop;
+		Pickup:
+			TNT1 A 0 
+			{
+				A_GiveInventory("BlueArmorForMegasphere", 1);
+				A_GiveInventory("MegasphereHealth",1);
+				A_PlaySound("misc/megasphere_pickup",6,1,0,0.1);
+			}
+			stop;
+	}
+}
+
+Class NewSoulSphere : CustomInventory replaces SoulSphere
+{
+	Default
+	{
+	+FLOATBOB;
+	inventory.pickupmessage "soulsphere";
+	Inventory.PickupSound "none";
+	FloatBobStrength 0.2;
+	scale 0.5;
+	}
+	States
+	{
+	Spawn:
+		BLUS ABCDEFGHIJKLMNOPQRSTUVWX 2 BRIGHT;
+		Loop;
+	Pickup:
+		TNT1 A 0
+		{
+			A_PlaySound("misc/soulsphere_pickup",6,1,0,0.1);
+			A_GiveInventory("Soulsphere",1);		
+		}
+		stop;
+	}
+  
+}
+
+class RageSphere: CustomInventory replaces Berserk
+{
+	default
+	{
+	scale 0.5;
+	Inventory.PickupSound "none";
+	inventory.pickupmessage "ragesphere";
+	FloatBobStrength 0.2;
+	+FLOATBOB;
+	}
+	States{
+		Spawn:
+			BERS ABCDEFGHIJKLMNOPQRSTUVWX 1 BRIGHT;
+			Loop;
+		Pickup:
+			TNT1 A 0
+			{
+				HealThing(100, 0);
+				A_PlaySound("misc/berserk_pickup",6,1,0,0.1);
+				A_GiveInventory("Rage",50);
+				//A_GiveInventory("PowerStrength");
+				A_SelectWeapon("FireAxe");
+				A_SetBlend("dd0011",0.6,140,"000000",0);
+			} 
+		Stop;
+	}
+
+}
+
+class RageSphere2: RageSphere replaces Chainsaw
+{
+}
+
+class healthvial : healthbonus replaces healthbonus
+{
+	Default
+	{
+	+COUNTITEM
+	inventory.amount 1;
+	inventory.pickupmessage "a health vial";
+	INVENTORY.PICKUPSOUND "misc/hbonus_pickup";
+	Health.LowMessage 25, "a lovely health vial!";
+	scale 0.25;
+	}
+	states
+	{
+		spawn:
+			VIHL ABCDEFGHIJ 5 bright;
+			loop;
+	}
+}
+
+
+class MediumHealth : Stimpack replaces Stimpack
+{
+Default
+{
+INVENTORY.PICKUPSOUND "misc/n_hp_pickup";
+inventory.pickupmessage "a health potion";
+Health.LowMessage 25, "a refreshing health potion!";
+scale 0.3;
+}
+states
+ {
+  Spawn:
+	VIBH GHIJKLMNOABCDEF 4 bright;
+    loop;
+  }
+}
+  
+class BigHealth : Medikit replaces Medikit
+{
+Default
+{
+INVENTORY.PICKUPSOUND "misc/l_hp_pickup";
+inventory.pickupmessage "a health elixir";
+Health.LowMessage 25, "a gracious health elixir!";
+scale 0.4;
+}
+states
+ {
+  Spawn:
+	VILH ABCDEFGHIJKLM 5 bright;
+    loop;
+  }
+}

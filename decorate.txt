@@ -1,0 +1,15 @@
+#include "deco/Player/General.txt"
+
+#include "deco/Particles.txt"
+#include "deco/Items.txt"
+
+
+#include "deco/Player/Spawner.txt"
+
+//#include "deco/Player/Nade.txt"
+
+
+
+
+
+

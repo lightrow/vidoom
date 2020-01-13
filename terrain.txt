@@ -1,0 +1,145 @@
+//********** Splashes **********
+splash 	nukage
+{
+ smallclass 	nukagesplashbasesmall
+ smallclip		4
+ smallsound	world/lavasizzlesmall
+
+ baseclass		nukageSplashBase
+ //chunkclass	    sludgechunk
+ chunkxvelshift	8
+ chunkyvelshift	8
+ chunkzvelshift	6
+ chunkbasezvel	2
+ sound		world/lavasizzle
+ NoAlert
+}
+
+splash Slime
+{
+	smallclass		SlimeSplashBaseSmall
+	smallclip		4
+	smallsound		world/sludgegloopsmall
+	
+
+	baseclass		SlimeSplashBase
+	//chunkclass		SlimeChunk
+	chunkxvelshift	8
+	chunkyvelshift	8
+	chunkzvelshift	8
+	chunkbasezvel	2
+	sound			world/sludgegloop
+	NoAlert
+}
+
+splash 	water
+{
+ smallclass 	watersplashbasesmall
+ smallclip		4
+ smallsound	dssplash
+
+ baseclass		watersplashbase2
+ //chunkclass	watersplash
+ chunkxvelshift	8
+ chunkyvelshift	8
+ chunkzvelshift	8
+ chunkbasezvel	2
+ sound		water
+ NoAlert
+}
+
+splash 	blood
+{
+ smallclass 	bloodsplashbasesmall
+ smallclip		4
+ smallsound	world/sludgegloopsmall
+
+
+ baseclass		bloodsplashbase
+ //chunkclass	bloodsplash
+ chunkxvelshift	8
+ chunkyvelshift	8
+ chunkzvelshift	8
+ chunkbasezvel	2
+ sound		world/sludgegloop
+ NoAlert
+}
+
+splash 	lava
+{
+ smallclass 	lavasplash
+ smallclip		10
+ smallsound	world/lavasizzlesmall
+
+
+ baseclass		lavasplash
+ //chunkclass	lavasmoke2
+ chunkxvelshift	-1
+ chunkyvelshift	-1
+ chunkzvelshift	2
+ chunkbasezvel	1
+ sound		world/lavasizzle
+ NoAlert
+}
+//********** Terrain **********
+
+terrain	 nukage
+{
+ splash 	nukage
+ footclip	 6
+ liquid
+}
+
+terrain	water
+{
+ splash 	water
+ footclip	 6
+ liquid
+}
+
+terrain	lava
+{
+ splash 	lava
+ footclip	 6
+ liquid
+}
+
+terrain	blood
+{
+ footclip	 6
+ liquid
+ splash 	blood
+}
+
+terrain Slime
+{
+ footclip	 6
+ liquid
+ splash Slime
+}
+
+ifdoom
+//Splash floors first
+floor BLOOD1 Blood
+floor BLOOD2 Blood
+floor BLOOD3 Blood
+floor FWATER1 Water
+floor FWATER2 Water
+floor FWATER3 Water
+floor FWATER4 Water
+floor LAVA1 Lava
+floor LAVA2 Lava
+floor LAVA3 Lava
+floor LAVA4 Lava
+floor NUKAGE1 Nukage
+floor NUKAGE2 Nukage
+floor NUKAGE3 Nukage
+floor SLIME01 Slime
+floor SLIME02 Slime
+floor SLIME03 Slime
+floor SLIME04 Slime
+floor SLIME05 Slime
+floor SLIME06 Slime
+floor SLIME07 Slime
+floor SLIME08 Slime
+

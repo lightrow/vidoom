@@ -1,0 +1,274 @@
+// awkward to spam, hard to maintain
+
+ACTOR Satchel : Weapon
+{
+	Weapon.BobStyle Alpha
+	Weapon.BobSpeed 2.5
+	Weapon.BobRangeX 0.2
+	Weapon.BobRangeY 0.5
+    weapon.ammotype1 "RocketAmmo"
+    weapon.ammotype2 "ThrownCharge"
+    weapon.ammouse1 1
+    weapon.ammouse2 1
+	scale 1
+    weapon.ammogive 3
+	Weapon.UpSound "weapons/putaway2"
+	Weapon.SelectionOrder 9000
+	+WEAPON.NOAUTOAIM 
+	// +WEAPON.NOAUTOFIRE
+	+WEAPON.AMMO_CHECKBOTH
+	+WEAPON.NOALERT
+	States
+	{
+	Spawn:
+		SATP A -1
+		Stop
+	Nothing:
+		TNT1 A 1 A_WeaponReady(WRF_NOFIRE)
+		goto Ready
+	Select:
+		TNT1 A 0 Offset(0, 32)
+		TNT1 A 0 A_JumpIfInventory("ThrownCharge",1,"DetonatorDraw")
+		TNT1 A 0 A_JumpIfInventory("RocketAmmo", 1, "ChargeDraw")
+		goto Nothing
+	Deselect: 
+		  TNT1 AAAAAAAAAAAAAAAA 0 A_Lower
+		  TNT1 AAAAAAA 1 A_Lower
+		  Loop
+	ChargeDraw:
+		SACD A 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SACD B 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SACD C 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SACD D 1 
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SACD E 1 
+		SACD F 1 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SACD G 1 A_WeaponReady
+		SACG A 2 A_WeaponReady
+		goto Ready
+	ChargeDrawWith:
+		TNT1 A 0
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SACW A 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SACW B 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SACW C 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SACW D 1 
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SACW E 1 
+		SACW F 1 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SACW G 1 A_WeaponReady
+		SABG A 2 A_WeaponReady
+		goto Ready
+	DetonatorDraw:
+		TNT1 A 0 A_JumpIfInventory("RocketAmmo", 1, "DrawBoth")
+		SADD A 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SADD B 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SADD C 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SADD D 1 
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SADD E 1 
+		SADD F 1 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SADD G 1 A_WeaponReady
+		SADG A 2 A_WeaponReady
+		goto Ready
+	DrawBoth:
+		SABD A 2
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SABD B 2
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SABD C 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SABD D 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SABD E 1 
+		SABD F 1 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SABD G 1 A_WeaponReady
+		SABG A 2 A_WeaponReady
+		goto Ready
+	Ready:
+		TNT1 A 0 A_JumpIfInventory("ThrownCharge",1,"ReadyDetonator")
+		TNT1 A 0 A_JumpIfInventory("RocketAmmo",1,"ReadyCharge")
+		Goto Nothing
+	ReadyBoth:
+		SABG A 1 A_WeaponReady
+		Loop
+	ReadyDetonator:
+		TNT1 A 0 A_JumpIfInventory("RocketAmmo",1,"ReadyBoth")
+		SADG A 1 A_WeaponReady
+		Loop
+	ReadyCharge:
+		SACG A 1 A_WeaponReady
+		Loop
+	Fire:
+		TNT1 A 0 A_JumpIfInventory("RocketAmmo",1,1)
+		Goto Ready
+		TNT1 A 0 A_JumpIfInventory("ThrownCharge",1,"FireNext")
+		TNT1 A 0 A_FireCustomMissile("Charge",0,1,0,0)
+		TNT1 A 0 A_GiveInventory("ThrownCharge",1)
+		SATA A 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SATA D 2
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SATA E 2
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SATA F 2
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SATA H 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SATA I 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 1
+		goto DetonatorDraw
+	FireNext:
+		TNT1 A 0 A_GiveInventory("ThrownCharge",1)
+		SATG A 0 A_FireCustomMissile("Charge",0,1,0,0)
+		SATW A 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SATW D 2
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SATW E 2
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SATW F 2
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SATW H 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SATW I 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SADG A 1
+		TNT1 A 0 A_JumpIfInventory("RocketAmmo", 1, "ChargeDrawWith")
+		goto Ready
+	Altfire:
+	TNT1 A 0 
+	TNT1 A 0 A_AlertMonsters
+		TNT1 A 0 A_JumpIfInventory("ThrownCharge",1,"AltFireDetonator")
+		goto Ready
+	AltFireBoth:
+		SAXW A 2 
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SAXW B 2 
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SAXW C 2
+		TNT1 A 0 A_Playsound("weapons/c4use",5)
+		SAXW C 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SAXW D 5 Thing_Destroy(1999)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SAXW E 2 
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SAXW F 2 
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SAXW G 2 
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SACG A 2
+ 		Goto Ready
+	AltFireDetonator:
+		TNT1 A 0 A_TakeInventory("ThrownCharge",0)
+		TNT1 A 0 A_JumpIfInventory("RocketAmmo",1,"AltFireBoth")
+		SAXA A 2 
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SAXA B 2 
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SAXA C 2 
+		TNT1 A 0 A_Playsound("weapons/c4use",5)
+		SAXA C 1 
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SAXA D 5 Thing_Destroy(1999)
+		SAXA E 2 
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SAXA F 2
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		SAXA G 2
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 2
+		Goto Ready
+	}
+}
+
+ACTOR ThrownCharge: Ammo
+{
+ Inventory.MaxAmount 99
+}
+
+ACTOR Charge
+{
+	Projectile
+	+SHOOTABLE
+	+THRUGHOST
+	+THRUSPECIES
+	+BOUNCEONWALLS
+	+BOUNCEONFLOORS
+	+BOUNCEONCEILINGS
+	+ALLOWBOUNCEONACTORS
+	-NOGRAVITY
+	+MOVEWITHSECTOR
+	+EXTREMEDEATH
+	+USEBOUNCESTATE
+	+BOUNCEONACTORS
+	+CANBOUNCEWATER
+	+DONTBLAST
+	+DONTTHRUST
+	Species "Player"
+	Health 100
+    Damage 0
+    Speed 30
+    Scale 0.6
+	Friction 1
+	BounceType Hexen
+    BounceFactor 0.3
+    WallBounceFactor 0.2
+    Radius 2
+    Height 4
+    DontHurtShooter
+    Renderstyle Normal
+    States
+    {
+    Spawn:
+      SATP B 1
+      SATP B 1 Thing_ChangeTid(0,1999)
+      Goto RealSpawn
+	RealSpawn:
+		SATP B 1
+		Loop
+    Death:
+        SATP B 1 Thing_ChangeTid(0,1999)
+		TNT1 A 0 A_AlertMonsters
+		TNT1 A 0 A_SetTranslucent (0.95, 1)
+		TNT1 A 0 A_SetScale (1.2)
+		TNT1 A 0 A_Blast(0,255,200,20)
+		SATP B 1
+		TNT1 A 0 A_Explode(220,200)
+		TNT1 A 0 A_PlaySound ("weapons/rocklx", 5, 1, 0, 0.5)
+		TNT1 A 0 A_ChangeFlag ("NOGRAVITY", 1)
+		TNT1 A 0 A_Stop
+		//TNT1 A 0 A_Jump (256, 1,5,10)
+		TNT1 AAAAAAAAAAAA 0 A_SpawnParticle (730000, SPF_FULLBRIGHT | SPF_RELATIVE, random(30,70), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+		//TNT1 A 0 A_Jump (256, 1,5,10)
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle (ef0000, SPF_FULLBRIGHT | SPF_RELATIVE, random(25,60), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+		//TNT1 A 0 A_Jump (256, 1,5,10)
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle (f37317, SPF_FULLBRIGHT | SPF_RELATIVE, random(20,50), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+		//TNT1 A 0 A_Jump (256, 1,5,10)
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle (ffa35b, SPF_FULLBRIGHT | SPF_RELATIVE, random(15,40), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+		//TNT1 A 0 A_Jump (256, 1,3,6)
+		TNT1 AAAAAAAAA 0 A_SpawnParticle (ffffff, SPF_FULLBRIGHT | SPF_RELATIVE, random(10,30), random(1,4), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,0, 0.98, -1)
+		expl d 0 a_quake (4,25,0,250,0)
+		expl d 0 a_quake (2,25,0,500,0)
+		expl d 0 a_quake (1,25,0,800,0)
+		rexp ABCDEF 2 Bright
+		TNT1 A 0 A_SpawnItemEx ("SmallFireSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		rexp GHIJKL 2 Bright
+		rexp M 2 A_SpawnItemEx("RocketSmokeTrail", random(-40, 40), random(-40, 40), random(0, 30))
+		rexp N 2 A_SpawnItemEx("RocketSmokeTrail", random(-40, 40), random(-40, 40), random(0, 30))
+		TNT1 AAAA 0 A_SpawnItemEx("RocketSmokeTrail", random(-40, 40), random(-40, 40), random(0, 30))
+		Stop
+    }
+}
+

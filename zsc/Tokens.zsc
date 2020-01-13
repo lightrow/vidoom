@@ -1,0 +1,33 @@
+class isSliding : Inventory
+{
+	default
+	{
+	+INVENTORY.ALWAYSPICKUP;
+	INVENTORY.maxamount 1;
+	}
+}
+
+class IsChoosingWeapon: Inventory
+{
+	default
+	{
+		Inventory.maxamount 1;
+	}
+}
+
+class HasSwitchedWeapon: Inventory
+{
+	default
+	{
+		Inventory.maxamount 1;
+	}
+}
+
+
+class isSprinting: Inventory
+{
+	default
+	{
+		Inventory.maxamount 1;
+	}
+}

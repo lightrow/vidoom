@@ -1,0 +1,163 @@
+#library "cvars"
+
+#include "zcommon.acs"
+ 
+
+// --------------------------------------------------
+// CVAR GETTERS
+// 
+
+script "sgswaptoggle" (void)
+{
+    SetResultValue(GetCVar("vi_sgswaptoggle"));
+}
+
+script "prettyparticles" (void)
+{
+    SetResultValue(GetCVar("vi_prettyparticles"));
+}
+
+script "tracers" (void)
+{
+    SetResultValue(GetCVar("vi_tracers"));
+}
+
+script "crouchduration" (void)
+{
+    SetResultValue(GetCVar("vi_crouchduration"));
+}
+
+script "redscreen" (void)
+{
+    SetResultValue(GetCVar("vi_redscreen"));
+}
+
+
+script "ResetHealth" (void)
+{
+	SetActorProperty(0, APROP_Health, 100);
+}
+
+// reloading stuff
+
+bool DoCheckReload = false;
+bool GottaReload = false;
+bool GottaAim = false;
+
+Script "CheckReloadButton" (void) 
+{ 
+	Delay(10);
+	DoCheckReload = true;
+	while (DoCheckReload)
+	{
+		int buttons = GetPlayerInput(-1, INPUT_BUTTONS);
+		if (buttons & BT_RELOAD) 
+		{
+			GottaReload = true;
+			DoCheckReload = false;
+
+		}
+		if (buttons & BT_ALTATTACK) 
+		{
+			GottaReload = true;
+			DoCheckReload = false;
+		}
+		Delay(1);
+	}
+}
+
+Script "Duck" (void)
+{
+    SetActorProperty(0,APROP_HEIGHT,20);
+}
+
+Script "Unduck" (void)
+{
+    SetActorProperty(0,APROP_HEIGHT,56);
+}
+
+Script "CheckFireReload" (void) 
+{
+	Delay(10);
+	DoCheckReload = true;
+	while (DoCheckReload)
+	{
+		int buttons = GetPlayerInput(-1, INPUT_BUTTONS);
+		if (buttons & BT_ATTACK) 
+		{
+			GottaReload = true;
+			DoCheckReload = false;
+		}
+		Delay(1);
+	}
+}
+
+Script "CheckFireHold" (void) 
+{
+	int buttons = GetPlayerInput(-1, INPUT_BUTTONS);
+	if (buttons & BT_ATTACK) 
+	{
+		SetResultValue(1);
+	}
+	else
+	{
+		SetResultValue(0);
+	}
+}
+
+
+Script "StopCheckingReload" (void) 
+{
+	DoCheckReload = false;
+}
+
+Script "WasReloadPressed" (void)
+{
+	if ( GottaReload )
+	{
+		GottaReload = false;
+		SetResultValue(1);
+	}
+	else
+	{
+		SetResultValue(0);
+	}
+}
+
+Script "WasAimPressed" (void)
+{
+	if ( GottaAim)
+	{
+		GottaAim = false;
+		SetResultValue(1);
+	}
+	else
+	{
+		SetResultValue(0);
+	}
+}
+
+
+// misc
+
+script "thrustZ" (void)
+{	
+	int z = GetActorZ(0);
+	if (z<10) {
+		ThrustThingZ(0,128,1,1);
+	} else {
+		ThrustThingZ(0,20,0,0); 
+	}
+}
+
+Script "CountCharges" (void) 
+{ 
+	if (ThingCount(T_NONE, 1999) > 0) {
+		SetResultValue(1);
+	} else {
+		SetResultValue(0);
+	}
+	
+}
+
+

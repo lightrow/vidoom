@@ -1,0 +1,62 @@
+AddOptionMenu "OptionsMenu"
+{
+	StaticText "-----"
+	StaticText "Voyage Infernal"
+	Submenu "Voyage Infernal Options", "honhon"
+	StaticText "-----"
+}
+
+
+OptionValue PistolStart
+{
+	0.0, "No"
+	1.0, "Yes"
+}
+
+OptionValue PrettyParticles
+{
+	0.0, "No"
+	1.0, "Yes"
+}
+
+OptionValue Tracers
+{
+	0.0, "No"
+	1.0, "Yes"
+}
+
+
+OptionValue RedScreen
+{
+	0.0, "No"
+	1.0, "Yes"
+}
+
+OptionValue WMCentered
+{
+	0.0, "Vertical"
+	1.0, "Horizonal"
+}
+
+
+
+
+OptionMenu "honhon"
+{
+title "Voyage Infernal Options"
+
+StaticText " "
+StaticText " "
+// option "Pistol start", "vi_pistolstart", "PistolStart"
+option "Muzzleflash particles", "vi_prettyparticles", "PrettyParticles"
+option "Bullet tracers", "vi_tracers", "Tracers"
+option "Weapon List", "vi_wm_centered", "WMCentered"
+StaticText " "
+StaticText "Requires level restart"
+Slider "Crouch-slide duration", "vi_crouchduration", 5, 150, 1
+option "Low health effects", "vi_redscreen", "RedScreen"
+StaticText " "
+StaticText " "
+
+}
+

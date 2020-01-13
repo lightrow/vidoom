@@ -1,0 +1,269 @@
+Actor BerserkToken: Inventory {Inventory.maxamount 1}
+
+
+actor lightvest : greenarmor replaces greenarmor
+{
+	INVENTORY.PICKUPSOUND "misc/armor1_pickup"
+	inventory.pickupmessage "recon vest"
+states
+	{
+	spawn:
+		ARML A -1 bright
+		stop
+	loop
+	}
+}
+
+
+actor heavyvest : bluearmor replaces bluearmor
+{
+	INVENTORY.PICKUPSOUND "misc/armor2_pickup"
+	inventory.pickupmessage "assault vest"
+states
+	{
+	spawn:
+		ARMH A -1 bright
+		stop
+	loop
+	}
+}
+
+
+
+actor newradsuit: PowerupGiver replaces radsuit
+{
+	INVENTORY.PICKUPSOUND "misc/radsuit_pickup"
+	inventory.pickupmessage "hazard suit"
+	Inventory.MaxAmount 0
+	Height 46
+	  Powerup.Type "NewPowerIronFeet"
+    +INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	States
+	{
+		Spawn:
+			SUIT A -1 Bright
+			Stop			
+	}
+	
+}
+
+
+
+actor armorvial : armorbonus replaces armorbonus
+{
+	inventory.pickupmessage "snake oil"
+	INVENTORY.PICKUPSOUND "misc/abonus_pickup"
+	scale 0.4
+states
+	{
+	spawn: 
+	VIAR ABCDEFGH 5 bright
+	loop
+	}
+}
+
+actor newblursphere : custominventory replaces blursphere
+{
+	+FLOATBOB
+	FloatBobStrength 0.2
+	scale 0.4
+	Inventory.PickupSound none 
+	inventory.pickupmessage "invisibility"
+	states
+	{
+	spawn:
+	TNT1 A 0 //A_PlaySound("misc/invisibility_loop", 7, 1, 1.2)
+    PNKS ABCDEFGHIJKLMNOPQRSTUV 3 BRIGHT
+	loop
+	Pickup:
+	TNT1 A 0 A_GiveInventory("blursphere")
+	TNT1 A 0 A_PlaySound("misc/invisibility_pickup",0,1,0,0.1)
+	stop
+}
+}
+
+actor newinvulnsphere : custominventory replaces InvulnerabilitySphere
+{
+	FloatBobStrength 0.2
+	+FLOATBOB
+	scale 0.4
+	inventory.pickupmessage "invulnerability"
+	Inventory.PickupSound none 
+	
+states
+	{
+	spawn:
+	TNT1 A 0 //A_PlaySound("misc/invulnerability_loop", 7, 1, 1.2)
+	SPHC abcd 1 bright
+	loop
+	Pickup:
+	TNT1 A 0 A_GiveInventory("actualInvul")
+	TNT1 A 0 A_PlaySound("misc/invulnerability_pickup",0,1,0,0.1)
+	stop
+	}
+}
+
+actor actualInvul : InvulnerabilitySphere
+{
+	Inventory.PickupSound none 
+	Powerup.Color GoldMap
+}
+
+actor newmap : allmap replaces allmap
+{
+	inventory.pickupmessage "a map"
+	INVENTORY.PICKUPSOUND "misc/map_pickup"
+}
+
+
+ACTOR NewClip : Clip replaces Clip
+{
+	INVENTORY.PICKUPSOUND "misc/clip_pickup"
+	inventory.pickupmessage "some bullets"
+	//Inventory.Amount 7
+	scale 0.8
+	States
+	{
+	Spawn:
+    TNT1 A 0
+	CL64 A -1
+    stop
+	}
+}
+
+ACTOR NewClipBox : ClipBox replaces ClipBox
+{
+	INVENTORY.PICKUPSOUND "misc/ammo_pickup"
+	inventory.pickupmessage "a box of bullets"
+	//Inventory.Amount 40
+	scale 0.5
+	States
+	{
+	OldSpawn:
+    TNT1 A 0
+	AMMO A -1
+    stop
+	
+	Spawn:
+	AM64 A -1
+    stop
+	}
+}
+
+Actor NewShell : Shell replaces Shell
+{
+	//Inventory.Amount 2
+	inventory.pickupmessage "some shells"
+	INVENTORY.PICKUPSOUND "misc/shell_pickup"
+	scale 0.5
+		States
+	{
+	Spawn:
+    TNT1 A 0
+	SHEB A -1
+    stop
+	}
+
+}
+
+ACTOR NewShellBox : ShellBox replaces ShellBox
+{
+	INVENTORY.PICKUPSOUND "misc/shellbox_pickup"
+	inventory.pickupmessage "a box of shells"
+	//Inventory.Amount 16
+	scale 0.55
+	States
+	{
+	Spawn:
+    TNT1 A 0
+	SH64 A -1
+    stop
+	
+	64Spawn:
+	SBOX A -1
+    stop
+	}
+}
+
+Actor NewRocketAmmo : RocketAmmo replaces RocketAmmo
+{
+	Inventory.Amount 1
+	INVENTORY.PICKUPSOUND "weapons/rocket_pickup"
+	inventory.pickupmessage "a rocket"
+	scale 0.8
+	States
+	{
+	Spawn:
+		ROCK P -1
+		Stop
+	}
+}
+
+
+
+ACTOR NewRocketBox : RocketBox replaces RocketBox
+{
+	//Inventory.Amount 3
+	inventory.pickupmessage "a box of rockets"
+	INVENTORY.PICKUPSOUND "misc/nades_pickup"
+	scale 0.8
+	States
+	{	
+	Spawn:
+	ROCK R -1
+    stop
+  }
+}
+
+
+
+
+ACTOR NewCell : Cell replaces Cell
+{
+	INVENTORY.PICKUPSOUND "misc/cell_pickup"
+	inventory.pickupmessage "a battery"
+	scale 0.4
+	States
+	{
+	Spawn:
+	CELS A -1
+	stop
+  }
+}
+
+ACTOR NewCellBig : CellPack replaces CellPack
+{
+	INVENTORY.PICKUPSOUND "misc/bulkcell_pickup"
+	inventory.pickupmessage "a bigger battery"
+	scale 0.5
+	States
+	{
+	Spawn:
+	TNT1 A 0
+    CELB A -1
+    stop
+	}
+}
+
+
+
+ACTOR NewPack : Backpack replaces Backpack
+{
+	INVENTORY.PICKUPSOUND "misc/backpack_pickup"
+	inventory.pickupmessage "a backpack"
+	States
+	{
+	Spawn:
+	TNT1 A 0
+    BPAK A -1
+    stop
+	}
+}
+
+
+actor newgoggles : infrared replaces infrared
+{
+	INVENTORY.PICKUPSOUND "misc/light_pickup"
+	inventory.pickupmessage "nightvision"
+}

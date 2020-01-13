@@ -1,0 +1,612 @@
+// unmaintainable mess, should have used additional flash states
+
+ACTOR PlasmaCannon : PlasmaRifle replaces PlasmaRifle
+{
+	Weapon.BobStyle Alpha
+	Weapon.BobSpeed 2.5
+	Weapon.BobRangeX 0.2
+	Weapon.BobRangeY 0.5
+	Weapon.UpSound "weapons/plasmaup"
+   	States
+   	{
+	Spawn:
+		PLZP A -1
+		Stop
+	Deselectbad:
+		PLZG A 1 Offset(2, 34)
+		PLZG A 1 Offset(7, 39)
+		PLZG A 1 Offset(10, 47)
+		PLZG A 1 Offset(22, 58)
+		PLZG A 1 Offset(32, 69)
+		PLZG A 1 Offset(54, 81)
+		PLZG A 1 Offset(67, 100)
+		TNT1 A 0 A_StopSound(7)
+		PLZG A 1 A_Lower
+		Wait 
+   Deselect: 
+      TNT1 A 0 A_StopSound(7)
+      TNT1 AAAAAAAAAAAAAAAA 0 A_Lower
+      TNT1 AAAAAAA 1 A_Lower
+      Loop
+
+	Select:
+		TNT1 A 0 A_JumpIfInventory("Charges",4,"Select4")
+		TNT1 A 0 A_JumpIfInventory("Charges",3,"Select3")
+		TNT1 A 0 A_JumpIfInventory("Charges",2,"Select2")
+		TNT1 A 0 A_JumpIfInventory("Charges",1,"Select1")
+		PLZE A 1 Offset(67, 100)
+		PLZE A 1 Offset(54, 81)
+		PLZE b 1 Offset(32, 69)
+		PLZE b 1 Offset(22, 58)
+		PLZE c 1 Offset(16, 53)
+		PLZE c 1 Offset(10, 47)
+		PLZE d 1 Offset(7, 39)
+		PLZE d 1 Offset(4, 36)
+		PLZE b 1 Offset(2, 34)
+		PLZE b 1 Offset(0, 32)
+		Goto Ready
+	Select4:
+		PLZA A 1 Offset(67, 100)
+		PLZA A 1 Offset(54, 81)
+		PLZA b 1 Offset(32, 69)
+		PLZA b 1 Offset(22, 58)
+		PLZA c 1 Offset(16, 53)
+		PLZA c 1 Offset(10, 47)
+		PLZA d 1 Offset(7, 39)
+		PLZA d 1 Offset(4, 36)
+		PLZA b 1 Offset(2, 34)
+		PLZA b 1 Offset(0, 32)
+		Goto Ready
+	Select3:
+		PLZB A 1 Offset(67, 100)
+		PLZB A 1 Offset(54, 81)
+		PLZB b 1 Offset(32, 69)
+		PLZB b 1 Offset(22, 58)
+		PLZB c 1 Offset(16, 53)
+		PLZB c 1 Offset(10, 47)
+		PLZB d 1 Offset(7, 39)
+		PLZB d 1 Offset(4, 36)
+		PLZB b 1 Offset(2, 34)
+		PLZB b 1 Offset(0, 32)
+		Goto Ready
+	Select2:
+		PLZC A 1 Offset(67, 100)
+		PLZC A 1 Offset(54, 81)
+		PLZC b 1 Offset(32, 69)
+		PLZC b 1 Offset(22, 58)
+		PLZC c 1 Offset(16, 53)
+		PLZC c 1 Offset(10, 47)
+		PLZC d 1 Offset(7, 39)
+		PLZC d 1 Offset(4, 36)
+		PLZC b 1 Offset(2, 34)
+		PLZC b 1 Offset(0, 32)
+		Goto Ready
+	Select1:
+		PLZD A 1 Offset(67, 100)
+		PLZD A 1 Offset(54, 81)
+		PLZD b 1 Offset(32, 69)
+		PLZD b 1 Offset(22, 58)
+		PLZD c 1 Offset(16, 53)
+		PLZD c 1 Offset(10, 47)
+		PLZD d 1 Offset(7, 39)
+		PLZD d 1 Offset(4, 36)
+		PLZD b 1 Offset(2, 34)
+		PLZD b 1 Offset(0, 32)
+		Goto Ready
+	Fire:
+		TNT1 A 0 A_JumpIfInventory("Charges",4,"Fire4")
+		TNT1 A 0 A_JumpIfInventory("Charges",3,"Fire3")
+		TNT1 A 0 A_JumpIfInventory("Charges",2,"Fire2")
+		TNT1 A 0 A_JumpIfInventory("Charges",1,"Fire1")
+		goto Fire0
+	Fire4:
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",15,"Fire44")
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",10,"Fire43")
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",5,"Fire42")
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",1,"Fire41")
+		goto Fire40
+	Fire3:
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",15,"Fire34")
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",10,"Fire33")
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",5,"Fire32")
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",1,"Fire31")
+		goto Fire30
+	Fire2:
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",15,"Fire24")
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",10,"Fire23")
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",5,"Fire22")
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",1,"Fire21")
+		goto Fire20
+	Fire1:
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",15,"Fire14")
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",10,"Fire13")
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",5,"Fire12")
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",1,"Fire11")
+		goto Fire10
+	Fire0:
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",15,"Fire04")
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",10,"Fire03")
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",5,"Fire02")
+		TNT1 A 0 A_JumpIfInventory("ChargeHealth",1,"Fire01")
+		goto Fire00
+		
+		
+		
+	Fire44:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZF A 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready	
+	Fire43:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZF B 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire42:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZF C 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire41:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZF D 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire40:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZF EFG 1
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZF HIJ 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire("Fire401")
+		goto Reload
+	Fire401:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZA G 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire("Fire401")
+		Goto Reload
+		
+		
+		
+	Fire34:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZG A 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire33:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZG B 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire32:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZG C 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire31:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZG D 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire30:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZG EFG 1
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZG HIJ 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire("Fire301")
+		goto Reload
+	Fire301:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZB G 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire("Fire301")
+		Goto Reload
+		
+		
+		
+	Fire24:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZH A 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire23:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZH B 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire22:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZH C 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire21:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZH D 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire20:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZH EFG 1
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZH HIJ 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire("Fire201")
+		goto Reload
+	Fire201:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZC G 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire("Fire201")
+		Goto Reload
+		
+		
+		
+	Fire14:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZI A 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire13:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZI B 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire12:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZI C 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire11:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZI D 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire10:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZI EFG 1
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZI HIJ 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire("Fire101")
+		goto Reload
+	Fire101:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZD G 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire("Fire101")
+		Goto Reload
+		
+		
+		
+	Fire04:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZJ A 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire03:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZJ B 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire02:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZJ C 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire01:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_TakeInventory("ChargeHealth",2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZJ D 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire
+		Goto Ready
+	Fire00:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZJ EFG 1
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZJ HIJ 1
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire("Fire001")
+		goto Reload
+	Fire001:
+		TNT1 A 0 A_Gunflash
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZE G 4
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		TNT1 A 0 A_Refire("Fire001")
+		Goto Reload
+
+
+		
+		
+	Tap4:
+		TNT1 A 0 A_TakeInventory("Charges",1)
+		TNT1 A 0 A_GiveInventory("ChargeHealth",40)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZT ABCD 3
+		PLZT F 2 Offset(3,32)
+		PLZT G 3 Offset(3,32)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZT G 4 Offset(6,32)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZT HIJKLM 3
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		Goto Ready
+	Tap3:
+		TNT1 A 0 A_TakeInventory("Charges",1)
+		TNT1 A 0 A_GiveInventory("ChargeHealth",40)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZU ABCD 3
+		PLZU F 2 Offset(3,32)
+		PLZU G 3 Offset(3,32)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZU G 4 Offset(6,32)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZU HIJKLM 3
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		Goto Ready
+	Tap2:
+		TNT1 A 0 A_TakeInventory("Charges",1)
+		TNT1 A 0 A_GiveInventory("ChargeHealth",40)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZV ABCD 3
+		PLZV F 2 Offset(3,32)
+		PLZV G 3 Offset(3,32)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZV G 4 Offset(6,32)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZV HIJKLM 3
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		Goto Ready
+	Tap1:
+		TNT1 A 0 A_TakeInventory("Charges",1)
+		TNT1 A 0 A_GiveInventory("ChargeHealth",40)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZW ABCD 3
+		PLZW F 2 Offset(3,32)
+		PLZW G 3 Offset(3,32)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZW G 4 Offset(6,32)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZW HIJKLM 3
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		Goto Ready
+	Reload:
+		TNT1 A 0 A_JumpIfInventory("Charges",4,"Tap4")
+		TNT1 A 0 A_JumpIfInventory("Charges",3,"Tap3")
+		TNT1 A 0 A_JumpIfInventory("Charges",2,"Tap2")
+		TNT1 A 0 A_JumpIfInventory("Charges",1,"Tap1")
+		TNT1 A 0 A_GiveInventory("Charges",4)
+		TNT1 A 0 A_GiveInventory("ChargeHealth",40)
+		PLZR ABC 1
+		PLZR DEF 2
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZR GHIJ 3
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZY ABCD 3
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZR K 5
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZR LMN 3
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZR O 2
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZR P 2
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZY E 3
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZY F 3
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZR QR 3
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZR ST 3
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZR U 2
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZR V 2
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZY G 3 
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZR W 3 
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZY H 3 
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZR X 3
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLZR YZ 3
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PLXR AB 3
+		Goto Ready
+	Ready:
+		TNT1 A 0 A_GiveInventory("ChargeHealth",5)
+		TNT1 A 0 A_PlaySound("weapons/plasmaloop", 7, 1, 1, 1.4)
+		TNT1 A 0 A_JumpIfInventory("Charges",4, "Ready4")
+		TNT1 A 0 A_JumpIfInventory("Charges",3, "Ready3")
+		TNT1 A 0 A_JumpIfInventory("Charges",2, "Ready2")
+		TNT1 A 0 A_JumpIfInventory("Charges",1, "Ready1")
+		PLZE A 3 A_WeaponReady
+		PLZE C 3 A_WeaponReady
+		PLZE b 3 A_WeaponReady
+		PLZE D 3 A_WeaponReady
+		Loop
+	Ready4:
+		PLZA A 3 A_WeaponReady
+		PLZA C 3 A_WeaponReady
+		PLZA b 3 A_WeaponReady
+		PLZA D 3 A_WeaponReady
+		Loop
+	Ready3:
+		PLZB A 3 A_WeaponReady
+		PLZB C 3 A_WeaponReady
+		PLZB b 3 A_WeaponReady
+		PLZB D 3 A_WeaponReady
+		Loop
+	Ready2:
+		PLZC A 3 A_WeaponReady
+		PLZC C 3 A_WeaponReady
+		PLZC b 3 A_WeaponReady
+		PLZC D 3 A_WeaponReady
+		Loop
+	Ready1:
+		PLZD A 3 A_WeaponReady
+		PLZD C 3 A_WeaponReady
+		PLZD b 3 A_WeaponReady
+		PLZD D 3 A_WeaponReady
+		Loop
+	Flash:
+		TNT1 A 0 A_AlertMonsters
+		TNT1 A 0 A_GiveInventory("hotToken",1)
+		TNT1 A 0 A_PlaySound("weapons/plzstart", CHAN_WEAPON, 1.2, 0, 0.7)	
+		TNT1 A 0 A_PlaySound("weapons/plzfire", CHAN_WEAPON, 0.90, 0, 0.7)
+		TNT1 A 0 A_ZoomFactor(0.997,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
+		PLZM A 1 Bright
+		TNT1 A 0 a_firecustommissile ("hydrabullet",0,1,0,0,0,1)
+		TNT1 A 0 a_firecustommissile ("hydrabullet",-0.5,0,0,0,0,-0.5)
+		TNT1 A 0 a_firecustommissile ("hydrabullet",0.5,0,0,0,0,-0.5)
+		TNT1 A 0 A_ZoomFactor(1,ZOOM_NOSCALETURNING)
+		PLZM B 2 Bright
+      	Goto LightDone
+}
+}
+
+actor ChargeHealth : Inventory {
+  +INVENTORY.UNTOSSABLE
+  +INVENTORY.IGNORESKILL
+  inventory.maxamount 20
+}
+
+actor Charges : Inventory {
+  +INVENTORY.UNTOSSABLE
+  +INVENTORY.IGNORESKILL
+  inventory.maxamount 4
+}
+
+
+actor hotToken : Inventory {
+  +INVENTORY.UNTOSSABLE
+  +INVENTORY.IGNORESKILL
+  inventory.maxamount 20
+}
+
+actor hydrabullet : fastprojectile
+{
+	+notimefreeze
+	projectile
+	+THRUSPECIES
+	species "friendly"
+	// missiletype "hydratrail"
+	missileheight 8
+	+FORCEXYBILLBOARD
+	+Bloodsplatter
+	+LOOKALLAROUND
+	+bright
+	height 8
+	radius 1
+	speed 90
+	damage 2
+	scale 0.50
+	decal doomimpscorch
+	DeathSound "weapons/plasmax"
+	states
+	{
+	spawn:
+		HRBL A 1
+		loop
+	death:
+		TNT1 A 0 A_SetScale(0.5)
+		PLSE ABCDE 4 Bright
+		stop
+	}
+}
+
+actor hydratrail
+{
+	+NOINTERACTION
+	+clientsideonly
+	Radius 1
+	Height 5
+	Renderstyle add
+	scale 0.50
+	Alpha 0.85
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		HRBL A 1 Bright a_fadeout (0.50)
+		wait
+	}
+}

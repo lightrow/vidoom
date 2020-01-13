@@ -1,0 +1,472 @@
+
+Class PlasmaHowitzer : BFG9000
+{	
+  Default
+	{Weapon.BobStyle "Alpha";
+	Weapon.BobSpeed 3.12;
+	Weapon.BobRangeX 0.2;
+	Weapon.BobRangeY 0.3;
+	inventory.pickupmessage "a lost XF-500";
+	tag "XF-500";}
+	States
+	{
+	Spawn:
+		BFGP A -1;
+		Stop;
+	Ready:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
+		BFGR A 1 A_WeaponReady();
+		Loop;
+	SlideStart:
+		BFGR A 1 Offset(0,33);
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+		BFGR A 1 Offset(0,35);
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+		BFGR A 1 Offset(0,38);
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+		BFGR A 1 Offset(0,40);
+		goto Sliding;
+	Sliding:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
+		TNT1 A 0 A_Jump(256,"SlideEnd");
+		BFGR A 1 Offset(0,40);
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+		Loop;
+	SlideEnd:
+		BFGR A 1 Offset(0,40);
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+		BFGR A 1 Offset(0,38);
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+		BFGR A 2 Offset(0,35);
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+		BFGR A 2 Offset(0,33);
+		goto Ready;
+	Select:
+		TNT1 A 0 A_GiveInventory("HasSwitchedWeapon",1);
+		BFGR C 1 Offset(67, 100) A_PlaySound("weapons/bfgup",7);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		BFGR D 1 Offset(54, 81);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		BFGR A 1 Offset(32, 69);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		BFGR B 1 Offset(26, 58);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		BFGR C 1 Offset(14, 47);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		BFGR D 1 Offset(7, 39);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		BFGR A 1 Offset(3, 36);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		BFGR B 2 Offset(2, 34);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		BFGR C 3 Offset(1, 33);
+		BFGR D 3 A_WeaponReady();
+		BFGR A 3 A_WeaponReady();
+		BFGR B 3 A_WeaponReady();
+		BFGR C 3 A_WeaponReady();
+		BFGR D 4 A_WeaponReady();
+		goto Ready;
+   Deselect: 
+      //TNT1 A 0 A_StopSound(7);
+      TNT1 AAAAAAAAAAAAAAAA 0 A_Lower;
+      TNT1 AAAAAAA 1 A_Lower;
+      Loop;
+    Fire: 
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 A_PlaySound("weapons/bfgcharge",7,1,0);
+		BFGR a 4 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR b 3 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 3;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR d 3;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 A_Gunflash;
+		BFGR a 2;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR b 2;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 1 Offset (-1,0) A_SetAngle(angle-0.3);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-0.0);
+		BFGR c 1 Offset (1,0) A_SetAngle(angle+0.3);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-0.0);
+		BFGR d 2 Offset (-1,31) A_SetAngle(angle-0.3);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch+0.2);
+		BFGR a 1 Offset (2,33) A_SetAngle(angle+0.3);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-0.2);
+		BFGR b 1 Offset (-2,33) A_SetAngle(angle-0.5);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-0.1);
+		BFGR c 1 Offset (2,31) A_SetAngle(angle+0.5);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch+0.2);
+		BFGR d 1 Offset (-3,33) A_SetAngle(angle-0.7);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-0.5);
+		BFGR a 1 Offset (3,30) A_SetAngle(angle+0.7);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch+0.5);
+		BFGR b 1 Offset (-3,31) A_SetAngle(angle-1.0);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-0.1);
+		BFGR c 1 Offset (3,34) A_SetAngle(angle+1.0);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch+0.9);
+    	BFGR d 1 Offset (-3,34);
+		TNT1 A 0 A_SetAngle(angle-1.5) ;
+		TNT1 A 0 a_setpitch(pitch+0.4);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR a 1 Offset (4,31) A_SetAngle(angle+1.5);
+		TNT1 A 0 a_setpitch(pitch-1.0);
+		BFGR b 0 A_PlaySound("weapons/bfgf",1);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 1 Offset (-4,27) A_SetAngle(angle-2.0) ;
+		TNT1 A 0 a_setpitch(pitch-0.5);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR d 1 Offset (4,31) A_SetAngle(angle+2.0) ;
+		TNT1 A 0 a_setpitch(pitch+0.4);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR a 1 Offset (-5,36) A_SetAngle(angle-2.0) ;
+		TNT1 A 0 a_setpitch(pitch-2.0);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR b 1 Offset (5,29) A_SetAngle(angle+2.0) ;
+		TNT1 A 0 a_setpitch(pitch+1.0);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 1 Offset (-5,32) A_SetAngle(angle-3.0) ;
+		TNT1 A 0 a_setpitch(pitch-2.0);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR d 1 Offset (6,32) A_SetAngle(angle+3.0) ;
+		TNT1 A 0 a_setpitch(pitch+0.6);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR a 1 Offset (-6,34) A_SetAngle(angle-4.0) ;
+		TNT1 A 0 a_setpitch(pitch+2.0);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR b 1 Offset (6,36) A_SetAngle(angle+3.0) ;
+		TNT1 A 0 a_setpitch(pitch-1.0);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 1 Offset(0,55)  A_FireProjectile("howitzerball", 0, 1);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR d 1 Offset(0,55) a_setpitch(pitch-2.0);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR a 1 Offset(0,53) a_setpitch(pitch-1.6);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR b 1 Offset(0,53) a_setpitch(pitch+0.6);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 1 Offset(0,47) a_setpitch(pitch+0.7);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR d 1 Offset(0,47) a_setpitch(pitch+0.7);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR a 1 Offset(0,41) a_setpitch(pitch+0.6);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR b 1 Offset(0,41) a_setpitch(pitch+0.5);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 1 Offset(0,36) a_setpitch(pitch+0.4);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR d 1 Offset(0,36) a_setpitch(pitch+0.4);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR A 1 A_ReFire;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR b 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR d 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR A 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR b 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR d 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR a 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR b 1 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR c 1 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR d 1 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR a 1 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR b 1 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR c 1 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR d 1 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR A 2 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR b 2 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR c 3 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR d 3 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR a 4 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR b 4 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR c 5;
+		TNT1 A 0 A_WeaponReady();
+		BFGR d 5;
+		TNT1 A 0 A_WeaponReady();
+    	goto Ready;
+	Hold:
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 A_Gunflash;
+		BFGR A 1 A_PlaySound("weapons/bfgchargeshort",7,1,0);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR a 1;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR b 2;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 1 Offset (-1,0) A_SetAngle(angle-0.3);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-0.0);
+		BFGR c 1 Offset (1,0) A_SetAngle(angle+0.3);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-0.0);
+		BFGR d 2 Offset (-1,31) A_SetAngle(angle-0.3);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch+0.2);
+		BFGR a 1 Offset (2,33) A_SetAngle(angle+0.3);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-0.2);
+		BFGR b 1 Offset (-2,33) A_SetAngle(angle-0.5);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-0.1);
+		BFGR c 1 Offset (2,31) A_SetAngle(angle+0.5);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch+0.2);
+		BFGR d 1 Offset (-3,33) A_SetAngle(angle-0.7);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-0.5);
+		BFGR a 1 Offset (3,30) A_SetAngle(angle+0.7);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch+0.5);
+		BFGR b 1 Offset (-3,31) A_SetAngle(angle-1.0);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-0.1);
+		BFGR c 1 Offset (3,34) A_SetAngle(angle+1.0);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch+0.9);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+    	BFGR d 1 Offset (-3,34);
+		TNT1 A 0 A_SetAngle(angle-1.5) ;
+		TNT1 A 0 a_setpitch(pitch+0.4);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR a 1 Offset (4,31) A_SetAngle(angle+1.5);
+		TNT1 A 0 a_setpitch(pitch-1.0);
+		BFGR b 0 A_PlaySound("weapons/bfgf",1);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 1 Offset (-4,27) A_SetAngle(angle-2.0) ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-0.5);
+		BFGR d 1 Offset (4,31) A_SetAngle(angle+2.0) ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch+0.4);
+		BFGR a 1 Offset (-5,36) A_SetAngle(angle-2.0) ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-2.0);
+		BFGR b 1 Offset (5,29) A_SetAngle(angle+2.0) ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch+1.0);
+		BFGR c 1 Offset (-5,32) A_SetAngle(angle-3.0) ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-2.0);
+		BFGR d 1 Offset (6,32) A_SetAngle(angle+3.0) ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch+0.6);
+		BFGR a 1 Offset (-6,45) A_SetAngle(angle-4.0) ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch+2.0);
+		BFGR b 1 Offset (6,45) A_SetAngle(angle+3.0) ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 a_setpitch(pitch-1.0);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 1 Offset(0,50)  A_FireProjectile("howitzerball", 0, 1);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR d 1 Offset(0,55) a_setpitch(pitch-2.0);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR a 1 Offset(0,53) a_setpitch(pitch-1.6);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR b 1 Offset(0,53) a_setpitch(pitch+0.6);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 1 Offset(0,47) a_setpitch(pitch+0.7);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR d 1 Offset(0,47) a_setpitch(pitch+0.7);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR a 1 Offset(0,41) a_setpitch(pitch+0.6);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR b 1 Offset(0,41) a_setpitch(pitch+0.5);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 1 Offset(0,36) a_setpitch(pitch+0.4);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR d 1 Offset(0,36) a_setpitch(pitch+0.4);
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR A 1 A_ReFire;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR b 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR d 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR A 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR b 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR c 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR d 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR a 1 ;
+		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		BFGR b 1 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR c 1 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR d 1 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR a 1 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR b 1 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR c 1 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR d 1 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR A 2 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR b 2 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR c 3 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR d 3 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR a 4 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR b 4 ;
+		TNT1 A 0 A_WeaponReady();
+		BFGR c 5;
+		TNT1 A 0 A_WeaponReady();
+		BFGR d 5;
+		TNT1 A 0 A_WeaponReady();
+    goto Ready;
+  Flash:
+		TNT1 A 0 A_AlertMonsters;
+		BFGC A 4 bright;
+		BFGC B 4 bright;
+		BFGC C 3 bright;
+		BFGC D 3 bright;
+		BFGC E 3 bright;
+		BFGC F 2 bright;
+		BFGC G 2 bright;
+		BFGf A 1 bright;
+		TNT1 A 0 bright A_FireProjectile("BFGParticles",0,0,0,-(56-height)/7,FPF_NOAUTOAIM,0);
+		BFGf b 2 bright;
+		BFGf c 2 bright;
+		BFGf d 3 bright;
+		BFGf e 3 bright;
+		BFGf f 4 bright;
+    Goto LightDone;
+	}
+}
+
+
+Class howitzerball : fastprojectile replaces BFGball
+{
+  default{
+    decal "BFGlightning";
+    DeathSound "weapons/bfgx";
+    speed 60;
+    scale 0.6;
+  }
+states
+{
+	spawn:
+	TNT1 A 0 A_PlaySound("weapons/bfgloop",3,1,1);
+	FUCK a 2 bright A_SpawnItemEx("GreenSparkle", random(-40, 40), random(-40, 40), random(0, 30));
+	TNT1 A 0 A_JumpIf(callacs("prettyparticles")==0,2);
+	TNT1 AAAA 0 A_SpawnParticle ("ffff6b", SPF_FULLBRIGHT | SPF_RELATIVE, random(4,10), random(1,3), frandom(0,360), 0,0,0, frandom(0.2,6.0),frandom(-0.2,0.2),frandom(-3.0,3.0), 0,0,0, 0.98, -1);
+	FUCK b 2 bright A_SpawnItemEx("GreenSparkle", random(-40, 40), random(-40, 40), random(0, 30));
+	TNT1 A 0 A_JumpIf(callacs("prettyparticles")==0,2);
+	TNT1 AAA 0 A_SpawnParticle ("ffff6b", SPF_FULLBRIGHT | SPF_RELATIVE, random(4,10), random(1,3), frandom(0,360), 0,0,0, frandom(0.2,6.0),frandom(-0.2,0.2),frandom(-3.0,3.0), 0,0,0, 0.98, -1);
+	FUCK c 2 bright A_SpawnItemEx("GreenSparkle", random(-40, 40), random(-40, 40), random(0, 30));
+	TNT1 A 0 A_JumpIf(callacs("prettyparticles")==0,2);
+	TNT1 AAAA 0 A_SpawnParticle ("ffff6b", SPF_FULLBRIGHT | SPF_RELATIVE, random(4,10), random(1,3), frandom(0,360), 0,0,0, frandom(0.2,6.0),frandom(-0.2,0.2),frandom(-3.0,3.0), 0,0,0, 0.98, -1);
+	FUCK d 2 bright A_SpawnItemEx("GreenSparkle", random(-40, 40), random(-40, 40), random(0, 30));
+	TNT1 A 0 A_JumpIf(callacs("prettyparticles")==0,2);
+	TNT1 AAAAA 0 A_SpawnParticle ("ffff6b", SPF_FULLBRIGHT | SPF_RELATIVE, random(4,10), random(1,3), frandom(0,360), 0,0,0, frandom(0.2,6.0),frandom(-0.2,0.2),frandom(-3.0,3.0), 0,0,0, 0.98, -1);
+	TNT1 A 0 A_Playsound("misc/zap",4);
+	loop;
+death:
+	TNT1 A 2;
+	//TNT1 A 0 A_Playsound("weapons/bfgx",5,1,0,0.5);
+	//TNT1 A 0 A_Playsound("weapons/bfgx",6,1,0,0.5);
+	TNT1 A 0 A_JumpIf(callacs("prettyparticles")==0,10);
+	TNT1 A 0 A_Jump (256, 1,2,3);
+	TNT1 AAAAAAAAAAAAAAAA 0 A_SpawnParticle ("ffff6b", SPF_FULLBRIGHT | SPF_RELATIVE, random(10,70), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,0, 0.98, -1);
+    TNT1 A 0 A_Jump (256, 1,2,3);
+	TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle ("439337", SPF_FULLBRIGHT | SPF_RELATIVE, random(35,105), random(1,20), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,0, 0.98, -1);
+    TNT1 A 0 A_Jump (256, 1,2,3);
+	TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle ("5fcf57", SPF_FULLBRIGHT | SPF_RELATIVE, random(35,105), random(1,20), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,0, 0.98, -1);
+    TNT1 A 0 A_Jump (256, 1,2,3);
+	TNT1 AAAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle ("ffffff", SPF_FULLBRIGHT | SPF_RELATIVE, random(10,70), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,0, 0.98, -1);
+	expl d 0 a_quake (3,10,0,750,0);
+	expl d 0 a_quake (1,25,0,1000,0);
+	BFGB a 1 bright;
+	TNT1 A 0 A_Playsound("misc/zap",1);
+	BFGB b 1 bright;
+	TNT1 A 0 A_Playsound("misc/zap",5);
+	BFGB c 1 bright;
+	BFGB d 1 bright;
+	TNT1 A 0 A_Playsound("misc/zap",3);
+	BFGB e 1 bright a_BFGspray;
+	TNT1 A 0 A_Playsound("misc/zap",4);
+	BFGB f 1 bright;
+	TNT1 A 0 A_Playsound("misc/zap",7);
+	BFGB f 2 bright ;
+	TNT1 A 0 A_Playsound("misc/zap",6);
+	BFGB ghijk 2 bright;
+	TNT1 A 30 A_Playsound("misc/zap",1);
+	stop;
+	}
+}
+
+Class howitzersparks : BFGextra replaces BFGextra
+{
+states
+	{
+	spawn:
+	BFEX abcdefghijklmno 2 bright;
+	stop;
+	}
+}
+
+
+Class BFGParticles : GunFlashParticles
+{
+	states
+	{
+	spawn:
+		TNT1 a 0;
+		TNT1 AAAAAAA 0 A_SpawnParticle ("ffff6b", SPF_FULLBRIGHT | SPF_RELATIVE, random(20,45), random(1,10), 0, 0,0,0, frandom(2,7),frandom(-8,8),frandom(-3,3), 0,0,0, 0.98, -1);
+		TNT1 AAAAAAAAAAA 0 A_SpawnParticle ("439337", SPF_FULLBRIGHT | SPF_RELATIVE, random(20,30), random(1,10), 0,0,0,0, frandom(2,7),frandom(-8,8),frandom(-3,3), 0,0,0, 0.98, -1);
+		TNT1 AAAAAAAAAAAAA 0 A_SpawnParticle ("5fcf57", SPF_FULLBRIGHT | SPF_RELATIVE, random(20,30), random(1,7), 0, 0,0,0, frandom(2,7),frandom(-8,8),frandom(-3,3), 0,0,0, 0.98, -1);
+		TNT1 AAAAAAAAAAAAAAAA 0 A_SpawnParticle ("ffffff", SPF_FULLBRIGHT | SPF_RELATIVE, random(20,30), random(1,5), 0,0,0,0, frandom(2,7),frandom(-8,8),frandom(-3,3), 0,0,0, 0.98, -1);
+	death:
+		TNT1 A 0;
+		stop;
+	}
+}

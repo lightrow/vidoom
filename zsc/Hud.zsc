@@ -1,0 +1,475 @@
+class WeaponIcon
+{
+	string _tex;
+	bool _active;
+	bool _selectable;
+	string _ammo;
+
+	
+	void setIcon(string tex, bool active, bool selectable, string ammoType){
+		_tex = tex;
+		_active = active;
+		_selectable = selectable;
+		_ammo = ammoType;
+	}	
+}
+
+Class VoyageHUD : BaseStatusBar {
+	HUDFont MainFont;
+	HUDFont SubFont;
+	InventoryBarState diparms;
+	Array<Ammo> ownedAmmo;
+	int curAmmoIndex;
+	Vector2 BaseSize;
+	bool centered;
+	
+	Array<WeaponIcon> toDraw;
+	
+	static const String weapons[] = {
+		"FireAxe",
+		"HandCannon",
+		"Famas",
+		"DoubleRifle",
+		"Spas",
+		"Bazooka",
+		"PlasmaCannon",
+		"PlasmaHowitzer"
+	};
+	
+	static const String ammos[] = {
+		"Rage",
+		"Clip",
+		"Clip",
+		"Shell",
+		"Shell",
+		"RocketAmmo",
+		"Cell",
+		"Cell"
+	};
+	
+	static const String weaponIcons[] = {
+		"iaxe",
+		"ijeri",
+		"ifamas",
+		"icolt",
+		"ispas",
+		"ibazoo",
+		"iplasma",
+		"ibfg"
+	};
+		
+	static const int weaponIconsWidths[] = {
+		14,
+		16,
+		21,
+		30,
+		26,
+		26,
+		25,
+		25
+	};
+	
+	// Major Cooke
+	void DrawStringScaled(HUDFont font, String string, Vector2 pos, int flags = 0, int translation = Font.CR_UNTRANSLATED, double Alpha = 1., int wrapwidth = -1, int linespacing = 4, double scaling = 1.0)
+	{
+		Vector2 OldScale = BaseSize, TempScale = BaseSize;
+		Vector2 ScaledPos = pos;
+		
+		if (scaling == 0.0) //Why draw anything? Also to prevent division by 0.
+			return;
+		
+		scaling = abs(scaling);
+		
+		// Thankfully, scaling up is directly that -- smaller screen coordinates and 
+		// larger texture size which is automatically handled by the engine.
+		bool sized = (scaling != 1.0);
+		if (sized)
+		{
+			TempScale /= scaling;
+			ScaledPos /= scaling;
+		}
+		
+		// Change to the new scale, draw it, and then set it back.
+		if (sized) SetSize(0, TempScale.X, TempScale.Y);
+		DrawString(font, string, ScaledPos, flags, translation, Alpha, wrapwidth, linespacing);
+		if (sized) SetSize(0, OldScale.X, OldScale.Y);
+		
+	} 
+
+	
+	// Gutawer
+	// not used
+	void DrawUnitBarImage(String unit, String overUnit, int monitor, Vector2 pos, int length, int flags = 0) {		
+		int healthClamp = (monitor > 100) ? 100 : monitor;
+		for (int i = 0; i < healthClamp * length / 100; i++) {
+			DrawImage(unit, (pos.x + i, pos.y), DI_ITEM_LEFT | flags);
+		}
+		int overhealthClamp = (monitor - 100 > 100) ? 100 : monitor - 100;
+		for (int i = 0; i < overhealthClamp * length / 100; i++) {
+			DrawImage(overUnit, (pos.x + i, pos.y), DI_ITEM_LEFT | flags);
+		}
+	}
+	
+	void DrawUnitBarCol(Color unit, Color overUnit, int monitor, Vector2 pos, Vector2 size, int flags = 0) {
+		if (monitor <= 0) return;
+		int monClamp = (monitor > 100) ? 100 : monitor;
+		// fill the "normal" part
+		Fill(unit, pos.x, pos.y, monClamp * size.x / 100, size.y, flags);
+		int overmonClamp = (monitor - 100 > 100) ? 100 : monitor - 100;
+		// fill the "over" part (for bonus health, armor)
+		if (overmonClamp > 0) {
+			Fill(overunit, pos.x, pos.y, overmonClamp * size.x / 100, size.y, flags);
+		}
+	}
+	
+	void DrawUnitBarGrad(Color uF, Color uT, Color ovuF, Color ovuT,
+						 int monitor, Vector2 pos, Vector2 size, int flags = 0) {
+		
+		// get the change in color every iteration
+		double uFD[4] = { 0.0, 0.0, 0.0, 0.0 };
+		uFD[0] = (uF.a - uT.a) / size.y; uFD[1] = (uF.r - uT.r) / size.y;
+		uFD[2] = (uF.g - uT.g) / size.y; uFD[3] = (uF.b - uT.b) / size.y;
+		double ovuFD[4] = { 0.0, 0.0, 0.0, 0.0 };
+		ovuFD[0] = (ovuF.a - ovuT.a) / size.y; ovuFD[1] = (ovuF.r - ovuT.r) / size.y;
+		ovuFD[2] = (ovuF.g - ovuT.g) / size.y; ovuFD[3] = (ovuF.b - ovuT.b) / size.y;
+		
+		// draw bar, change color, rinse & repeat until done
+		Color drawCol = "000000";
+		Color overDrawCol = "000000";
+		int cC[4] = { 0, 0, 0, 0 };
+		int ovcC[4] = { 0, 0, 0, 0 };
+		for (int y = 0; y < size.y; y++) {
+			drawCol = Color(uF.a + cC[0], uF.r + cC[1], uF.g + cC[2], uF.b + cC[3]);
+			overDrawCol = Color(ovuF.a + ovcC[0], ovuF.r + ovcC[1], ovuF.g + ovcC[2], ovuF.b + ovcC[3]);
+			DrawUnitBarCol(drawCol, overDrawCol, monitor, (pos.x, pos.y + y), (size.x, 1), flags);
+			cC[0] -= uFD[0]; cC[1] -= uFD[1]; cC[2] -= uFD[2]; cC[3] -= uFD[3];
+			ovcC[0] -= ovuFD[0]; ovcC[1] -= ovuFD[1]; ovcC[2] -= ovuFD[2]; ovcC[3] -= ovuFD[3];
+		}
+	}
+	
+	// makes my life easier
+	Vector2 TexSize(String texture) { return Texman.GetScaledSize(TexMan.CheckForTexture(texture, TexMan.Type_Any)); }
+	
+	// draw the edges of a "hud box"
+	Vector2, Vector2, Vector2, Vector2 DrawHUDBoxEdges(String corner, String edge, Vector2 pos, Vector2 size, int flags = 0, double alpha = 1) {
+		// corners are ezpz
+		DrawImage(corner.."TL", pos, DI_ITEM_LEFT_TOP | flags, alpha);
+		DrawImage(corner.."TR", (pos.x + size.x, pos.y), DI_ITEM_RIGHT_TOP | flags, alpha);
+		DrawImage(corner.."BL", (pos.x, pos.y + size.y), DI_ITEM_LEFT_BOTTOM | flags, alpha);
+		DrawImage(corner.."BR", pos + size, DI_ITEM_RIGHT_BOTTOM | flags, alpha);
+		
+		// store the sizes of all the corners so we know where to draw the edges
+		Vector2 tlCornerSize = TexSize(corner.."TL");
+		Vector2 trCornerSize = TexSize(corner.."TR");
+		Vector2 blCornerSize = TexSize(corner.."BL");
+		Vector2 brCornerSize = TexSize(corner.."BR");
+		
+		// the edges are drawn as one image, just scaled on the x/y axis
+		DrawImage(edge.."T", (pos.x + tlCornerSize.x, pos.y), DI_ITEM_LEFT_TOP | flags,
+				  alpha, (-1, -1), (size.x - (tlCornerSize.x + trCornerSize.x), 1));
+		DrawImage(edge.."B", (pos.x + blCornerSize.x, pos.y + size.y), DI_ITEM_LEFT_BOTTOM | flags,
+				  alpha, (-1, -1), (size.x - (blCornerSize.x + brCornerSize.x), 1));
+		
+		DrawImage(edge.."L", (pos.x, pos.y + tlCornerSize.y), DI_ITEM_LEFT_TOP | flags,
+				  alpha, (-1, -1), (1, size.y - (tlCornerSize.y + blCornerSize.y)));
+		DrawImage(edge.."R", (pos.x + size.x, pos.y + blCornerSize.y), DI_ITEM_RIGHT_TOP | flags,
+				  alpha, (-1, -1), (1, size.y - (trCornerSize.y + brCornerSize.y)));
+		
+		return tlCornerSize, trCornerSize, blCornerSize, brCornerSize;
+	}
+	
+	void DrawHudBoxCol(String corner, String edge, Color fillColor, Vector2 pos, Vector2 size, int flags = 0, double alpha = 1) {
+		// get the corner sizes
+		Vector2 tlCornerSize, trCornerSize, blCornerSize, brCornerSize;
+		[tlCornerSize, trCornerSize, blCornerSize, brCornerSize] = DrawHudBoxEdges(corner, edge, pos, size, flags, alpha);
+		
+		// fill in the inside
+		fillColor = Color(int(alpha * fillColor.a), fillColor.r, fillColor.g, fillColor.b);
+		Fill(fillColor, pos.x + tlCornerSize.x, pos.y + tlCornerSize.y,
+			 size.x - (tlCornerSize.x + trCornerSize.x), size.y - (tlCornerSize.y + blCornerSize.y), flags);
+	}
+
+	override void Init() {	
+		Super.Init();
+		// this has to be done, even if the HUD is fullscreen, it prevents a crash
+		BaseSize = (320, 200);
+		SetSize(0, BaseSize.x, BaseSize.y);
+		//SetSize(0, 320, 200);
+		
+		// Create the font used for the fullscreen HUD
+		Font fnt = "EVILBIG";
+		MainFont = HUDFont.Create(fnt);
+		fnt = "EVILBIG";
+		// the small font is monospace because it helps with centering and positioning
+		SubFont = HUDFont.Create(fnt, fnt.GetCharWidth("0"), true);
+		diparms = InventoryBarState.Create(null, Font.CR_UNTRANSLATED, 1, "ITEMBOX");
+	}
+	
+	override void DrawAutomapHUD(double ticFrac) {
+		// This uses the normal automap HUD but just changes the highlight color.
+		DoDrawAutomapHUD(Font.CR_GREY, Font.CR_UNTRANSLATED);
+	}
+	
+	override void Draw (int state, double TicFrac) {
+		// create the list of owned ammo
+		// this only contains ammo that the player has weapons for
+		ownedAmmo.Clear();
+		// credit to argv on zdf for the following if() {} block - my implementation for this was slow
+		// as all fuck, and upon it being brought up, jesus was my original code bad D:
+		// this should be far faster
+		if (CPlayer) {
+			for (let inv = CPlayer.mo.Inv; inv; inv = inv.Inv) {
+				// [argv] look through the player pawn's inventory for weapons
+				if (inv is "Weapon") {
+					// [argv] take each ammo item, and add it to ownedAmmo if not already present
+					let ammo = Weapon(inv).Ammo1;
+					if (ammo && ownedAmmo.Size() == ownedAmmo.Find(ammo)) {
+						ownedAmmo.Push(ammo);
+					}
+					
+					ammo = Weapon(inv).Ammo2;
+					if (ammo && ownedAmmo.Size() == ownedAmmo.Find(ammo)) {
+						ownedAmmo.Push(ammo);
+					}
+				}
+			}
+		}
+		
+		Super.Draw(state, TicFrac);
+		
+		if (state == HUD_StatusBar)
+		{
+			BeginStatusBar();
+			DrawMainBar(TicFrac);
+		}
+		else if (state == HUD_Fullscreen)
+		{
+			BeginHUD();
+			DrawFullScreenStuff(TicFrac);
+		}
+	}
+	
+	void DrawMainBar(double TicFrac) {
+	}
+	
+	
+	void handleWeaponsBar() {
+
+		Array<WeaponIcon> toDrawNew;
+		
+		for (int i=0; i < weapons.size(); i++){
+			if (CPlayer.mo.findInventory(weapons[i])){
+				WeaponIcon newIcon = new("WeaponIcon");
+				bool gotAmmo = false;
+				int ammoLeft = 0;
+				switch(i){
+					case 0:
+						ammoLeft = GetAmount("Rage");
+						// always selectable, don't dim the icon
+						gotAmmo = true;
+						break;
+					case 1:
+						ammoLeft = Max(GetAmount("PistolLoad"),GetAmount("Clip"));
+						if (ammoLeft){
+							gotAmmo = true;
+						}
+						break;
+					case 3:
+						ammoLeft = GetAmount("Shell");
+						if (ammoLeft >= 2){
+							gotAmmo = true;
+						}
+						break;
+					case 4:
+						ammoLeft = Max(GetAmount("LoadedShell"),GetAmount("Shell"));
+						if (ammoLeft){
+							gotAmmo = true;
+						}
+						break;
+					case 7:
+						ammoLeft = GetAmount("Cell");
+						if (ammoLeft >= 40){
+							gotAmmo = true;
+						}
+						break;
+					default:
+						ammoLeft = GetAmount(ammos[i]);
+						if (ammoLeft){
+							gotAmmo = true;
+						}
+						break;
+				}
+				newIcon.setIcon(weaponIcons[i],CPlayer.readyweapon && CPlayer.readyweapon.getClass() == weapons[i], gotAmmo, ammos[i]);
+				toDrawNew.push(newIcon);
+			}
+		}
+		
+		if (toDrawNew.Size() > 0){
+			int totalWidth = 0;
+			int totalHeight = 0;
+			int currentWidth = 0;
+			int currentHeight = 0;
+			
+			string back;
+			string icon;
+			
+			int width = 480;
+			int height = 200;
+			double center = 160;
+
+			int iconWidth = 23;
+			int iconHeight = 17;
+
+			int yOffset = -iconHeight - 5;
+			int xOffset = -iconWidth - 5;
+			int distance = 3;
+			
+			for (int i = 0; i < toDrawNew.Size(); i++) {
+				totalWidth+=distance+iconwidth;
+				totalheight+=15;
+			}
+			
+			double x = width - totalWidth;
+
+			for (int i = toDrawNew.Size() -1; i >= 0; i--) {
+				if (toDrawNew[i]._active) {
+					back = "ibacka";
+				} else {
+					back = "ibacki";
+				}
+				icon = toDrawNew[i]._tex;
+				if (toDrawNew[i]._selectable){
+					if (toDrawNew[i]._active){
+						DrawImage(back, (xOffset - currentWidth, yOffset), DI_ITEM_LEFT_TOP|DI_SCREEN_RIGHT_BOTTOM, 1);
+						DrawImage(icon, (xOffset - currentWidth+1, yOffset+2), DI_ITEM_LEFT_TOP|DI_SCREEN_RIGHT_BOTTOM, 1);
+					} else {
+						DrawImage(back, (xOffset - currentWidth, yOffset), DI_ITEM_LEFT_TOP|DI_SCREEN_RIGHT_BOTTOM, 0.6);
+						DrawImage(icon, (xOffset - currentWidth+1, yOffset+2), DI_ITEM_LEFT_TOP|DI_SCREEN_RIGHT_BOTTOM, 0.6);
+					}
+				} else {
+					DrawImage(back,(xOffset - currentWidth, yOffset), DI_ITEM_LEFT_TOP|DI_SCREEN_RIGHT_BOTTOM, 0.2);
+					DrawImage(icon,(xOffset - currentWidth+1, yOffset+2), DI_ITEM_LEFT_TOP|DI_SCREEN_RIGHT_BOTTOM, 0.2);
+				}
+				
+				double amt, maxamt;
+				[amt, maxamt] = GetAmount(toDrawNew[i]._ammo);
+				double ratio = amt / maxamt;
+				double barHeight = Max(Round(15 * ratio),amt>0?1:0);
+				int alpha;
+				Color barColor;
+				if (toDrawNew[i]._active){
+					alpha = 255;
+				} else {
+					alpha = 170;
+				}
+				if (barHeight > 10 ){
+					barColor = Color(alpha, 0, 150, 70);
+				} else if (barHeight < 5) {
+					barColor = Color(alpha, 200, 20, 20);
+				} else {
+					barColor = Color(alpha, 200, 180, 10);
+				}
+				Fill(barColor, xOffset - currentWidth+iconwidth -3, yOffset+1+15-barHeight, 2, barHeight, DI_ITEM_LEFT_BOTTOM|DI_SCREEN_RIGHT_BOTTOM);
+
+				currentWidth += iconwidth + distance;	
+			}
+		}
+
+	}
+	
+	int getColorGrading(int amount, int redamount, int greenamount) {
+		if (amount>greenamount){
+			return Font.CR_WHITE;
+		}
+		if (amount<redamount) {
+			return Font.CR_DARKRED;
+		}
+		return Font.CR_WHITE;
+	}
+	
+	string getAmmoIcon(string ammoname){
+		if (ammoname=="Clip"){
+			return "ibull";
+		}
+		if (ammoname=="Shell"){
+			return "ishell";
+		}
+		if (ammoname=="Cell"){
+			return "icell";
+		}
+		if (ammoname=="RocketAmmo"){
+			return "irock";
+		}
+		if (ammoname=="rage") {
+			//WHY DOES THIS HAVE TO BE LOWERCASE TO WORK REEEEEE
+			return "irage";
+		}
+		return "";
+	}
+	
+	void DrawFullScreenStuff(double TicFrac) {
+		if (CPlayer && !automapactive) {
+			// flags used for positioning text
+			int tAlignLeft = DI_TEXT_ALIGN_LEFT | DI_SCREEN_LEFT_BOTTOM;
+			int tAlignRight = DI_TEXT_ALIGN_RIGHT | DI_SCREEN_RIGHT_BOTTOM;
+			
+			
+			// ammo
+			Inventory a1, a2;
+			[a1, a2] = GetCurrentAmmo();
+			if (a1 && a2 == NULL) {
+				DrawStringScaled(MainFont, FormatNumber(a1.amount, 0, 6), (-23, -42), tAlignRight,GetColorGrading(a1.amount,25,60),1,-1,4,0.75);
+				DrawImage(getAmmoIcon(a1.getClassName()),(-20,-42), DI_ITEM_LEFT_TOP|DI_SCREEN_RIGHT_BOTTOM, 1);
+			}
+			if (a2 && a1 == NULL) {
+				DrawStringScaled(MainFont, FormatNumber(a2.amount, 0, 6), (-23, -42), tAlignRight,GetColorGrading(a2.amount,25,60),1,-1,4,0.75);
+				DrawImage(getAmmoIcon(a2.getClassName()),(-20,-42), DI_ITEM_LEFT_TOP|DI_SCREEN_RIGHT_BOTTOM, 1);
+			}
+			else if (a1 && a2) {
+				DrawStringScaled(MainFont, FormatNumber(a2.amount, 0, 6), (-23, -42), tAlignRight,GetColorGrading(a2.amount,25,60),1,-1,4,0.75);
+				DrawStringScaled(MainFont, FormatNumber(a1.amount, 0, 6), (-59, -51), tAlignRight,Font.CR_DARKRED,1,-1,4,1.3);
+				DrawImage(getAmmoIcon(a2.getClassName()),(-20,-42), DI_ITEM_LEFT_TOP|DI_SCREEN_RIGHT_BOTTOM, 1);
+		}
+			
+		
+			
+			// health
+			DrawStringScaled(MainFont, FormatNumber(CPlayer.health, 0, 9), (40, -42), tAlignLeft, getColorGrading(CPlayer.health,30,70),1,-1,4,0.75);
+			DrawImage("iheart",(20,-42), DI_ITEM_LEFT_TOP|DI_SCREEN_LEFT_BOTTOM, 1);
+			
+			// armor
+			DrawStringScaled(MainFont, FormatNumber(GetArmorAmount(), 0, 9), (40, -25), tAlignLeft, getColorGrading(GetArmorAmount(),50,100),1,-1,4,0.75);
+			DrawImage("ishield",(20,-25), DI_ITEM_LEFT_TOP|DI_SCREEN_LEFT_BOTTOM, 1);
+	
+			// weapons
+			handleWeaponsBar();
+			
+			// keys			
+			// this is basically just gzdoom.pk3 code, but i changed the flags, offsets and scale a bit
+			// goes through the keys list and just draws whatever is appropriate
+			bool locks[6];
+			String image;
+			for (int i = 0; i < 6; i++) locks[i] = CPlayer.mo.CheckKeys(i + 1, false, true);
+			// key 1
+			if (locks[1] && locks[4]) image = "STKEYS6";
+			else if (locks[1]) image = "STKEYS0";
+			else if (locks[4]) image = "STKEYS3";
+			DrawImage(image, (28, -50), DI_ITEM_CENTER | DI_SCREEN_LEFT_BOTTOM, 1, (-1, -1), (1, 1));
+			// key 2
+			if (locks[2] && locks[5]) image = "STKEYS7";
+			else if (locks[2]) image = "STKEYS1";
+			else if (locks[5]) image = "STKEYS4";
+			else image = "";
+			DrawImage(image, (43, -50), DI_ITEM_CENTER | DI_SCREEN_LEFT_BOTTOM, 1, (-1, -1), (1, 1));
+			// key 3
+			if (locks[0] && locks[3]) image = "STKEYS8";
+			else if (locks[0]) image = "STKEYS2";
+			else if (locks[3]) image = "STKEYS5";
+			else image = "";
+			DrawImage(image, (58, -50), DI_ITEM_CENTER | DI_SCREEN_LEFT_BOTTOM, 1, (-1, -1), (1, 1));
+			
+			int invY = -96;
+
+		}
+	}
+}

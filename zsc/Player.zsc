@@ -1,0 +1,666 @@
+
+// Dusk Movement - Ivory Duke
+Class VoyageGal : DoomPlayer replaces DoomPlayer
+{
+	int tickCount;
+	int exhaleTick;
+	
+	bool heartbeat1;
+	bool heartbeat2;
+	bool redscreen;
+	bool pulsing;
+	
+	int deathoverlayticks;
+	
+	int redscreenTick;
+	
+	int overhealTick;
+	
+	bool playRelief;
+	
+	//Weapon menu
+	int WeaponMenuCD;
+	int WeaponMenuMaxCD;
+	int WeaponMenuMaxCDCancelable;
+	
+	
+	//Crouch Slide
+	int CROUCHDURATION;
+	float CROUCHSPEED;
+	float CrouchFactor;
+	bool	SlideInProgress;
+	bool	CanSlideAgain;	
+	uint	CrouchCD;
+	double 	MaximumGroundSpeed;		
+	int lastHealth;
+	vector2	MoveVec;
+	Footsteps fsteps;
+	string fallDirection;
+	bool pitchReached;
+
+	Default
+	{
+	player.startitem "Handcannon";
+	player.startitem "FireAxe";
+	Player.StartItem "Clip", 35;
+	Player.StartItem "PistolLoad", 10;
+	Player.WeaponSlot 1, "FireAxe";
+   	Player.WeaponSlot 2, "Handcannon";
+	Player.WeaponSlot 3, "Famas";
+	Player.WeaponSlot 4, "DoubleRifle", "Spas";
+	Player.WeaponSlot 5, "Bazooka";
+	Player.WeaponSlot 6, "PlasmaCannon";
+	Player.WeaponSlot 7, "PlasmaHowitzer";
+	Player.DamageScreenColor "99 00 18";
+	radius 16;
+	height 56;
+	Player.ViewHeight 42;
+	Player.ForwardMove 1;
+    Player.SideMove 1;
+	Player.DisplayName "HonHon";
+
+	PainChance 255;
+	DamageFactor "NadeBoom", 0.35; // no suicidal grenades
+	//DamageFactor "Melee", 1.5;
+	}
+	States
+	{
+	Death:
+		PD71 A 3 {pitchReached = false;}
+		TNT1 A 0 A_SetBlend("9900011",0.95,50);
+		PD71 B 3 A_PlayerScream;
+		PD71 C 3 A_NoBlocking;
+		PD71 DEFGH 3;
+		PD71 I -1;
+		Stop;
+	XDeath:
+		PD71 A 3 {pitchReached = false;}
+		TNT1 A 0 A_SetBlend("990011",0.95,50);
+		PD71 B 3 A_PlayerScream;
+		PD71 C 3 A_NoBlocking;
+		PD71 DEFGH 3;
+		PD71 I -1;
+		Stop;
+	}
+	
+	override void BeginPlay() {
+		deathoverlayticks=3;
+		CROUCHSPEED = (1./6);
+		CrouchFactor = 1;
+		CROUCHDURATION = GetCvar("vi_crouchduration");
+		lastHealth = health;
+		tickCount = 0;
+		WeaponMenuMaxCD = 60;
+		WeaponMenuMaxCDCancelable = 30;
+		redscreenTick = 0;
+		overhealTick = 0;
+		heartbeat1 = false;
+		heartbeat2 = false;
+		redscreen = false;
+		pulsing = false;
+		exhaleTick = 0;
+		playRelief = false;
+		Super.BeginPlay();
+	}
+
+	
+	override void Tick()
+	{
+		if (!player || !player.mo || player.mo != self)
+		{
+			Super.Tick();
+			return;
+		}
+		checkFootsteps();
+		checkSlide();
+		checkRage();
+		checkHeartBeat();	
+		checkRedScreen();
+		checkOverheal();
+		checkSwitchWeapon();
+		Super.Tick();
+	}
+	
+	
+	
+	void checkSwitchWeapon() {
+		UserCmd cmd = player.cmd;
+	
+		if (checkInventory("HasSwitchedWeapon",1)){
+			WeaponMenuCD = 1;
+			A_TakeInventory("HasSwitchedWeapon",1);
+			A_GiveInventory("IsChoosingWeapon",1);
+		}
+		if (WeaponMenuCD > 0) {
+			WeaponMenuCD++;
+		}
+		if (WeaponMenuCD > WeaponMenuMaxCD || (WeaponMenuCD > WeaponMenuMaxCDCancelable && cmd.buttons & BT_ATTACK)){
+			WeaponMenuCD=0;
+			A_TakeInventory("IsChoosingWeapon",1);
+		}
+		
+	}
+	
+	void checkFootsteps() {
+		if (fsteps == null) {
+		  Actor fstepsActor = Spawn("Footsteps",pos);
+		  if(fstepsActor != null)
+		  {
+			 fsteps = Footsteps(fstepsActor);
+			 fsteps.Init(self);
+		  }		
+		}
+	}
+	
+	void checkOverheal() {
+		if (G_SkillPropertyInt(SKILLP_ACSReturn) != 666 && G_SkillPropertyInt(SKILLP_ACSReturn) != 999 ) {
+			return;
+		}
+		overhealTick++;
+		if (overhealTick > 35 && player.mo.health > 100){
+			A_SetHealth(player.mo.health-1);
+			// directly changing player.mo.health causes health desync. Bug?
+			overhealTick = 0;
+		}
+	}
+	
+	void checkRedScreen() {
+		if (!GetCvar("vi_redscreen")) {
+			return;
+		}
+		if (redscreen){
+			if (!pulsing){
+				pulsing = true;
+				A_SetBlend("00 00 00", 0.0, 31, "99 00 18", 0.2);
+			}
+			redscreenTick++;
+			if (redscreenTick == 30) {
+				A_SetBlend("99 00 18", 0.2, 31, "99 00 18", 0.0);
+			} 
+			if (redscreenTick == 60) {
+				A_SetBlend("99 00 18", 0.0, 31, "99 00 18", 0.2);
+				redscreenTick = 0;
+			} 
+		} else if (pulsing) {
+			redscreenTick = 0;
+			pulsing = false;
+			A_SetBlend("99 00 18",0.2,60);
+		}
+	}
+	
+	void checkRage(){
+		tickCount++;
+		if (tickCount > 16) {
+			tickCount = 0;
+			if (CheckInventory("PowerStrength",1) && !CheckInventory("Rage",1)) {
+				A_TakeInventory("PowerStrength",1);
+			}
+			A_TakeInventory("Rage",1);
+			int diff = lastHealth - health;		
+			/*
+			if (playRelief) {
+				A_PlaySound("player/relief",2);
+				playRelief = false;
+			}
+			if (diff < -40 && health > 0) {
+				playRelief = true;
+			}
+			*/
+			if (diff > 6 && health > 0) {
+			   A_GiveInventory("Rage",3);
+			}
+			if (diff > 14 && health > 0) {
+			   A_GiveInventory("Rage",7);
+			}
+			if (diff > 40 && health > 0) {
+				A_PlaySound("player/breath",7);
+				A_GiveInventory("Rage",20);
+			}
+			lastHealth = health;
+		}
+		if (G_SkillPropertyInt(SKILLP_ACSReturn) != 666 && G_SkillPropertyInt(SKILLP_ACSReturn) != 999 ) {
+			return;
+		}
+		double rage = countinv("Rage");
+		double damageReductionFactor = min((rage / 35) / 2, 0.5);
+		damagefactor = 1.15 - damageReductionFactor;
+	}
+	
+	void checkHeartBeat()
+	{
+		if (!GetCvar("vi_redscreen")) {
+			return;
+		}
+		if (health > 20 && health < 35 && !heartbeat1) {
+			heartbeat1 = true;
+			heartbeat2 = false;
+			redscreen = false;
+			A_PlaySound("player/heartbeat1",5,0.5,1);
+		}
+		if (health > 0 && health <=20 && !heartbeat2) {
+			heartbeat2 = true;
+			redscreen = true;
+			heartbeat1 = false;
+			A_PlaySound("player/heartbeat2",5,1,1);
+		}
+		if (health >= 35 && (heartbeat1 || heartbeat2)) {
+			heartbeat1 = false;
+			redscreen = false;
+			heartbeat2 = false;
+			A_StopSound(5);
+		}
+		if ((player.playerstate == PST_DEAD || health == 0) && (heartbeat1 || heartbeat2)) {
+			A_StopSound(5);
+			heartbeat1 = false;
+			heartbeat2 = false;
+			redscreen = false;
+		}
+	}
+	
+	void checkSlide(){
+		if (player.playerstate == PST_DEAD){
+			return;
+		}
+		let player = self.player;
+		UserCmd cmd = player.cmd;
+		if (player.crouchfactor == 1 && cmd.buttons & ~BT_CROUCH){
+			CanSlideAgain = true;
+		} 
+		if (SlideInProgress)
+		{
+			SlideDuck(-1);	
+		}
+		else
+		{
+			SlideDuck(1);
+		}
+		
+		if (cmd.buttons & BT_CROUCH && CanSlideAgain) {
+			SlideInProgress = true;
+			CanSlideAgain = false;
+			A_PlaySound("Slide",4);
+			A_GiveInventory("isSliding",1);
+			CrouchCD = 1;
+			exhaleTick = 1;
+			CROUCHSPEED = (1./5);
+			if (cmd.forwardmove){
+				ForwardThrust(20*(cmd.forwardmove/sqrt(cmd.forwardmove*cmd.forwardmove)), Angle);
+			}
+			if (cmd.sidemove) {
+				Thrust(15*(cmd.sidemove/sqrt(cmd.sidemove*cmd.sidemove)), Angle - 90);
+			}
+			if (cmd.forwardmove == 0 && cmd.sidemove == 0){
+				if (Vel.X == 0 && Vel.Y == 0) {
+					Thrust(35, Angle);
+				} else {
+					Thrust(35, VectorAngle(Vel.X,Vel.Y));
+				}
+				
+			}
+		}
+		if (crouchCD > 0) {
+			crouchCD++;
+		}
+		if (crouchCD > CROUCHDURATION) {
+			crouchCD = 0;
+			slideInProgress = false;
+			A_TakeInventory("isSliding",0);
+			CROUCHSPEED = (1./25);
+		}
+		if (exhaleTick>0){
+			exhaleTick++;
+			if (exhaleTick>4) {
+				exhaleTick=0;
+				A_PlaySound("player/exhale",2);
+			}
+		}
+	}
+	
+	void SlideDuck(int direction)
+	{
+		let player = self.player;
+		double defaultheight = FullHeight;
+		double savedheight = Height;
+		double crouchdelta = direction * CROUCHSPEED;
+		double oldheight = player.viewheight;
+		player.crouchfactor += crouchdelta;
+		if (player.crouchfactor > 0.7) {
+			CROUCHSPEED /= (1.3);
+		} else {
+			CROUCHSPEED *= (1.1);
+		}
+		//a_logfloat(CROUCHSPEED);
+		player.crouchfactor = clamp(player.crouchfactor, 0.2, 1.);
+		player.viewheight = ViewHeight * player.crouchfactor;
+		player.crouchviewdelta = player.viewheight - ViewHeight;
+		player.crouchoffset = -50 + -(ViewHeight) * (1 - player.crouchfactor);
+		// Check for eyes going above/below fake floor due to crouching motion.
+		CheckFakeFloorTriggers(pos.Z + oldheight, true);
+	}
+	
+	Override void CheckCrouch(bool frozen) {
+		if (!CanSlideAgain) {
+			return;
+		}
+		super.CheckCrouch(frozen);
+	}
+	
+	Override void MovePlayer()
+	{ 
+		let player = self.player;
+		UserCmd cmd = player.cmd;
+		// [RH] 180-degree turn overrides all other yaws
+		if (player.turnticks)
+		{
+			player.turnticks--;
+			Angle += (180. / TURN180_TICKS);
+		}
+		else
+		{
+			Angle += cmd.yaw * (360./65536.);
+		}
+
+		player.onground = (pos.z <= floorz) || bOnMobj || bMBFBouncer || (player.cheats & CF_NOCLIP2);
+
+		// killough 10/98:
+		//
+		// We must apply thrust to the player and bobbing separately, to avoid
+		// anomalies. The thrust applied to bobbing is always the same strength on
+		// ice, because the player still "works just as hard" to move, while the
+		// thrust applied to the movement varies with 'movefactor'.
+
+		if (cmd.buttons & ~BT_SPEED) {
+			A_TakeInventory("IsSprinting",1);
+		}
+
+
+		if (cmd.forwardmove | cmd.sidemove)
+		{
+			double forwardmove, sidemove;
+			double bobfactor;
+			double friction, movefactor;
+			double fm, sm;
+
+			[friction, movefactor] = GetFriction();
+			bobfactor = friction < ORIG_FRICTION ? movefactor : ORIG_FRICTION_FACTOR;
+			if (!player.onground && !bNoGravity && !waterlevel)
+			{
+				// [RH] allow very limited movement if not on ground.
+				movefactor *= level.aircontrol;
+				bobfactor*= level.aircontrol;
+			}
+
+			fm = cmd.forwardmove;
+			sm = cmd.sidemove;
+			[fm, sm] = TweakSpeeds (fm, sm);
+			fm *= Speed / 256;
+			sm *= Speed / 256;
+
+			forwardmove = fm * movefactor * (35 / TICRATE);
+			sidemove = sm * movefactor * (35 / TICRATE);
+			
+			if (cmd.buttons & BT_SPEED) {
+				A_GiveInventory("IsSprinting",1);
+			}
+
+			if (forwardmove)
+			{
+				if (!SlideInProgress){
+					Bob(Angle, (cmd.forwardmove*cmd.forwardmove/20000) * bobfactor / 256., true);
+				}
+				ForwardThrust(forwardmove, Angle);
+			}
+			if (sidemove)
+			{
+				let a = Angle - 90;
+				if (!SlideInProgress){
+					Bob(a, cmd.sidemove*cmd.sidemove/20000 * bobfactor/ 256., false);
+				}
+				Thrust(sidemove, a);
+			}
+
+			if (!(player.cheats & CF_PREDICTING) && (forwardmove != 0 || sidemove != 0))
+			{
+				PlayRunning ();
+			}
+
+			if (player.cheats & CF_REVERTPLEASE)
+			{
+				player.cheats &= ~CF_REVERTPLEASE;
+				player.camera = player.mo;
+			}
+		}
+	}	
+
+	void fallBackwards() {
+		if (pitch > -30 && !pitchReached){
+			pitch-=5;
+		} else
+		if (pitch > -50 && !pitchReached){
+			pitch-=6;
+		} else
+		if (pitch > -70 && !pitchReached){
+			pitch-=4;
+		} else
+		if (pitch > -82 && !pitchReached){
+			pitch-=2;
+		} else
+		if (pitch > -87 && !pitchReached){
+			pitch-=1;
+			angle-=0.2;
+		} else
+		if (pitch > -90 && !pitchReached){
+			pitch-=0.4;
+			angle-=0.3;
+		}
+		if (pitch <= -90){
+			pitchReached=true;
+			deathoverlayticks=100;
+			A_SetBlend("black", 0.0, deathoverlayticks, "black", 1.0);
+		}
+		if (pitchReached) {
+			if (pitch < -80){
+				pitch+=1;
+				angle-=0.4;
+			} else
+			if (pitch < -70){
+				pitch+=2;
+				angle-=0.5;
+			} else
+			if (pitch < -50){
+				pitch+=2;
+				angle-=1.4;
+				roll+=0.6;
+			} else
+			if (pitch < -30){
+				pitch+=2;
+				angle-=1;
+				roll+=0.4;
+			} else
+			if (pitch < -25){
+				pitch+=0.5;
+				angle-=0.5;
+				roll+=0.3;
+			} else
+			if (pitch < -20){
+				pitch+=0.2;
+				angle-=0.2;
+				roll+=0.2;
+			} else
+			if (pitch < -18){
+				pitch+=0.1;
+				angle-=0.1;
+				roll+=0.1;
+			}
+
+				
+		}
+	}
+	
+	void fallForward() {
+		if (pitch < 30 && !pitchReached){
+			pitch+=4;
+		} else
+		if (pitch < 40 && !pitchReached){
+			pitch+=5;
+		} else
+		if (pitch < 50 && !pitchReached){
+			pitch+=4;
+		} else
+		if (pitch < 60 && !pitchReached){
+			pitch+=2;
+		} else
+		if (pitch < 70 && !pitchReached){
+			pitch+=1;
+		}
+		if (pitch >= 70){
+			pitchReached=true;
+			deathoverlayticks=70;
+			A_SetBlend("black", 0.0, deathoverlayticks, "black", 1.0);
+		}
+		if (pitchReached) {
+			
+			if (pitch > 50){
+				pitch-=2;
+				angle-=0.5;
+				roll-=0.5;
+			} else
+			if (pitch > 30){
+				pitch-=1.2;
+				angle-=2;
+				roll-=2;
+			} else
+			if (pitch > 25){
+				pitch-=0.4;
+				angle-=0.4;
+				roll-=0.4;
+			} else
+			if (pitch > 20){
+				pitch-=0.2;
+				angle-=0.2;
+				roll-=0.2;
+			} else
+			if (pitch > 18){
+				pitch-=0.1;
+				angle-=0.1;
+				roll-=0.1;
+			}
+			
+		}
+	}
+	
+	override void DeathThink () {
+		let player = self.player;
+		int dir;
+		double delta;
+
+		player.Uncrouch();
+		TickPSprites();
+		
+		if (deathoverlayticks <= 2 && pitchReached) {
+			A_SetBlend("black", 1.0, 5, "black", 1.0);
+		}
+
+		deathoverlayticks--;
+
+		
+
+		player.onground = (pos.Z <= floorz);
+		if (self is "PlayerChunk")
+		{ // Flying bloody skull or flying ice chunk
+			player.viewheight = 6;
+			player.deltaviewheight = 0;
+			if (player.onground)
+			{
+				if (Pitch > -19.)
+				{
+					double lookDelta = (-19. - Pitch) / 8;
+					Pitch += lookDelta;
+				}
+			}
+		}
+		else if (!bIceCorpse)
+		{ // Fall to ground (if not frozen)			
+			player.deltaviewheight = 0;
+			if (player.viewheight > 6)
+			{
+				player.viewheight -= 1;
+			}
+			if (player.viewheight < 6)
+			{
+				player.viewheight = 6;
+			}
+			
+			if (Pitch < -10 && !fallDirection)
+			{
+				fallDirection = "back";
+				//Pitch += 3;
+			}
+			else if (Pitch > 10 && !fallDirection)
+			{
+				fallDirection = "forward";
+				//Pitch -= 3;
+			} else if (!fallDirection) {
+				if (random(0,3)){
+					fallDirection = "back";
+				} else {
+					fallDirection = "forward";
+				}
+			}
+ 
+			if (fallDirection == "back"){
+				fallBackwards();
+			} else
+			if (fallDirection == "forward"){
+				fallForward();
+			} 
+
+		}
+		player.mo.CalcHeight ();
+			
+		if (player.attacker && player.attacker != self)
+		{ // Watch killer
+			double diff = deltaangle(angle, AngleTo(player.attacker));
+			double delta = abs(diff);
+
+			if (delta < 10)
+			{ // Looking at killer, so fade damage and poison counters
+				if (player.damagecount)
+				{
+					player.damagecount--;
+				}
+				if (player.poisoncount)
+				{
+					player.poisoncount--;
+				}
+			}
+			delta /= 8;
+			//Angle += clamp(diff, -5., 5.);
+		}
+		else
+		{
+			if (player.damagecount)
+			{
+				player.damagecount--;
+			}
+			if (player.poisoncount)
+			{
+				player.poisoncount--;
+			}
+		}		
+
+		if ((player.cmd.buttons & BT_USE ||
+			((deathmatch || alwaysapplydmflags) && sv_forcerespawn)) && !sv_norespawn)
+		{
+			if (Level.maptime >= player.respawn_time || ((player.cmd.buttons & BT_USE) && player.Bot == NULL))
+			{
+				player.cls = NULL;		// Force a new class if the player is using a random class
+				player.playerstate = (multiplayer || level.AllowRespawn || sv_singleplayerrespawn || G_SkillPropertyInt(SKILLP_PlayerRespawn)) ? PST_REBORN : PST_ENTER;
+				if (special1 > 2)
+				{
+					special1 = 0;
+				}
+			}
+		}
+	}
+}

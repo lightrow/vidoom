@@ -1,0 +1,44 @@
+
+Decal AxeDecal
+{
+    pic SCRATCHB
+    x-scale 1
+    y-scale 0.20
+}
+ 
+Decal AxeDecalBig
+{
+    pic SCRATCHB
+    x-scale 2
+    y-scale 0.25
+}
+
+fader ProtFade
+{
+   DecayStart 0.3
+   DecayTime 3
+}
+
+DECAL ProtDecalLower
+{
+    Pic SCORCH1
+	shade "00 10 00"
+    X-scale 0.1
+    Y-scale 0.1
+    RandomFlipx
+    RandomFlipy
+}
+
+DECAL ProtDecal
+{
+    Pic BPSPA0
+    Add 1.0
+    FullBright
+    Animator ProtFade
+    X-scale 0.14
+    Y-scale 0.14
+    LowerDecal ProtDecalLower
+}
+
+
+

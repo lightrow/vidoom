@@ -1,0 +1,295 @@
+// less awkward than satchel, but still awkward
+
+ACTOR Nade : Weapon
+{
+	Weapon.BobStyle Alpha
+	Weapon.BobSpeed 2.5
+	Weapon.BobRangeX 0.2
+	Weapon.BobRangeY 0.5
+	weapon.ammotype "RocketAmmo"
+	weapon.ammouse 1
+	inventory.pickupmessage "a lost grenade"
+	+INVENTORY.UNDROPPABLE
+	+WEAPON.NOAUTOAIM 
+	-WEAPON.AMMO_OPTIONAL
+	States
+	{
+	Spawn:
+		NADE p -1
+		loop
+	Ready:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart")
+		nade A 1
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD)
+		loop
+	SlideStart:
+		nade A 1 Offset(0,33)
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD)
+		nade A 1 Offset(0,35)
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD)
+		nade A 1 Offset(0,38)
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD)
+		nade A 1 Offset(0,40)
+		goto Sliding
+	Sliding:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("isSliding",1,2)
+		TNT1 A 0 A_Jump(256,"SlideEnd")
+		nade A 1 Offset(0,40)
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD)
+		Loop
+	SlideEnd:
+		nade A 1 Offset(0,40)
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD)
+		nade A 1 Offset(0,38)
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD)
+		nade A 2 Offset(0,35)
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD)
+		nade A 2 Offset(0,33)
+		goto Ready	
+   Deselect: 
+      TNT1 AAAAAAAAAAAAAAAA 0 A_Lower
+      TNT1 AAAAAAA 1 A_Lower
+      Loop
+	Select:
+		nade a 1 Offset(-67, 100) A_PlaySound("weapons/nade2",7)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		nade a 1 Offset(-40, 81)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		nade a 1 Offset(-24, 52)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		nade a 1 Offset(-15, 46)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		nade A 1 Offset(-6, 36)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		nade A 2 Offset(-2, 34)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		nade A 2 Offset(-1, 33)
+		goto Ready
+	Fire:
+		Nadf a 1
+		Nadf b 1
+		Nadf c 1 
+		Nadf d 1
+		Nadf e 1
+		Nadf f 2 A_Playsound("weapons/click1",1)
+		Nadf f 2 Offset(-5,35) 
+		Nadf g 2 
+		tnt1 a 0 a_setangle(angle-0.0)
+		tnt1 a 0 a_setpitch(pitch-0.25)
+		tnt1 a 0 //a_setroll(roll+0.25)	
+		Nadf h 1 
+		Nadf i 1 
+		tnt1 a 0 a_setangle(angle-0.25)
+		tnt1 a 0 a_setpitch(pitch-0.5)
+		tnt1 a 0 //a_setroll(roll+0.5)
+		Nadf j 1 
+		tnt1 a 0 a_setangle(angle-0.5)
+		tnt1 a 0 a_setpitch(pitch-0.75)
+		tnt1 a 0 //a_setroll(roll+0.75)
+		TNT1 a 1
+		tnt1 a 0 a_setangle(angle-0.25)
+		tnt1 a 0 a_setpitch(pitch-0.5)
+		tnt1 a 0 //a_setroll(roll+0.5)
+		TNT1 a 1
+		TNT1 a 1 A_Playsound("weapons/putaway7",7)
+		TNT1 a 1
+		tnt1 a 0 a_setangle(angle+0.25)
+		tnt1 a 0 a_setpitch(pitch+0.5)
+		tnt1 a 0 //a_setroll(roll-0.5)
+		TNT1 a 1
+		tnt1 a 0 a_setangle(angle+0.25)
+		tnt1 a 0 a_setpitch(pitch+0.5)
+		tnt1 a 0 //a_setroll(roll-0.5)
+		nade b 1 
+		tnt1 a 0 a_setangle(angle+1.25)
+		tnt1 a 0 a_setpitch(pitch+1)
+		tnt1 a 0 //a_setroll(roll-1)
+		nade b 1 
+		nade c 1 A_FireCustomMissile("ThrownNade",0,1,12,5,0,2)
+		tnt1 a 0 A_CheckReload
+		tnt1 a 0 a_setangle(angle+0.5)
+		tnt1 a 0 a_setpitch(pitch+0.5)
+		tnt1 a 0 a_setroll(roll-0.5)
+		nade d 1
+		TNT1 A 0 A_Jump(150,1)
+		TNT1 a 0 A_Playsound("player/exhale",3)
+		tnt1 a 0 a_setangle(angle+0.25)
+		tnt1 a 0 a_setpitch(pitch+0.5)
+		tnt1 a 0 a_setroll(roll-0.5)
+		nade e 1
+		TNT1 A 1
+		tnt1 a 0 a_setangle(angle-0.5)
+		tnt1 a 0 a_setpitch(pitch-0.5)
+		tnt1 a 0 a_setroll(roll+0.5)
+		TNT1 A 1
+		TNT1 A 1
+		TNT1 A 1
+		tnt1 a 0 a_setangle(angle-0.5)
+		tnt1 a 0 a_setpitch(pitch-0.5)
+		tnt1 a 0 a_setroll(roll+0.5)
+		TNT1 A 1
+		TNT1 A 1
+		nade a 1 Offset(-67, 100)
+		tnt1 a 0 a_setangle(angle-0.25)
+
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		nade a 1 Offset(-40, 70)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		nade a 1 Offset(-20, 48)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		nade a 1 Offset(-12, 44)
+		TNT1 A 0 A_WeaponReady
+		nade A 1 Offset(-5, 35)
+		TNT1 A 0 A_WeaponReady
+		nade A 2 Offset(-1, 33)
+		goto Ready
+	}
+}
+
+
+ACTOR NadeTick: Inventory
+{
+	Inventory.MaxAmount 60
+}
+
+
+
+ACTOR ThrownNade
+{
+	Projectile
+	+SHOOTABLE
+	+THRUGHOST
+	+THRUSPECIES
+	+BOUNCEONWALLS
+	+BOUNCEONFLOORS
+	+BOUNCEONCEILINGS
+	+ALLOWBOUNCEONACTORS
+	-NOGRAVITY
+	+MOVEWITHSECTOR
+	+EXTREMEDEATH
+	+USEBOUNCESTATE
+	+CANBOUNCEWATER
+	+DONTBLAST
+	+DONTTHRUST
+	+ROLLSPRITE
+	+ROLLCENTER
+	+QUICKTORETALIATE
+	+LOOKALLAROUND
+	+FRIENDLY
+	+DROPPED
+	+STANDSTILL
+	Species "Player"
+	Health 1
+    Damage 0
+    Speed 70
+	gravity 0.8
+    Scale 0.40
+	Friction 1
+	BounceType Doom
+	DamageType NadeBoom
+    BounceFactor 0.4
+    WallBounceFactor 0.4
+    Radius 3
+    Height 2
+    Renderstyle Normal
+	
+    States
+    {
+    Spawn:
+		NADE P 1 A_SetRoll(frandom(0,360))
+	Life1:
+		NADE P 1 A_SetRoll(roll+25)
+		TNT1 A 0 A_LookEx(0,0,30)
+		TNT1 A 0 A_GiveInventory("NadeTick",1)
+		TNT1 A 0 A_JumpIfInventory("NadeTick",0,"ActualDeath")
+		Loop
+	Life2:
+		NADE P 1 A_SetRoll(roll+35)
+		TNT1 A 0 A_LookEx(0,0,70)
+		TNT1 A 0 A_GiveInventory("NadeTick",1)
+		TNT1 A 0 A_JumpIfInventory("NadeTick",0,"ActualDeath")
+		Loop
+	Life3:
+		NADE P 1 A_SetRoll(roll+45)
+		TNT1 A 0 A_LookEx(0,0,70)
+		TNT1 A 0 A_GiveInventory("NadeTick",1)
+		TNT1 A 0 A_JumpIfInventory("NadeTick",0,"ActualDeath")
+		Loop
+	Life4:
+		NADE P 1 A_SetRoll(roll-15)
+		TNT1 A 0 A_LookEx(0,0,70)
+		TNT1 A 0 A_GiveInventory("NadeTick",1)
+		TNT1 A 0 A_JumpIfInventory("NadeTick",0,"ActualDeath")
+		Loop
+	Life5:
+		NADE P 1 A_SetRoll(roll-25)
+		TNT1 A 0 A_LookEx(0,0,70)
+		TNT1 A 0 A_GiveInventory("NadeTick",1)
+		TNT1 A 0 A_JumpIfInventory("NadeTick",0,"ActualDeath")
+		Loop
+	Life6:
+		NADE P 1 A_SetRoll(roll-35) 
+		TNT1 A 0 A_LookEx(0,0,70)
+		TNT1 A 0 A_GiveInventory("NadeTick",1)
+		TNT1 A 0 A_JumpIfInventory("NadeTick",0,"ActualDeath")
+		Loop
+	Life7:
+		NADE P 1 A_SetRoll(roll-45) 
+		TNT1 A 0 A_LookEx(0,0,70)
+		TNT1 A 0 A_GiveInventory("NadeTick",1)
+		TNT1 A 0 A_JumpIfInventory("NadeTick",0,"ActualDeath")
+		Loop
+	Bounce:
+		TNT1 A 0 A_SetRoll(frandom(0,360))
+		TNT1 A 0 A_Playsound("weapons/tick1",2)
+		TNT1 A 0 A_Playsound("weapons/nadebounce",1)
+		TNT1 A 0 A_Jump(256,"Life1","Life2","Life3","Life4","Life5","Life6","Life7")
+	Death:
+		TNT1 A 0 
+		TNT1 A 0 A_ChangeVelocity(frandom(0,1),0,0,CVF_RELATIVE)
+	Lying:
+		NADE P 18 
+		NADE P 2 BRIGHT A_LookEx(0,0,200,0,360,"BigBoom")
+		TNT1 A 0 A_Playsound("weapons/tick1",2)
+		TNT1 A 0 A_GiveInventory("NadeTick",20)
+		TNT1 A 0 A_JumpIfInventory("NadeTick",0,"BigBoom")
+		loop
+	See:
+	Crash:
+	XDeath:
+    ActualDeath:
+		TNT1 A 0 A_setRoll(0)
+		TNT1 A 0 A_AlertMonsters
+		//TNT1 A 0 A_Blast(0,255,200,20) // hits through walls
+		NADE P 1
+		TNT1 A 0 A_Explode(220,200)
+		TNT1 A 0 A_PlaySound ("weapons/rocklx", 5, 1, 0, 0.4)
+		TNT1 A 0 A_ChangeFlag ("NOGRAVITY", 1)
+		TNT1 A 0 A_Stop
+		TNT1 A 0 A_SpawnItemEx("DukeSplosion")
+		TNT1 A 0 A_Jump(150,3)
+		TNT1 A 0 A_PlaySound("weapons/debris",6,1,0,2)
+		TNT1 A 50
+		TNT1 A 0
+		Stop
+	BigBoom:
+		TNT1 A 0 A_setRoll(0)
+		TNT1 A 0 A_AlertMonsters
+		//TNT1 A 0 A_Blast(0,255,200,20) // hits through walls
+		NADE P 1
+		TNT1 A 0 A_Explode(320,300)
+		TNT1 A 0 A_PlaySound ("weapons/rocklx", 5, 1, 0, 0.4)
+		TNT1 A 0 A_ChangeFlag ("NOGRAVITY", 1)
+		TNT1 A 0 A_Stop
+		TNT1 A 0 A_SpawnItemEx("DukeSplosion3")
+		TNT1 A 0 A_Jump(150,3)
+		TNT1 A 0 A_PlaySound("weapons/debris",6,1,0,2)
+		TNT1 A 50
+		TNT1 A 0
+		Stop
+
+    }
+}
+

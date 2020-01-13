@@ -1,0 +1,943 @@
+//kept around for inheritance purposes
+ACTOR ExplosionFire
+{
+	Game Doom
+	Radius 1
+	Height 1
+	Speed 4
+	Damage 0 
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +DONTSPLASH
+	+MISSILE
+	+FORCEXYBILLBOARD
+    +CLIENTSIDEONLY
+    +NOINTERACTION
+	+NOCLIP
+    DamageType Flames
+	Gravity 0
+	Renderstyle Add
+	States
+	{
+    Spawn:
+        MISL BCDEFG 2 BRIGHT
+        Stop
+	}
+}
+
+Actor BulletTracer : FastProjectile
+{
+-ACTIVATEIMPACT
+-ACTIVATEPCROSS
++NOTELEPORT
++BLOODLESSIMPACT
++THRUGHOST
+alpha .75
+renderstyle add
+scale 0.8
+damage 0
+speed 150
+radius 4
+height 4
+seesound ""
+deathsound ""
+states
+	{
+	Spawn:
+		PUFF A 1 bright
+		TNT1 A 0 A_FadeOut(0.1)
+		// PUFF A 1 bright A_PlaySound("weapons/tracerwhizz",5)
+		loop
+	Death:
+		Stop
+	}
+}
+
+Actor BulletTracerBig:BulletTracer
+{
+	States
+	{
+		XDeath:
+		//TNT1 A 3 A_PlaySound("weapons/fleshbig", 7, 1,0,1)
+		Stop
+	}
+}
+
+Actor RicochetBullet //: FastProjectile
+{
+-ACTIVATEIMPACT
+-ACTIVATEPCROSS
++FORCEXYBILLBOARD
++THRUACTORS
+bouncetype "Hexen"
+mass 1
+damage 0
+radius 1
+height 1
+speed 30
+seesound ""
+renderstyle Add
+alpha 0.8
+//MissileType BulletTrail
+//MissileHeight 8
+states
+	{
+	Spawn:
+		TNT1 A 0 A_PlaySound("weapons/ricochet",7)
+		PUFF A 2
+		stop
+	}
+}
+ 
+
+
+// NAKU NARU
+Actor Muzzlesmoke
+{
+	+NOGRAVITY
+	+NOBLOCKMAP
+	+FLOORCLIP
+	+FORCEXYBILLBOARD
+	+NOINTERACTION
+	+DONTSPLASH
+	Speed 1
+	RenderStyle Add
+	Alpha		0.1
+	+CLIENTSIDEONLY
+	Radius		0
+	Height		0
+	Scale		0.4
+	States
+	{
+	Spawn:
+    NULL A 1 A_SetTranslucent(0.15)	
+	SMOK ABCDEFGHIJKLMNOPQ 2 A_FadeOut(0.005)
+	goto death
+	Death:
+	TNT1 A 0
+	stop
+}	
+}
+
+actor Smokespawner 
+{
+	Speed 30
+	+NOCLIP
+	states
+	{
+	spawn:
+	TNT1 A 1	
+	TNT1 A 0 A_CustomMissile("Muzzlesmoke", 0, 0, random (0,360), 2, random (0, 180)) 
+	stop
+	}
+}
+
+actor Smokespawner2
+{
+	Speed 30
+	+NOCLIP
+	states
+	{
+	spawn:
+	TNT1 A 1	
+	TNT1 A 0 A_CustomMissile("PuffSmoke", 0, 0, random (0,360), 2, random (0, 180)) 
+	stop
+	}
+}
+
+ACTOR SmoothBulletPuff Replaces BulletPuff
+{
+	Game Doom
+	SpawnID 131
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+ALLOWPARTICLES
+	+RANDOMIZE
+	//+ROLLSPRITE
+	//+ROLLCENTER
+	RenderStyle Translucent
+	Alpha 0.7
+	VSpeed 1
+	Mass 5
+	States
+	{
+	spawn:
+		PUFF A 2 Bright
+		//TNT1 AAAAA 0 A_CustomMissile ("PuffParticles", 0, 0, random (0, 360), 2, random (0, 360))
+		PUFF B 2
+	Melee:
+		PUFF CD 2
+		Stop		
+	}
+}
+
+ACTOR WeaponBulletPuff:SmoothBulletPuff
+{
+	+NOINTERACTION
+	+PUFFONACTORS 
+	States
+	{
+	spawn:
+		PUFF A 2 Bright
+		//TNT1 AAAAA 0 A_CustomMissile ("PuffParticles", 0, 0, random (0, 360), 2, random (0, 360))
+		PUFF B 2
+	Melee:
+		PUFF C 1
+		PUFF C 1 A_PlaySound("weapons/flesh", 7|CHAN_NOPAUSE, 1,0,1)
+		PUFF D 2 
+		TNT1 A 15
+		Stop
+	XDeath:
+		PUFF A 1 Bright 
+		PUFF A 1 Bright A_PlaySound("weapons/flesh", 7|CHAN_NOPAUSE, 1,0,1)
+		PUFF B 2
+		TNT1 A 15
+		Stop
+	Crash:
+		TNT1 AA 0 A_SpawnItemEx("SlugShard",random(-100,100)/100.00,random(-100,100)/100.00,random(-100,100)/100.00,random(-400,400)/100.00,random(-400,400)/100.00,random(-100,800)/100.00,random(-180,180),160,96)
+        TNT1 A 0 A_SpawnItemEx("SlugShard2",random(-100,100)/100.00,random(-100,100)/100.00,random(-100,100)/100.00,random(-400,400)/100.00,random(-400,400)/100.00,random(-100,800)/100.00,random(-180,180),160,96)
+		TNT1 A 0 A_SpawnItemEx("PuffSparks",0,0,0,0,0,0,0)
+		TNT1 A 1
+		TNT1 A 15 A_PlaySound("weapons/ricochet",6|CHAN_NOPAUSE,1,1,1.5)
+		Stop		
+	}
+}
+
+Actor BloodSpurt
+{
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+ALLOWPARTICLES
+	+RANDOMIZE
+	//+ROLLSPRITE
+	//+ROLLCENTER
+	Scale 2
+	RenderStyle Normal
+	Alpha 1
+	VSpeed 1
+	Mass 5
+	States
+	{
+	Spawn:
+		BLPF A 1 A_SetRoll(random(0,359))
+		BLPF B 1
+		BLPF C 1
+		BLPF D 1
+		BLPF E 1
+		Stop
+	}
+}
+
+Actor WeaponBigBulletPuff:WeaponBulletPuff
+{
+	States
+	{
+	Melee:
+		PUFF C 1
+		TNT1 AAAAA 0 A_SpawnItemEx("Blood",random(-100,100)/100.00,random(-100,100)/100.00,random(-100,100)/100.00,random(-400,400)/100.00,random(-400,400)/100.00,random(-100,800)/100.00,random(-180,180))
+		PUFF C 1 A_PlaySound("weapons/fleshbig", 7|CHAN_NOPAUSE, 1,0,1)
+		PUFF D 2 
+		TNT1 A 30
+		Stop
+	XDeath:
+		PUFF A 1 Bright 
+		TNT1 AAAAA 0 A_SpawnItemEx("Blood",random(-100,100)/100.00,random(-100,100)/100.00,random(-100,100)/100.00,random(-400,400)/100.00,random(-400,400)/100.00,random(-100,800)/100.00,random(-180,180))
+		PUFF A 1 Bright A_PlaySound("weapons/fleshbig", 7|CHAN_NOPAUSE, 1,0,1)
+		PUFF B 2 
+		TNT1 A 30
+		Stop
+	Crash:
+		TNT1 AAAA 0 A_SpawnItemEx("SlugShard",random(-100,100)/100.00,random(-100,100)/100.00,random(-100,100)/100.00,random(-400,400)/100.00,random(-400,400)/100.00,random(-100,800)/100.00,random(-180,180),160,96)
+        TNT1 AA 0 A_SpawnItemEx("SlugShard2",random(-100,100)/100.00,random(-100,100)/100.00,random(-100,100)/100.00,random(-400,400)/100.00,random(-400,400)/100.00,random(-100,800)/100.00,random(-180,180),160,96)
+		TNT1 A 0 A_SpawnItemEx("SlugShard3",random(-100,100)/100.00,random(-100,100)/100.00,random(-100,100)/100.00,random(-400,400)/100.00,random(-400,400)/100.00,random(-100,800)/100.00,random(-180,180),160,96)
+		TNT1 AAAA 0 A_SpawnItemEx("PuffSparks",random(-5,5),random(-5,5),random(-5,5))
+		TNT1 A 1
+		TNT1 A 15 A_PlaySound("weapons/ricochet",6|CHAN_NOPAUSE,1,1,1.5)
+		Stop	
+	}
+}
+
+Actor PuffSparks
+{
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+ALLOWPARTICLES
+	+RANDOMIZE
+	//+ROLLSPRITE
+	//+ROLLCENTER
+	Scale 0.3
+	RenderStyle Translucent
+	Alpha 0.7
+	VSpeed 1
+	Mass 5
+
+	States
+	{
+	Spawn:
+		TNT1 A 0 
+		FX57 A 1 BRIGHT A_SetRoll(random(0, 359))
+		FX57 BC 1  BRIGHT A_SetTranslucent(.8,1)
+		FX57 DE 1  BRIGHT A_SetTranslucent(.6,1)
+		FX57 FG 1  BRIGHT A_SetTranslucent(.4,1)
+		FX57 HIJ 1 BRIGHT A_SetTranslucent(.2,1) 
+		Stop
+	}
+}
+
+
+// *******  te13  ****** //
+actor AkzeSmoke
+{
+    Scale 0.4
+    Alpha 0.175
+    RenderStyle Translucent
+    +NOINTERACTION
+    +CLIENTSIDEONLY
+    States
+    {
+    Spawn:
+        TNT1 A 0
+        TNT1 A 1
+        TNT1 A 0 A_Jump(255,"Spawn1","Spawn2","Spawn3","Spawn4","Spawn5","Spawn6","Spawn7","Spawn8")
+    Spawn1:
+        SMOK A 2 A_Fadeout(0.01)
+        loop
+    Spawn2:
+        SMOK B 2 A_Fadeout(0.01)
+        loop
+    Spawn3:
+        SMOK C 2 A_Fadeout(0.01)
+        loop
+    Spawn4:
+        SMOK D 2 A_Fadeout(0.01)
+        loop
+    Spawn5:
+        SMOK E 2 A_Fadeout(0.01)
+        loop
+    Spawn6:
+        SMOK F 2 A_Fadeout(0.01)
+        loop
+    Spawn7:
+        SMOK G 2 A_Fadeout(0.01)
+        loop
+    Spawn8:
+        SMOK H 2 A_Fadeout(0.01)
+        loop
+    }
+}
+
+ACTOR AkzePuff
+{
+    +NOINTERACTION
+    +CLIENTSIDEONLY
+    States
+    {
+    Spawn:
+        TNT1 A 0
+        TNT1 A 1
+        TNT1 AAA 0 A_SpawnItemEx("SlugShard",random(-100,100)/100.00,random(-100,100)/100.00,random(-100,100)/100.00,random(-400,400)/100.00,random(-400,400)/100.00,random(-100,800)/100.00,random(-180,180),160,96)
+        TNT1 AA 0 A_SpawnItemEx("SlugShard2",random(-100,100)/100.00,random(-100,100)/100.00,random(-100,100)/100.00,random(-400,400)/100.00,random(-400,400)/100.00,random(-100,800)/100.00,random(-180,180),160,96)
+        TNT1 A 0 A_SpawnItemEx("SlugShard3",random(-100,100)/100.00,random(-100,100)/100.00,random(-100,100)/100.00,random(-400,400)/100.00,random(-400,400)/100.00,random(-100,800)/100.00,random(-180,180),160,96)
+        TNT1 A 1
+        Stop
+    }
+}
+
+
+ACTOR GunFlashLight
+{
+ States
+ {
+ Spawn:
+   TNT1 A 10
+   Stop
+ }
+}
+ 
+ACTOR SlugShard
+{
+    Radius 3
+    Height 6
+    Scale 0.1
+    Mass 0
+    BounceFactor 0.55
+    WallBounceFactor 1.1
+    BounceCount 6
+    +MISSILE
+    +DOOMBOUNCE
+    +FLOORCLIP
+    -DONTSPLASH
+    +NOTELEPORT
+    -SOLID
+    +CLIENTSIDEONLY
+    States
+    {
+    Spawn:
+        SHRD NLMNLMNLMNLMNLMNLMLMNLMNLMNLMNLMNLMNLM 2
+        goto Death
+    Death:
+        TNT1 A 0
+        TNT1 A 0 A_Jump(255,"Death1","Death2","Death3")
+        SHRD N 1
+        loop
+    Death1:
+        SHRD NNNNNNNNNN 1 A_FadeOut(0.1)
+        TNT1 A 0
+        Stop
+    Death2:
+        SHRD MMMMMMMMMM 1 A_FadeOut(0.1)
+        TNT1 A 0
+        Stop
+    Death3:
+        SHRD LLLLLLLLLL 1 A_FadeOut(0.1)
+        TNT1 A 0
+        Stop
+    }
+}
+
+Actor SlugShard2: SlugShard
+{
+	scale 0.2
+}
+
+Actor SlugShard3: SlugShard
+{
+	scale 0.3
+}
+// ************** //
+
+ACTOR PainlessBulletPuff: WeaponBulletPuff
+{
+	+PAINLESS
+}
+
+ACTOR BulletPuffGibby : WeaponBigBulletPuff
+{
+  +EXTREMEDEATH
+  -NOEXTREMEDEATH
+ }
+ 
+ ACTOR BulletPuffGibless : WeaponBulletPuff
+{
+  -EXTREMEDEATH
+  +NOEXTREMEDEATH
+ }
+
+ACTOR PuffParticles: ExplosionFire
+{
+    Speed 10
+	Scale 0.6
+	Renderstyle Add
+	States
+	{
+    Spawn:
+        PUFF A 2 BRIGHT
+		PUFF A 2
+        Stop
+	}
+}
+
+ACTOR PuffSmoke: ExplosionFire
+{
+    Speed 1
+	Scale 0.9
+	Renderstyle Translucent
+	Alpha 0.9
+	States
+	{
+    Spawn:
+	TNT1 A 0
+	TNT1 A 0 A_Jump(128, "Spawn2")
+    PUFF CCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.05)
+	Stop
+	Spawn2:
+	PUFF DDDDDDDDDDDDDDDDDD 1 A_FadeOut(0.05)
+    Stop
+	}
+}
+
+Actor bulletcasing
+{
+  scale 0.17
+  radius 3
+  projectile
+  bouncefactor 0.5
+  wallbouncefactor 0.4
+  bouncecount 5
+  bouncesound "casings/bullet/bounce"
+  bouncetype Doom
+  -NOGRAVITY
+  -NOBLOCKMAP
+//  -BOUNCEONCEILINGS
+  +NOTELEPORT
+  +THRUACTORS
+  +DROPOFF
+  +FLOORCLIP
+  -BOUNCEONACTORS
+  states
+	{
+	Spawn:
+		BCAS ABCDEFGH 1
+		loop
+	Death:
+		TNT1 A 0 A_Jump(255, "Death1", "Death2", "Death3", "Death4")
+		goto death1
+	Death1:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(CallACS("LiquidCheck"),"disappear")
+		BCAS I -1 a_playsound ("casings/bullet/die") 
+		stop
+	Death2:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(CallACS("LiquidCheck"),"disappear")
+		BCAS J -1 a_playsound ("casings/bullet/die") 
+		stop
+	Death3:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(CallACS("LiquidCheck"),"disappear")
+		BCAS K -1 a_playsound ("casings/bullet/die") 
+		stop
+	Death4:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(CallACS("LiquidCheck"),"disappear")
+		BCAS L -1 a_playsound ("casings/bullet/die") 
+		stop
+	disappear:
+		tnt1 a 1
+		stop
+	}
+}
+
+Actor riflecasing
+{
+  scale 0.17
+  radius 3
+  projectile
+  bouncefactor 0.5
+  wallbouncefactor 0.4
+  bouncecount 5
+  bouncesound "casings/bullet/bounce"
+  bouncetype Doom
+  -NOGRAVITY
+  -NOBLOCKMAP
+//  -BOUNCEONCEILINGS
+  +NOTELEPORT
+  +THRUACTORS
+  +DROPOFF
+  +FLOORCLIP
+  -BOUNCEONACTORS
+  states
+	{
+	Spawn:
+		556C ABCDEFGH 1
+		loop
+	Death:
+		556C A 0 A_Jump(255, "Death1", "Death2")
+		goto death1
+	Death1:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(CallACS("LiquidCheck"),"disappear")
+		556C I -1 a_playsound ("casings/bullet/die") 
+		stop
+	Death2:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(CallACS("LiquidCheck"),"disappear")
+		556C J -1 a_playsound ("casings/bullet/die") 
+		stop
+	disappear:
+		tnt1 a 1
+		stop
+	}
+}
+
+
+Actor shellcasing
+{
+  projectile
+  scale 0.26
+  radius 3
+  bouncefactor 0.5
+  wallbouncefactor 0.4
+  bouncecount 5
+  bouncesound "casings/shell/bounce"
+  bouncetype Doom
+  -NOGRAVITY
+  -NOBLOCKMAP
+ // -BOUNCEONCEILINGS
+  +DROPOFF
+  +THRUACTORS
+  +NOTELEPORT
+  +BOUNCEONACTORS
+  +FLOORCLIP
+  states
+	{
+	Spawn:
+		SCAS ABCDEFGH 2
+		loop
+	Death:
+		TNT1 A 0 A_Jump(255, "Death1", "Death2", "Death3", "Death4", "Death6")
+		goto death1
+		
+	Death1:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(CallACS("LiquidCheck"),"disappear")
+		SHDY a -1 a_playsound ("casings/shell/die")
+		stop
+	Death2:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(CallACS("LiquidCheck"),"disappear")
+		SHDY b -1 a_playsound ("casings/shell/die")
+		stop
+	Death3:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(CallACS("LiquidCheck"),"disappear")
+		SHDY c -1 a_playsound ("casings/shell/die")
+		stop
+	Death4:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(CallACS("LiquidCheck"),"disappear")
+		SHDY d -1 a_playsound ("casings/shell/die")
+		stop
+	Death5:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(CallACS("LiquidCheck"),"disappear")
+		SHDY e -1 a_playsound ("casings/shell/die")
+		stop
+	Death6:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(CallACS("LiquidCheck"),"disappear")
+		SHDY f -1 a_playsound ("casings/shell/die")
+		stop
+	disappear:
+		tnt1 a 1
+		stop
+	}
+}
+
+actor smoothfog : teleportfog replaces teleportfog
+{
+states
+	{
+	spawn:
+	SFOG abcdefghijklmnopqrstrqpo 2 bright
+	stop
+	}
+}
+
+actor smoothtrail : rocketsmoketrail
+{
+renderstyle add
+scale 2
+states
+	{
+	Spawn:
+    SMOK ABCDEFGHIJKLMNOPQR 3
+    Stop
+	}
+}
+
+actor bluesparkle : rocketsmoketrail
+{
+alpha 0.4
+states
+	{
+	spawn:
+	bspk abcde 3 bright
+	stop
+	}
+}
+
+actor greensparkle : rocketsmoketrail
+{
+alpha 0.4
+states
+	{
+	spawn:
+	gsmk defghi 3 bright
+	stop
+	}
+}
+
+
+
+ACTOR SmokeColumn
+{
+    Radius 0
+    Height 0
+    Alpha 0.4
+    RenderStyle Translucent
+    XScale 1.5
+    YScale 0.6
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +DONTSPLASH
+    +CLIENTSIDEONLY
+    Damage 0
+    States
+    {
+    Spawn:
+        SB17 E 4
+        SB17 ABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCDABCD 5
+        SB17 E 4
+        Stop
+    }
+}
+
+
+
+ACTOR SmallFireSpawner
+{
+	Radius 0
+	Height 0
+	Alpha 0.4
+	RenderStyle Translucent
+	XScale 1.5
+	YScale 0.6
+	+NOBLOCKMAP
+	+NOTELEPORT
+	+DONTSPLASH
+	+CLIENTSIDEONLY
+	Damage 0
+	States
+    {
+        Spawn:
+        TNT1 A 1
+        TNT1 A 0 A_Jump(180, 3)
+        TNT1 A 0 A_SpawnItemEx("SmallFire",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+        TNT1 A 0 A_SpawnItemEx("SmokeColumn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+        TNT1 AAAA 0
+        Stop
+    }
+}
+
+ACTOR SmallFire
+{
+    var int user_loop_index;
+	Radius 0
+    Height 0
+    XScale 1.5
+    YScale 0.6
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +DONTSPLASH
+    +CLIENTSIDEONLY
+    Damage 0
+    Alpha 0.9
+    RenderStyle Translucent
+    Scale 0.6
+    States
+    {
+    Spawn:
+        FLME A 1 BRIGHT A_CustomMissile ("MinimalFlameTrails", 24, 0, random (0, 360), 2, random (70, 110))
+        FLME BCD 1 BRIGHT 
+        FLME E 1 BRIGHT A_CustomMissile ("MinimalFlameTrails", 24, 0, random (0, 360), 2, random (70, 110))
+        FLME FGH 1 BRIGHT
+        FLME I 1 BRIGHT A_CustomMissile ("MinimalFlameTrails", 24, 0, random (0, 360), 2, random (60, 130))
+        FLME JKL 1 BRIGHT
+        FLME M 1 BRIGHT A_CustomMissile ("MinimalFlameTrails", 24, 0, random (0, 360), 2, random (60, 130))
+        FLME N 1 BRIGHT
+        TNT1 A 0 A_SetUserVar("user_loop_index", user_loop_index+1)
+        TNT1 A 0 A_JumpIf(user_loop_index < 14, "Spawn")
+        TNT1 AAAAA 3 BRIGHT A_CustomMissile ("MinimalFlameTrails", 2, 0, random (0, 360), 2, random (60, 130))
+        TNT1 AAA 8 BRIGHT A_CustomMissile ("MinimalFlameTrails", 2, 0, random (0, 360), 2, random (60, 130))
+        Stop
+    }
+}
+
+
+ACTOR MinimalFlameTrails
+{
+	Game Doom
+    Radius 1
+    Height 1
+    Damage 0 
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +DONTSPLASH
+    +MISSILE
+    +FORCEXYBILLBOARD
+    +CLIENTSIDEONLY
+    +NOINTERACTION
+    +NOCLIP
+    RenderStyle Add
+    Alpha 1
+    Gravity 0
+    Speed 4
+    Scale 0.4
+    States
+    {
+    Spawn:
+        TNT1 A 0
+        FIR1 FGGHHII 1 BRIGHT
+        Stop
+    }
+}
+
+Actor DukeSplosion
+{
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_Jump(256, "Boom1","Boom2","Boom3")
+		Boom1:
+			TNT1 A 0 A_SpawnItemEx("DukeSplosion2",0,0,0,0,0,0)
+			stop
+		Boom2:
+			TNT1 A 0 A_SpawnItemEx("DukeSplosion2",0,0,0,0,0,0)
+			stop
+		Boom3:
+			TNT1 A 0 A_SpawnItemEx("DukeSplosion2",0,0,0,0,0,0)
+			stop
+	}
+}
+
+
+Actor DukeSplosion1
+{
+	Renderstyle Add
+	scale 3
+	gravity 0
+	+NOGRAVITY
+	+NOBLOCKMAP
+    +NOTELEPORT
+    +DONTSPLASH
+    +MISSILE
+    +FORCEXYBILLBOARD
+    +CLIENTSIDEONLY
+    +NOINTERACTION
+    +NOCLIP
+	States
+	{
+		Spawn:
+			TNT1 A 0 A_NoGravity
+			TNT1 AAAAAAAAAAAA 0 A_SpawnParticle (730000, SPF_FULLBRIGHT | SPF_RELATIVE, random(30,70), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,5,10)
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle (ef0000, SPF_FULLBRIGHT | SPF_RELATIVE, random(25,60), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,5,10)
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle (f37317, SPF_FULLBRIGHT | SPF_RELATIVE, random(20,50), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,5,10)
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle (ffa35b, SPF_FULLBRIGHT | SPF_RELATIVE, random(15,40), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,3,6)
+			TNT1 AAAAAAAAA 0 A_SpawnParticle (ffffff, SPF_FULLBRIGHT | SPF_RELATIVE, random(10,30), random(1,4), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,0, 0.98, -1)
+			expl d 0 a_quake (4,25,0,250,0)
+			expl d 0 a_quake (2,25,0,500,0)
+			expl d 0 a_quake (1,25,0,800,0)
+			TNT1 a 0 A_SpawnItemEx("smoothtrail", random(-40, 40), random(-40, 40), random(0, 30))
+			X003 ABCD 1 Bright
+			TNT1 a 0 A_SpawnItemEx("smoothtrail", random(-40, 40), random(-40, 40), random(0, 30))
+			TNT1 A 0 A_SpawnItemEx ("SmallFireSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			x003 EFGHIJKLNOPQRSTYVWXYZ 1 Bright
+			TNT1 a 2 A_SpawnItemEx("smoothtrail", random(-40, 40), random(-40, 40), random(0, 30))
+			Stop
+	}
+}
+
+Actor DukeSplosion2: DukeSplosion1
+{
+	//+ROLLSPRITE
+	//+ROLLCENTER
+	scale 2.5
+	States
+	{
+		Spawn:
+			TNT1 A 0 
+			TNT1 A 0 A_Jump(128,2)
+			TNT1 A 0 A_SetScale(ScaleX * -1)
+			TNT1 A 0 A_NoGravity
+			TNT1 AAAAAAAAAAAA 0 A_SpawnParticle (730000, SPF_FULLBRIGHT | SPF_RELATIVE, random(30,70), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,5,10)
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle (ef0000, SPF_FULLBRIGHT | SPF_RELATIVE, random(25,60), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,5,10)
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle (f37317, SPF_FULLBRIGHT | SPF_RELATIVE, random(20,50), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,5,10)
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle (ffa35b, SPF_FULLBRIGHT | SPF_RELATIVE, random(15,40), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,3,6)
+			TNT1 AAAAAAAAA 0 A_SpawnParticle (ffffff, SPF_FULLBRIGHT | SPF_RELATIVE, random(10,30), random(1,4), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,0, 0.98, -1)
+			expl d 0 a_quake (4,25,0,250,0)
+			expl d 0 a_quake (2,25,0,500,0)
+			expl d 0 a_quake (1,25,0,800,0)
+			TNT1 a 0 A_SpawnItemEx("smoothtrail", random(-40, 40), random(-40, 40), random(0, 30))
+			BLAM ABCD 1 Bright
+			TNT1 a 0 A_SpawnItemEx("smoothtrail", random(-40, 40), random(-40, 40), random(0, 30))
+			TNT1 A 0 A_CheckFloor("WithFire")
+			BLAM EFGHIJKLNOP 1 Bright
+			TNT1 a 2 A_SpawnItemEx("smoothtrail", random(-40, 40), random(-40, 40), random(0, 30))
+			Stop
+		WithFire:
+			TNT1 A 0 A_SpawnItemEx ("SmallFireSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			BLAM EFGHIJKLNOP 1 Bright
+			TNT1 a 2 A_SpawnItemEx("smoothtrail", random(-40, 40), random(-40, 40), random(0, 30))
+			stop
+		
+	}
+}
+
+Actor DukeSplosion3:DukeSplosion1
+{
+	scale 2
+	States
+	{
+		Spawn:
+			TNT1 A 0 A_NoGravity
+			TNT1 A 0 A_Jump(128,2)
+			TNT1 A 0 A_SetScale(ScaleX * -1)
+			TNT1 AAAAAAAAAAAA 0 A_SpawnParticle (730000, SPF_FULLBRIGHT | SPF_RELATIVE, random(30,70), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,5,10)
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle (ef0000, SPF_FULLBRIGHT | SPF_RELATIVE, random(25,60), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,5,10)
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle (f37317, SPF_FULLBRIGHT | SPF_RELATIVE, random(20,50), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,5,10)
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle (ffa35b, SPF_FULLBRIGHT | SPF_RELATIVE, random(15,40), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,3,6)
+			TNT1 AAAAAAAAA 0 A_SpawnParticle (ffffff, SPF_FULLBRIGHT | SPF_RELATIVE, random(10,30), random(1,4), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,0, 0.98, -1)
+			expl d 0 a_quake (4,25,0,250,0)
+			expl d 0 a_quake (2,25,0,500,0)
+			expl d 0 a_quake (1,25,0,800,0)
+			TNT1 a 0 A_SpawnItemEx("smoothtrail", random(-40, 40), random(-40, 40), random(0, 30))
+			X004 ABCD 1 Bright
+			TNT1 a 0 A_SpawnItemEx("smoothtrail", random(-40, 40), random(-40, 40), random(0, 30))
+			TNT1 A 0 A_CheckFloor("WithFire")
+			x004 EFGHIJKLNOPQ 1 Bright
+			TNT1 a 2 A_SpawnItemEx("smoothtrail", random(-40, 40), random(-40, 40), random(0, 30))
+			Stop
+		WithFire:
+			TNT1 A 0 A_SpawnItemEx ("SmallFireSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			x004 EFGHIJKLNOPQ 1 Bright
+			TNT1 a 2 A_SpawnItemEx("smoothtrail", random(-40, 40), random(-40, 40), random(0, 30))
+			Stop
+
+	}
+}
+
+Actor DukeSplosion4:DukeSplosion1
+{
+	scale 2
+	States
+	{
+		Spawn:
+			TNT1 A 0 A_NoGravity
+			TNT1 AAAAAAAAAAAA 0 A_SpawnParticle (730000, SPF_FULLBRIGHT | SPF_RELATIVE, random(30,70), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,5,10)
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle (ef0000, SPF_FULLBRIGHT | SPF_RELATIVE, random(25,60), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,5,10)
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle (f37317, SPF_FULLBRIGHT | SPF_RELATIVE, random(20,50), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,5,10)
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnParticle (ffa35b, SPF_FULLBRIGHT | SPF_RELATIVE, random(15,40), random(1,10), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,-0.1, 0.98, -1)
+			//TNT1 A 0 A_Jump (256, 1,3,6)
+			TNT1 AAAAAAAAA 0 A_SpawnParticle (ffffff, SPF_FULLBRIGHT | SPF_RELATIVE, random(10,30), random(1,4), frandom(0,360), 0,0,0, frandom(0.2,12.0),frandom(-0.2,0.2),frandom(-6.0,6.0), 0,0,0, 0.98, -1)
+			expl d 0 a_quake (4,25,0,250,0)
+			expl d 0 a_quake (2,25,0,500,0)
+			expl d 0 a_quake (1,25,0,800,0)
+			TNT1 a 0 A_SpawnItemEx("smoothtrail", random(-40, 40), random(-40, 40), random(0, 30))
+			rexp oABCD 1 Bright
+			TNT1 a 0 A_SpawnItemEx("smoothtrail", random(-40, 40), random(-40, 40), random(0, 30))
+			TNT1 A 0 A_SpawnItemEx ("SmallFireSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			rexp EFGHIJKL 2 Bright
+			rexp M 2 A_SpawnItemEx("smoothtrail", random(-40, 40), random(-40, 40), random(0, 30))
+			rexp N 2 A_SpawnItemEx("smoothtrail", random(-40, 40), random(-40, 40), random(0, 30))
+			Stop
+	}
+}
+
+

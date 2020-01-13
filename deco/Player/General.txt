@@ -1,0 +1,69 @@
+// Actor VoyageGal : DoomPlayer replaces DoomPlayer
+// {
+
+// 	player.startitem "Handcannon"
+// 	player.startitem "FireAxe"
+// 	Player.StartItem "Clip", 35
+// 	Player.StartItem "PistolLoad", 10
+// 	Player.StartItem "Nade", 1
+// 	Player.StartItem "NadeAmmo", 1
+// 	Player.WeaponSlot 1, "FireAxe"
+//    	Player.WeaponSlot 2, "Handcannon"
+// 	Player.WeaponSlot 3, "BuffaloRifle", "AutoShotgun"
+// 	Player.WeaponSlot 4, "Famas"
+// 	Player.WeaponSlot 5, "Nade"
+// 	Player.WeaponSlot 6, "PlasmaCannon"
+// 	Player.WeaponSlot 7, "PlasmaHowitzer"
+// 	Player.DamageScreenColor "99 00 16"
+// 	radius 16
+// 	height 56
+// 	Player.ViewHeight 42
+// 	Player.ForwardMove 1
+//     Player.SideMove 1
+// 	Player.DisplayName "HonHon"
+// 	PainChance 255
+// 	DamageFactor "NadeBoom", 0.35 // no suicidal grenades
+// 	States
+// 	{
+// 	Death:
+// 		PD71 A 3
+// 		PD71 B 3 A_PlayerScream
+// 		PD71 C 3 A_NoBlocking
+// 		PD71 DEFGH 3
+// 		PD71 I -1
+// 		Stop
+// 	XDeath:
+// 		PD71 A 3
+// 		PD71 B 3 A_PlayerScream
+// 		PD71 C 3 A_NoBlocking
+// 		PD71 DEFGH 3
+// 		PD71 I -1
+// 		Stop
+// 	}
+// }
+
+ACTOR CustomFunction : CustomInventory
+{
+  -COUNTITEM
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.PickupMessage ""
+  Inventory.PickupSound ""
+  States
+  {
+  Spawn:
+    TNT1 A 1
+    Stop
+  Pickup:
+    TNT1 A 0 
+	TNT1 A 0
+    Stop
+  }
+}
+
+
+
+ACTOR NewPowerIronFeet : PowerIronFeet
+{
+  Powerup.Duration -60
+  Powerup.Color 90, 90, 100, 0.125
+}

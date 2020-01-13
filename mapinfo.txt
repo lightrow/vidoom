@@ -1,0 +1,20 @@
+gameinfo
+{
+	AddEventHandlers = "PistolStartHandler"
+	statusbarclass = "VoyageHUD"
+}
+
+
+
+skill adjustedhard
+{
+	ACSReturn = 666
+	SpawnFilter = Hard
+	Name = "Tour de Sang."
+	MonsterHealth = 1
+	DamageFactor = 1
+	MustConfirm = "Pistol start, bonus health is temporary, increased damage taken, but rage gives damage reduction"
+	Aggressiveness = 0
+}
+
+

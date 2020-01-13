@@ -1,0 +1,24 @@
+class GunFlashParticles  : fastprojectile
+{
+	Default
+	{
+	+notimefreeze;
+	projectile;
+	+THRUSPECIES;
+	species "friendly";
+	missileheight 1;
+	+FORCEXYBILLBOARD;
+	+NOCLIP;
+	+NOINTERACTION;
+	+Bloodsplatter;
+	+LOOKALLAROUND;
+	//+ROLLSPRITE;
+	//+ROLLCENTER;
+	+bright;
+	height 1;
+	radius 1;
+	speed 25;
+	damage 0;
+	scale 1;
+	}
+}

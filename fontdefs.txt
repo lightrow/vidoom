@@ -1,0 +1,27 @@
+VI_FONT
+{
+    0 HNUM0
+    1 HNUM1
+    2 HNUM2
+    3 HNUM3
+    4 HNUM4
+    5 HNUM5
+    6 HNUM6
+    7 HNUM7
+    8 HNUM8
+    9 HNUM9
+}
+
+VI_FONT2
+{
+    0 HBNUM0
+    1 HBNUM1
+    2 HBNUM2
+    3 HBNUM3
+    4 HBNUM4
+    5 HBNUM5
+    6 HBNUM6
+    7 HBNUM7
+    8 HBNUM8
+    9 HBNUM9
+}

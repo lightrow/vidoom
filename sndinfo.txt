@@ -1,0 +1,766 @@
+//--Menu sounds--//
+
+menu/activate			button5
+menu/clear				button3
+menu/cursor				button1
+menu/change				button1
+menu/choose				button4
+menu/backup				button2
+menu/tick				button6
+menu/dismiss			button3
+weapons/pistol			famas1
+
+quiet  QUIET
+
+// health pickups
+misc/L_HP_pickup BOTLBIG
+misc/N_HP_pickup BOTLSML
+
+// misc/secret		DSSECRET
+
+// ammo clip
+$random misc/clip_pickup {clip1 clip2}
+clip1 CLIPUP1
+clip2 CLIPUP2
+
+// ammo box
+misc/ammo_pickup  AMMOUP
+
+// 2 shell
+misc/shell_pickup SHELLUP
+
+// shell box
+misc/shellbox_pickup SHLBOXUP
+
+// 1 nade
+misc/nade_pickup NADEU
+
+// nades box
+misc/nades_pickup NADESU
+
+// cell
+misc/cell_pickup BATTERY
+
+// bulk cell
+misc/bulkcell_pickup cell_pak
+
+// backpack
+misc/backpack_pickup FDBACKPK
+
+
+
+// green armor
+misc/armor1_pickup vestlup
+
+// blue armor
+misc/armor2_pickup vesthup
+
+
+// rad suit
+misc/radsuit_pickup FDSUITPK
+
+// health bonus
+misc/hbonus_pickup VIALUP
+
+// armor bonus
+$random misc/abonus_pickup {viar1 viar2}
+viar1 VIARUP
+viar2 VIAR2UP	
+
+// bfg explosion zaps
+$random misc/zap {zap1 zap2 zap3 zap4 zap5 zap6 zap7 zap8 zap9}
+zap1 zap1 
+zap2 zap2
+zap3 zap3
+zap4 zap4
+zap5 zap5
+zap6 zap6
+zap7 zap7
+zap8 zap8
+zap9 zap9
+
+// berserk
+misc/berserk_pickup bers
+// soulsphere
+misc/soulsphere_pickup soul
+misc/soulsphere_loop SOULLP
+// megasphere
+misc/megasphere_pickup mega
+misc/megasphere_loop MEGALP
+// invisibility
+misc/invisibility_pickup invis
+misc/invisibility_loop BLURLP
+// invulnerability
+misc/invulnerability_pickup invu
+misc/invulnerability_loop INVULP
+
+// automap
+misc/map_pickup FDCOMPPK
+
+// visor
+misc/light_pickup FDINFRPK
+
+
+// player sounds
+
+player/heartbeat2 hbeat2
+player/heartbeat1 hbeat1
+
+player/death death1
+$playeralias    player  male    *death      player/death
+
+player/xdeath death2
+$playeralias    player  male    *xdeath      player/xdeath
+
+$random player/pain100	{ pp11 pp12 pp13 }
+pp11 med1
+pp12 med2
+pp13 med3
+$playeralias    player  male    *pain100    player/pain100
+
+$random player/pain75	{ pp21 pp22 pp23 }
+pp21 high1
+pp22 high2
+pp23 high3
+$playeralias    player  male    *pain75   player/pain75
+$playeralias    player  male    *pain50    player/pain75
+
+/*
+$random player/pain50	{ pp31 pp32 pp33 }
+pp31 high1
+pp32 high2
+pp32 high3
+$playeralias    player  male    *pain50    player/pain50
+*/
+
+
+$random player/pain25	{ pp41 pp42 pp43 }
+pp41 crit1
+pp42 crit2
+pp43 crit3
+$playeralias    player  male    *pain25    player/pain25
+
+
+$random player/jump	{ pjmp1 pjmp2 }
+pjmp1 grunt1
+pjmp2 grunt3
+$playeralias    player  male    *jump    player/jump
+
+$random player/land1	{ plnd11 plnd12 plnd13 plnd14 plnd15 plnd16 plnd17 }
+plnd11 grunt1
+plnd12 grunt2
+plnd13 grunt3
+plnd14 grunt4
+plnd15 grunt5
+plnd16 grunt6
+plnd17 grunt7
+$playeralias    player  male    *grunt    player/land1
+
+$random player/land2	{ plnd21 plnd22 plnd23 }
+plnd21 grunt4
+plnd22 grunt5
+plnd23 grunt6
+$playeralias    player  male    *land    player/land1
+
+
+$random Slide	{slide1 slide2 slide3}
+slide1 slide1
+slide2 slide2
+slide3 slide3
+$volume Slide 0.7
+
+$random player/push	{ppush1 ppush2 ppush2 ppush3 ppush6 ppush6 ppush6 ppush7 ppush7 ppush7 ppush9 ppush9 ppush9 }
+ppush1 huh1 // qua
+ppush2 huh2
+ppush3 huh3	// whatever
+//ppush4 huh4 // qua
+//ppush5 huh5 // eeeeeeeeh
+ppush6 huh6
+ppush7 huh7
+//ppush8 huh8 // no
+ppush9 huh9 // no
+//ppush10 huh10 // ufff
+$playeralias    player  male    *usefail    player/push
+
+
+$random misc/secret {pf1 pf2 pf3 pf4}
+pf1 perfect1
+pf2 perfect2
+pf3 perfect3
+pf4 perfect4
+
+//misc/secret	player/perfect //{pf1 pf2 pf3 pf4 pf5 pf6 pf7 pf8}
+// pf1 perfect1
+// pf2 perfect2
+// pf3 perfect3
+// pf4 perfect4
+// pf5 perfect5
+// pf6 perfect6
+// pf7 perfect7
+// pf8 perfect8
+
+$random player/greet {gr1 gr2 gr3  gr4 gr5}
+gr1 greet1
+gr2 greet2
+gr3 greet3
+gr4 greet4
+gr5 greet5
+
+
+player/relief relief
+
+$random player/breath {br1 br1 br3}
+br1 breath1
+br2 breath2
+br3 breath3
+
+
+$random player/exhale {sigh1 sigh2 sigh3 sigh4 sigh5 sigh6 quiet quiet quiet quiet quiet}
+sigh1 sigh1
+sigh2 sigh2
+sigh3 sigh3
+sigh4 sigh4
+sigh5 sigh5
+sigh6 sigh6
+$volume player/exhale 0.65
+
+
+player/tene tene
+
+//
+// Weapons
+//
+
+
+// foleys
+weapons/putaway			putaway
+weapons/putaway1		putaway1
+weapons/putaway2		putaway2
+weapons/putaway3		putaway3
+weapons/putaway4		putaway4
+weapons/putaway5		putaway5
+weapons/putaway6		putaway6
+weapons/putaway7		putaway7
+weapons/putaway8		putaway8
+weapons/gunfoley1		FOLEY1
+weapons/gunfoley2		FOLEY2
+weapons/gunfoley3		FOLEY3
+weapons/gunfoley4		FOLEY4
+weapons/gunfoley5		FOLEY5
+weapons/gunfoley6		FOLEY6
+
+
+// AXE
+$random weapons/axemiss { fwh1 fwh2 fwh3 fwh4 }
+
+fwh1			missd1
+fwh2			missd2
+fwh3			missd3
+fwh4			missd4
+
+$random weapons/axemissquick { miss1 miss2 }
+miss1			miss1
+miss2			miss2
+
+$random weapons/fisthit { fht1 fht2 fht3 }
+
+fht1			melee_1
+fht2			melee_2
+fht3			melee_3
+$volume weapons/fisthit 1
+
+$random weapons/axehitwall {wall1 wall2}
+//JFISWAL1 JFISWAL1
+//JFISWAL2 JFISWAL2
+//JFISWAL3 JFISWAL3
+//JFISWAL4 JFISWAL4
+wall1 wall1
+wall2 wall2
+
+weapons/axeup AXEUP
+
+weapons/axeching JFISIAI3
+
+$random weapons/fisthitwall { fhw1 fhw2 fhw3 fhw4 fhw5 }
+
+fhw1			fimpact1
+fhw2			fimpact2
+fhw3			fimpact3
+fhw4			fimpact4
+fhw5			fimpact5
+$volume weapons/fisthitwall 1.95
+
+// PISTOL
+weapons/pistol_slidebac	slidebac
+weapons/pistol_slidefor slidefor
+weapons/pistol_clipout	clipout
+weapons/pistol_clipin	clipin
+weapons/pistol_sliderel	sliderel
+
+weapons/1911	kimono
+
+weapons/pistolup pistol_u
+
+$random weapons/sgfire	{ shot11 shot12 shot12 shot13 shot13} 	
+shot11			sgfire1
+shot12			sgfire2
+shot13			sgfire3
+
+
+// SPAS
+$random weapons/shellinsert	{ sh1 sh2 sh3 } 	
+sh1			shlin1
+sh2			shlin2
+sh3			shlin3
+
+$random weapons/pumpfire	{ m901 m902 m903 }
+m901			m901
+m902			m902
+m903			m903
+
+weapons/pumpdown1						PSHTPD1
+weapons/pumpdown2						PSHTPD2
+weapons/pumpdown3						PSHTPD3
+weapons/pumpdown4						PSHTPD4
+$random weapons/pumpdown { weapons/pumpdown1 weapons/pumpdown2 weapons/pumpdown3 weapons/pumpdown4 }
+weapons/pumpup1							PSHTPU1
+weapons/pumpup2							PSHTPU2
+weapons/pumpup3							PSHTPU3
+weapons/pumpup4							PSHTPU4
+$random weapons/pumpup { weapons/pumpup1 weapons/pumpup2 weapons/pumpup3 weapons/pumpup4 }
+
+
+// Double Rifle
+weapons/ssgup			SSG_UP
+weapons/sshotf			ssgfire
+$random weapons/tfsnf	{tfsn1 tfsn2 tfsn3 tfsn4 tfsn5}
+tfsn1	tfsn1
+tfsn2	tfsn2
+tfsn3	tfsn3
+tfsn4	tfsn4
+tfsn5	tfsn5
+
+weapons/sshoto			SSG_OP
+weapons/sshotc			SSG_CL
+
+
+$random weapons/sshotr	{ ins1 ins2 ins3 }
+ins1			INSERT1
+ins2			INSERT2
+ins3			INSERT3
+
+weapons/sshotl INSERT
+
+
+// FAMAS
+weapons/famas1			famas1
+weapons/akclick			DRYFIRE
+
+
+weapons/famup putaway3
+famup1 famup
+famup2 famup2
+famup3 famup3
+
+weapons/famas_loop famloop
+
+$random weapons/famas_last { famsh1 famsh2 }
+famsh1 famsh1 
+famsh2 famsh2
+
+
+// Bazooka
+weapons/rocket_pickup WARHEAD1
+
+
+$random weapons/debris { debris1 debris2 debris3 }
+debris1 debris1 
+debris2 debris2
+debris3 debris3
+
+$random weapons/rocklx	{ rktexp1 rktexp2 rktexp3 }
+rktexp1			boom1
+rktexp2			boom2
+rktexp3			boom3
+
+weapons/bazoo BAZOO
+
+weapons/rocklf			rktloop
+
+weapons/rocketup		rktraise
+weapons/rocketloop		rktloop
+
+
+// Plasma cannon
+weapons/plzstart plzstart
+weapons/plzend plzend
+
+$random weapons/protfire { PRFIRE1 PRFIRE2 PRFIRE3 }
+PRFIRE1 PRFIRE1
+PRFIRE2 PRFIRE2
+PRFIRE3 PRFIRE3
+
+
+weapons/plzclick plzclick
+
+weapons/plzbeep plzbeep
+
+weapons/plzhot plzhot
+
+weapons/plzdown plzdown
+
+$random weapons/plasmax	{ plax1 plax2 plax3 }
+plax1			plasmai1
+plax2			plasmai2
+plax3			plasmai3
+
+$volume weapons/plasmax 1
+$limit weapnos/plasmax 1
+
+weapons/plasmaup		plasma_u
+weapons/plasmaloop		plasmalp
+
+
+// Plasma howitzer ( BFG )
+weapons/bfgidle			bfg_idle
+weapons/bfgcharge		bfg_chrg
+weapons/bfgchargeshort		bfg_chrh
+weapons/bfgf			bfg_fire
+weapons/bfgup			bfgraise
+weapons/bfgloop			bfg_fly
+
+weapons/bfgx			plasexpl
+
+// Problem: weapons/rocklx needs to be unlimited but
+// is also used for the MAP30 brain explosion.
+// This alias remaps to the original but has its own limit
+// attached so that it doesn't become too loud.
+$alias misc/brainexplode weapons/rocklx
+$limit misc/brainexplode 4
+
+$limit weapons/plasmaf 0
+$limit weapons/chngun 0
+$limit weapons/rocklf 0		// because normal running is almost as fast as a rocket
+$limit weapons/rocklx 0		// and the cyberdemon shoots 3 at once
+
+//===========================================================================
+//
+// MISCELLANEOUS SOUNDS
+//
+//===========================================================================
+
+
+misc/w_pkup			WEAPUP	// Pickup weapon
+
+misc/teleport			teleport
+
+
+
+
+
+$random weapons/tracerwhizz { weapons/tracerwhizz1 weapons/tracerwhizz2 weapons/tracerwhizz3 }
+$limit weapons/tracerwhizz 2
+weapons/tracerwhizz1	TRACER1
+weapons/tracerwhizz2	TRACER2
+weapons/tracerwhizz3	TRACER3
+
+
+$random weapons/ricochet { rico1 rico2 rico3 rico4  rico5 rico6 rico7 rico8 }
+$limit weapons/ricochet 1
+rico1 rico1
+rico2 rico2
+rico3 rico3
+rico4 rico4
+rico5 rico5
+rico6 rico6
+rico7 rico7
+rico8 rico8
+
+
+
+$random weapons/flesh { flesh1 flesh2 flesh3 flesh4 flesh5 }
+$limit weapons/flesh 1
+flesh1 flesh1
+flesh2 flesh2
+flesh3 flesh3
+flesh4 flesh4
+flesh5 flesh5
+
+$random weapons/fleshbig { fleshb1 fleshb2 fleshb3 fleshb4 fleshb5 fleshb6 fleshb7 fleshb8}
+$limit weapons/fleshbig 1
+fleshb1 FLSHB1
+fleshb2 FLSHB2
+fleshb3 FLSHB3
+fleshb4 FLSHB4
+fleshb5 FLSHB5
+fleshb6 FLSHB6
+fleshb7 FLSHB7
+fleshb8 FLSHB8
+
+///////////
+//CASINGS//
+///////////
+
+$volume casings/bullet/bounce 0.4
+$random Casings/Bullet/bounce { CBNCE1 CBNCE2 CBNCE3 CBNCE4 CBNCE5 CBNCE6 CBNCE7 CBNCE8 CBNCE9 CBNCE10 }
+CBNCE1 CBNCE1
+CBNCE2 CBNCE2
+CBNCE3 CBNCE3
+CBNCE4 CBNCE4
+CBNCE5 CBNCE5
+CBNCE6 CBNCE6
+CBNCE7 CBNCE7
+CBNCE8 CBNCE8
+CBNCE9 CBNCE9
+CBNCE10 CBNCE10
+
+$volume casings/bullet/die 0.4
+$random Casings/Bullet/die { CASDIE1 CASDIE2 CASDIE3 CASDIE4 CASDIE5 CASDIE6 CASDIE7 CASDIE8 CASDIE9 CASDIE10 }
+CASDIE1 CASDIE1
+CASDIE2 CASDIE2
+CASDIE3 CASDIE3
+CASDIE4 CASDIE4
+CASDIE5 CASDIE5
+CASDIE6 CASDIE6
+CASDIE7 CASDIE7
+CASDIE8 CASDIE8
+CASDIE9 CASDIE9
+CASDIE10 CASDIE10
+
+$volume casings/shell/die 0.4
+$random casings/shell/die { SDIE1 SDIE2 SDIE3 }
+SDIE1 SDIE1
+SDIE2 SDIE2
+SDIE3 SDIE3
+
+$volume casings/shell/bounce 0.4
+$random casings/shell/bounce { SBNCE1 SBNCE2 SBNCE3 SBNCE4 SBNCE5 }
+SBNCE1 SBNCE1
+SBNCE2 SBNCE2
+SBNCE3 SBNCE3
+SBNCE4 SBNCE4
+SBNCE5 SBNCE5
+
+
+///////////
+//LIQUIDS//
+///////////
+
+slime				dsmuck
+slimesmall			dsmucksm
+water				dsgloop
+watersmall			dsfloush
+burn				dsburn
+burnsmall			dsburnsm
+blood1				dssplat1
+blood2				dssplat2
+$RANDOM blood { blood1 blood2 }
+bloodsmall1			dssplat3
+bloodsmall2			dssplat4
+$RANDOM bloodsmall { bloodsmall1 bloodsmall2 }
+
+
+world/drip			dsempty
+$random world/watersplash		{dssplash dssplas2 water}
+dssplash	dssplash
+dssplas2	dssplas2
+world/watersplashsmall		dssplsml
+world/sludgegloop		dsploosh
+world/sludgegloopsmall		dsplosml
+world/lavasizzle		dslvsiz
+world/lavsiz2			dslvsiz2
+world/lavasizzlesmall		dslavsml
+world/thunder			dsthun
+
+
+$volume world/watersplash 0.6 
+$volume dssplash 0.6 
+$volume dssplas2 0.6 
+
+$limit dssplash 4
+$limit world/drip 4
+$limit world/watersplash 4
+$limit world/watersplashsmall 4
+$limit world/sludgegloop 4
+$limit world/sludgegloopsmall 4
+$limit world/lavasizzle 4
+$limit world/lavsiz2 4
+$limit world/lavasizzlesmall 4
+
+
+// Footsteps
+// Sound Info
+
+// Define the actual sounds here
+
+// Default / Ground
+step/default1			DSEART1
+step/default2			DSEART2
+step/default3			DSEART3
+step/default4			DSEART4
+step/default5			DSEART5
+step/default6			DSEART6
+step/default7			DSEART7
+step/default0			DSEART0
+//$random step/default { step/default1  step/default2  step/default3  step/default4 step/default5 step/default6 step/default7 step/default0 }
+$random step/default { step/hard1 step/hard2 step/hard3 step/hard4 step/hard5 step/hard6 step/hard7 step/hard0 }
+
+// Water
+step/water1			DSWTR1
+step/water2			DSWTR2
+step/water3			DSWTR3
+step/water4			DSWTR4
+$random step/water { step/water1  step/water2  step/water3  step/water4 }
+
+// Carpet
+step/carpet1			DSCARP1
+step/carpet2			DSCARP2
+step/carpet3			DSCARP3
+step/carpet4			DSCARP4
+step/carpet5			DSCARP5
+step/carpet6			DSCARP6
+step/carpet7			DSCARP7
+step/carpet0			DSCARP0
+$random step/carpet { step/carpet1 step/carpet2 step/carpet3 step/carpet4 step/carpet5 step/carpet6 step/carpet7 step/carpet0 }
+
+// Dirt
+step/dirt1			DSDIRT1
+step/dirt2			DSDIRT2
+step/dirt3			DSDIRT3
+step/dirt4			DSDIRT4
+step/dirt5			DSDIRT5
+step/dirt6			DSDIRT6
+step/dirt7			DSDIRT7
+step/dirt0			DSDIRT0
+$random step/dirt { step/dirt1 step/dirt2 step/dirt3 step/dirt4 step/dirt5 step/dirt6 step/dirt7 step/dirt0}
+
+// Gravel
+step/gravel1			DSGRAV1
+step/gravel2			DSGRAV2
+step/gravel3			DSGRAV3
+step/gravel4			DSGRAV4
+step/gravel5			DSGRAV5
+step/gravel6			DSGRAV6
+step/gravel7			DSGRAV7
+step/gravel0			DSGRAV0
+$random step/gravel { step/gravel1 step/gravel2 step/gravel3 step/gravel4 step/gravel5 step/gravel6 step/gravel7 step/gravel0 }
+
+// Hard
+step/hard1			DSHARD1
+step/hard2			DSHARD2
+step/hard3			DSHARD3
+step/hard4			DSHARD4
+step/hard5			DSHARD5
+step/hard6			DSHARD6
+step/hard7			DSHARD7
+step/hard0			DSHARD0
+$random step/hard { step/hard1 step/hard2 step/hard3 step/hard4 step/hard5 step/hard6 step/hard7 step/hard0 }
+
+// Metal A
+step/metal/a1			DSMET1
+step/metal/a2			DSMET2
+step/metal/a3			DSMET3
+step/metal/a4			DSMET4
+step/metal/a5			DSMET5
+step/metal/a6			DSMET6
+step/metal/a7			DSMET7
+step/metal/a0			DSMET0
+$random step/metal/a { step/metal/a1 step/metal/a2 step/metal/a3 step/metal/a4 step/metal/a5 step/metal/a6 step/metal/a7 step/metal/a0 }
+
+// Metal B (Thin Metals, Girders)
+step/metal/b1			DSMET201
+step/metal/b2			DSMET202
+step/metal/b3			DSMET203
+step/metal/b4			DSMET204
+step/metal/b5			DSMET205
+step/metal/b6			DSMET206
+step/metal/b7			DSMET207
+step/metal/b0			DSMET200
+$random step/metal/b { step/metal/b1 step/metal/b2 step/metal/b3 step/metal/b4 step/metal/b5 step/metal/b6 step/metal/b7 step/metal/b0 }
+
+// Rock
+step/rock1			DSROCK1
+step/rock2			DSROCK2
+step/rock3			DSROCK3
+step/rock4			DSROCK4
+step/rock5			DSROCK5
+step/rock6			DSROCK6
+step/rock7			DSROCK7
+step/rock0			DSROCK0
+$random step/rock { step/rock1 step/rock2 step/rock3 step/rock4 step/rock5 step/rock6 step/rock7 step/rock8 }
+
+// Snow
+step/snow1			DSSNOW1
+step/snow2			DSSNOW2
+step/snow3			DSSNOW3
+step/snow4			DSSNOW4
+step/snow5			DSSNOW5
+step/snow6			DSSNOW6
+step/snow7			DSSNOW7
+step/snow0			DSSNOW0
+$random step/snow { step/snow1 step/snow2 step/snow3 step/snow4 step/snow5 step/snow6 step/snow7 step/snow0 }
+
+// Tile A
+step/tile/a1			DSTILE01
+step/tile/a2			DSTILE02
+step/tile/a3			DSTILE03
+step/tile/a4			DSTILE04
+step/tile/a5			DSTILE05
+step/tile/a6			DSTILE06
+$random step/tile/a { step/tile/a1 step/tile/a2 step/tile/a3 step/tile/a4 step/tile/a5 step/tile/a6 }
+
+// Tile B (Hallways, Marble/Finer Tiles)
+step/tile/b1			DSTILE21
+step/tile/b2			DSTILE22
+step/tile/b3			DSTILE23
+step/tile/b4			DSTILE24
+step/tile/b5			DSTILE25
+step/tile/b6			DSTILE26
+step/tile/b7			DSTILE27
+step/tile/b8			DSTILE28
+$random step/tile/b { step/tile/b1 step/tile/b2 step/tile/b3 step/tile/b4 step/tile/b5 step/tile/b6 step/tile/b7 step/tile/b8 }
+
+// Wood
+step/wood1			DSWOOD1
+step/wood2			DSWOOD2
+step/wood3			DSWOOD3
+step/wood4			DSWOOD4
+step/wood5			DSWOOD5
+step/wood6			DSWOOD6
+step/wood7			DSWOOD7
+step/wood0			DSWOOD0
+$random step/wood { step/wood1 step/wood2 step/wood3 step/wood4 step/wood5 step/wood6 step/wood7 step/wood0 }
+
+// Slime
+step/slime1			DSSLIME1
+step/slime2			DSSLIME2
+step/slime3			DSSLIME3
+step/slime4			DSSLIME4
+step/slime0			DSSLIME0
+$random step/slime { step/slime1 step/slime2 step/slime3 step/slime4 step/slime0 }
+
+// Slimy
+$random step/slimy		{ floor/slimy01  floor/slimy02 floor/slimy03 floor/slimy04 floor/slimy05 floor/slimy06 floor/slimy07 floor/slimy08 floor/slimy09 floor/slimy10 floor/slimy11 floor/slimy12 floor/slimy13 floor/slimy14 floor/slimy15 floor/slimy0 }
+floor/slimy01	dsslimy1
+floor/slimy02	dsslimy2
+floor/slimy03	dsslimy3
+floor/slimy04	dsslimy4
+floor/slimy04	dsslimy5
+floor/slimy05	dsslimy6
+floor/slimy06	dsslimy7
+floor/slimy07	dsslimy8
+floor/slimy08	dsslimy9
+floor/slimy09	dsslimy10
+floor/slimy10	dsslimy11
+floor/slimy11	dsslimy12
+floor/slimy12	dsslimy13
+floor/slimy13	dsslimy14
+floor/slimy14	dsslimy15
+floor/slimy0	dsslimy0
+
+// Lava
+step/lava1			DSLAVA1
+step/lava2			DSLVSIZ2
+step/lava3			DSLAVA3
+step/lava4			DSLAVA4
+$random step/lava { step/lava1 step/lava2 step/lava3 step/lava4 }
