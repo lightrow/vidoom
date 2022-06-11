@@ -45,6 +45,7 @@ Class PlasmaHowitzer : BFG9000
 		BFGR A 2 Offset(0,33);
 		goto Ready;
 	Select:
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_GiveInventory("HasSwitchedWeapon",1);
 		BFGR C 1 Offset(67, 100) A_PlaySound("weapons/bfgup",7);
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
@@ -70,10 +71,9 @@ Class PlasmaHowitzer : BFG9000
 		BFGR D 4 A_WeaponReady();
 		goto Ready;
    Deselect: 
-      //TNT1 A 0 A_StopSound(7);
-      TNT1 AAAAAAAAAAAAAAAA 0 A_Lower;
-      TNT1 AAAAAAA 1 A_Lower;
-      Loop;
+		TNT1 AAAAAAAAAAAAAAAA 0 A_Lower;
+		TNT1 AAAAAAA 1 A_Lower;
+		Loop;
     Fire: 
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		TNT1 A 0 A_PlaySound("weapons/bfgcharge",7,1,0);

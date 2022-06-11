@@ -1,276 +1,277 @@
 Class PlasmaCannon : PlasmaRifle
 {
   default
-	{Weapon.BobStyle "Alpha";
-	Weapon.BobSpeed 3.12;
-	Weapon.BobRangeX 0.2;
-	Weapon.BobRangeY 0.3;
-	inventory.pickupmessage "a lost XF-20";
-	weapon.slotnumber 6;
-	scale 0.8;
-	tag "XF-20";}
+	{
+		Weapon.BobStyle "Alpha";
+		Weapon.BobSpeed 3.12;
+		Weapon.BobRangeX 0.2;
+		Weapon.BobRangeY 0.3;
+		inventory.pickupmessage "a lost XF-20";
+		weapon.slotnumber 6;
+		scale 0.8;
+		tag "XF-20";
+	}
    	States
    	{
-	Spawn:
-		PZDP A -1;
-		Stop;
-	Ready:
-		TNT1 A 0 A_JumpifInventory("hotToken",9,"ReadyHot2");
-		TNT1 A 0 A_JumpifInventory("hotToken",4,"ReadyHot1");
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
-		PZDG a 3 A_WeaponReady();
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
-		PZDG a 3 A_WeaponReady();
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
-		PZDG a 3 A_WeaponReady();
-		TNT1 A 0 A_takeinventory("hotToken",3);
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
-		PZDG b 3 A_WeaponReady();
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
-		PZDG b 3 A_WeaponReady();
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
-		PZDG b 3 A_WeaponReady();
-		TNT1 A 0 A_takeinventory("hotToken",3);
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
-		PZDG c 3 A_WeaponReady();
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
-		PZDG c 3 A_WeaponReady();
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
-		PZDG c 3 A_WeaponReady();
-		TNT1 A 0 A_takeinventory("hotToken",3);
-		Loop;
-	ReadyHot1:
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
-		PZDG d 3 A_WeaponReady();
-		TNT1 A 0 A_takeinventory("hotToken",2);
-		goto Ready;
-	ReadyHot2:
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
-		PZDG e 3 A_WeaponReady();
-		TNT1 A 0 A_takeinventory("hotToken",3);
-		goto Ready;
-	SlideStart:
-		PZDG A 1 Offset(0,33);
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		PZDG A 1 Offset(0,35);
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		PZDG A 1 Offset(0,38);
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		PZDG A 1 Offset(0,40);
-		goto Sliding;
-	Sliding:
-		TNT1 A 0;
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
-		TNT1 A 0 A_Jump(256,"SlideEnd");
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		PZDG A 3 Offset(0,40);
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
-		TNT1 A 0 A_Jump(256,"SlideEnd");
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		PZDG A 3 Offset(0,40);
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
-		TNT1 A 0 A_Jump(256,"SlideEnd");
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		PZDG A 3 Offset(0,40);
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
-		TNT1 A 0 A_Jump(256,"SlideEnd");
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		PZDG B 3 Offset(0,40);
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
-		TNT1 A 0 A_Jump(256,"SlideEnd");
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		PZDG B 3 Offset(0,40);
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
-		TNT1 A 0 A_Jump(256,"SlideEnd");
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		PZDG B 3 Offset(0,40);
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
-		TNT1 A 0 A_Jump(256,"SlideEnd");
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		PZDG C 3 Offset(0,40);
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
-		TNT1 A 0 A_Jump(256,"SlideEnd");
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		PZDG C 3 Offset(0,40);
-		TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
-		TNT1 A 0 A_Jump(256,"SlideEnd");
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		PZDG C 3 Offset(0,40);
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		Loop;
-	SlideEnd:
-		PZDG A 1 Offset(0,40);
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		PZDG A 1 Offset(0,38);
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		PZDG A 2 Offset(0,35);
-		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
-		PZDG A 2 Offset(0,33);
-		goto Ready;
-   Deselect: 
-      //TNT1 A 0 A_StopSound(7);
-	  TNT1 A 0 A_TakeInventory("hotToken",16);
-      TNT1 AAAAAAAAAAAAAAAA 0 A_Lower;
-      TNT1 AAAAAAA 1 A_Lower;
-      Loop;
-	Select:
-		TNT1 A 0 A_GiveInventory("HasSwitchedWeapon",1);
-		PZDR A 1 A_PlaySound("weapons/plzdown",7);
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE);
-		PZDR B 1 ;
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE);
-		PZDR C 1 ;
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE);
-		PZDR D 1 ;
-		PZDR A 0 A_WeaponReady(WRF_NOFIRE);
-		PZDR E 1 ;
-		PZDR A 0 A_WeaponReady(WRF_NOFIRE);
-		PZDR F 1 ;
-		PZDR A 0 A_WeaponReady(WRF_NOFIRE);
-		PZDR G 2 ;
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
-		PZDR H 2 Offset(-3, 35);
-		PZDR A 0 A_WeaponReady();
-		PZDG A 2 Offset(-2, 34);
-		PZDR A 0 A_WeaponReady();
-		PZDG A 3 Offset(-1, 33);
-		PZDR A 0 A_WeaponReady();
-		PZDG A 3 Offset(0, 32);
-		goto Ready;
-	Fire:
-		TNT1 A 0 A_Giveinventory("hotToken",1);
-		PZDG a 0 A_Gunflash;
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		TNT1 A 0 A_JumpifInventory("hotToken",16,"FireHot3");
-		TNT1 A 0 A_JumpifInventory("hotToken",9,"FireHot2");
-		TNT1 A 0 A_JumpifInventory("hotToken",4,"FireHot1");
-		TNT1 A 0 A_FireProjectile ("plazmaball",frandom(-0.2,0.2),1,0,0,0,frandom(0,0));
-		TNT1 A 0 A_SetPitch(pitch-0.1);
-		PZDG a 1 Offset(0,34);
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDG a 1 Offset(0,35);
-		TNT1 A 0 A_SetPitch(pitch+0.1);
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDG a 1 {A_WeaponOffset(frandom(-0.3,0.3),35);}
-		//TNT1 A 0 A_SetPitch(pitch+0.25);
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		TNT1 A 0 A_Refire;
-		PZDG a 2 Offset(0,34);
-		TNT1 A 0 A_WeaponReady;
-		PZDG a 2 Offset(0,33);
-		goto Ready;
-	FireHot1:
-		TNT1 A 0 A_FireProjectile ("plazmaball",frandom(-0.5,0.5),1,0,0,0,frandom(-0.2,0.2));
-		TNT1 A 0 A_SetPitch(pitch-0.2);
-		PZDG d 1 {A_WeaponOffset(frandom(-0.5,0.5),36);}
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDG d 1 Offset(0,37);
-		TNT1 A 0 A_SetPitch(pitch+0.2);
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDG d 1 {A_WeaponOffset(frandom(-0.5,0.5),37);}
-		//TNT1 A 0 A_SetPitch(pitch+0.25);
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		TNT1 A 0 A_Refire;
-		PZDG d 2 Offset(0,34);
-		TNT1 A 0 A_WeaponReady;
-		PZDG d 2 Offset(0,33);
-		goto Ready;
-	FireHot2:
-		TNT1 A 0 A_FireProjectile ("plazmaballx2",frandom(-0.9,0.9),1,0,0,0,frandom(-0.3,0.3));
-		TNT1 A 0 A_SetPitch(pitch-0.3);
-		PZDG e 1 {A_WeaponOffset(frandom(-1,1),37);}
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDG e 1 Offset(0,38);
-		TNT1 A 0 A_SetPitch(pitch+0.3);
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDG e 1 {A_WeaponOffset(frandom(-1,1),37);}
-		//TNT1 A 0 A_SetPitch(pitch+0.25);
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		TNT1 A 0 A_Refire;
-		PZDG e 2 Offset(0,34);
-		TNT1 A 0 A_WeaponReady;
-		PZDG e 2 Offset(0,33);
-		goto Ready;
-	FireHot3:
-		TNT1 A 0 A_FireProjectile ("plazmaballx3",frandom(-1.1,1.1),1,0,0,0,frandom(-0.4,0.4));
-		TNT1 A 0 A_SetPitch(pitch-0.3);
-		PZDG F 1 {A_WeaponOffset(random(-1,1),37);}
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDG F 1 Offset(0,39);
-		TNT1 A 0 A_SetPitch(pitch+0.3);
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDG F 1 {A_WeaponOffset(random(-1,1),37);}
-		//TNT1 A 0 A_SetPitch(pitch+0.25);
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		TNT1 A 0 A_Refire;
-		goto Hot;
-	Hot:
-		TNT1 A 0 A_Playsound("weapons/plzhot",7,2);
-		TNT1 A 0 A_TakeInventory("hotToken",16);
-		PZDD A 2 Offset(-1,33);
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-10);
-		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-10);
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDD B 2 Offset(0,32);
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDD C 2;
-		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-20);
-		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-20);
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDD D 1;
-		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-30);
-		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-30);
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDD E 4 Offset(0,32);
-		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-30);
-		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-30);
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDD E 3 Offset(-1,31);
-		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-40);
-		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-40);
-		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-40);
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDD E 6 Offset(-1,31); 
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDD E 6 Offset(-1,31);
-		TNT1 A 0 A_Playsound("weapons/plzclick",7,2);
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDD E 3 Offset(0,32);
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDD D 2;
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDD C 1;
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDD B 2;
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDD A 2 Offset(-3,34);
-		PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		PZDD A 2 Offset(-2,33) A_WeaponReady();
-		PZDG A 3 Offset(-1,32) A_WeaponReady();
-		PZDG B 4 Offset(0,32) A_WeaponReady();
-		Goto Ready	;
-	Flash:
-		TNT1 A 0 A_PlaySound("weapons/protfire", 1, 0.90, 0, 0.7);
-		TNT1 A 0 A_JumpIf(callacs("prettyparticles")==0,2);
-		TNT1 A 0 A_FireProjectile("PlasmaParticles",0,0,0,-(56-height)/7,FPF_NOAUTOAIM,0);
-		TNT1 A 0 A_AlertMonsters;
-		TNT1 A 0 A_zoomfactor(0.997,ZOOM_INSTANT|ZOOM_NOSCALETURNING);
-		TNT1 A 0 A_JumpifInventory("hotToken",16,2);
-		TNT1 A 0 A_Jump(256,4);
-		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,0);
-		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,0);
-		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,0);
-		TNT1 A 0 {
-			if (callacs("glflashes")==1){
-				A_SpawnItemEx("GunFlashPlasma");
+		Spawn:
+			PZDP A -1;
+			Stop;
+		Ready:
+			TNT1 A 0 A_JumpifInventory("hotToken",9,"ReadyHot2");
+			TNT1 A 0 A_JumpifInventory("hotToken",4,"ReadyHot1");
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
+			PZDG a 3 A_WeaponReady();
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
+			PZDG a 3 A_WeaponReady();
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
+			PZDG a 3 A_WeaponReady();
+			TNT1 A 0 A_takeinventory("hotToken",3);
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
+			PZDG b 3 A_WeaponReady();
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
+			PZDG b 3 A_WeaponReady();
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
+			PZDG b 3 A_WeaponReady();
+			TNT1 A 0 A_takeinventory("hotToken",3);
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
+			PZDG c 3 A_WeaponReady();
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
+			PZDG c 3 A_WeaponReady();
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
+			PZDG c 3 A_WeaponReady();
+			TNT1 A 0 A_takeinventory("hotToken",3);
+			Loop;
+		ReadyHot1:
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
+			PZDG d 3 A_WeaponReady();
+			TNT1 A 0 A_takeinventory("hotToken",2);
+			goto Ready;
+		ReadyHot2:
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
+			PZDG e 3 A_WeaponReady();
+			TNT1 A 0 A_takeinventory("hotToken",3);
+			goto Ready;
+		SlideStart:
+			PZDG A 1 Offset(0,33);
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			PZDG A 1 Offset(0,35);
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			PZDG A 1 Offset(0,38);
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			PZDG A 1 Offset(0,40);
+			goto Sliding;
+		Sliding:
+			TNT1 A 0;
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
+			TNT1 A 0 A_Jump(256,"SlideEnd");
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			PZDG A 3 Offset(0,40);
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
+			TNT1 A 0 A_Jump(256,"SlideEnd");
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			PZDG A 3 Offset(0,40);
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
+			TNT1 A 0 A_Jump(256,"SlideEnd");
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			PZDG A 3 Offset(0,40);
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
+			TNT1 A 0 A_Jump(256,"SlideEnd");
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			PZDG B 3 Offset(0,40);
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
+			TNT1 A 0 A_Jump(256,"SlideEnd");
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			PZDG B 3 Offset(0,40);
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
+			TNT1 A 0 A_Jump(256,"SlideEnd");
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			PZDG B 3 Offset(0,40);
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
+			TNT1 A 0 A_Jump(256,"SlideEnd");
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			PZDG C 3 Offset(0,40);
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
+			TNT1 A 0 A_Jump(256,"SlideEnd");
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			PZDG C 3 Offset(0,40);
+			TNT1 A 0 A_JumpIfInventory("isSliding",1,2);
+			TNT1 A 0 A_Jump(256,"SlideEnd");
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			PZDG C 3 Offset(0,40);
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			Loop;
+		SlideEnd:
+			PZDG A 1 Offset(0,40);
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			PZDG A 1 Offset(0,38);
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			PZDG A 2 Offset(0,35);
+			TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD);
+			PZDG A 2 Offset(0,33);
+			goto Ready;
+		Deselect: 
+			//TNT1 A 0 A_StopSound(7);
+			TNT1 A 0 A_TakeInventory("hotToken",16);
+			TNT1 AAAAAAAAAAAAAAAA 0 A_Lower;
+			TNT1 AAAAAAA 1 A_Lower;
+			Loop;
+		Select:
+			TNT1 A 0 A_GiveInventory("HasSwitchedWeapon",1);
+			PZDR A 1 A_PlaySound("weapons/plzdown",7);
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE);
+			PZDR B 1 ;
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE);
+			PZDR C 1 ;
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE);
+			PZDR D 1 ;
+			PZDR A 0 A_WeaponReady(WRF_NOFIRE);
+			PZDR E 1 ;
+			PZDR A 0 A_WeaponReady(WRF_NOFIRE);
+			PZDR F 1 ;
+			PZDR A 0 A_WeaponReady(WRF_NOFIRE);
+			PZDR G 2 ;
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+			PZDR H 2 Offset(-3, 35);
+			PZDR A 0 A_WeaponReady();
+			PZDG A 2 Offset(-2, 34);
+			PZDR A 0 A_WeaponReady();
+			PZDG A 3 Offset(-1, 33);
+			PZDR A 0 A_WeaponReady();
+			PZDG A 3 Offset(0, 32);
+			goto Ready;
+		Fire:
+			TNT1 A 0 A_Giveinventory("hotToken",1);
+			PZDG a 0 A_Gunflash;
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			TNT1 A 0 A_JumpifInventory("hotToken",16,"FireHot3");
+			TNT1 A 0 A_JumpifInventory("hotToken",9,"FireHot2");
+			TNT1 A 0 A_JumpifInventory("hotToken",4,"FireHot1");
+			TNT1 A 0 A_FireProjectile ("plazmaball",frandom(-0.2,0.2),1,0,0,0,frandom(0,0));
+			TNT1 A 0 A_SetPitch(pitch-0.1);
+			PZDG a 1 Offset(0,34);
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDG a 1 Offset(0,35);
+			TNT1 A 0 A_SetPitch(pitch+0.1);
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDG a 1 {A_WeaponOffset(frandom(-0.3,0.3),35);}
+			//TNT1 A 0 A_SetPitch(pitch+0.25);
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			TNT1 A 0 A_Refire;
+			PZDG a 2 Offset(0,34);
+			TNT1 A 0 A_WeaponReady;
+			PZDG a 2 Offset(0,33);
+			goto Ready;
+		FireHot1:
+			TNT1 A 0 A_FireProjectile ("plazmaball",frandom(-0.5,0.5),1,0,0,0,frandom(-0.2,0.2));
+			TNT1 A 0 A_SetPitch(pitch-0.2);
+			PZDG d 1 {A_WeaponOffset(frandom(-0.5,0.5),36);}
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDG d 1 Offset(0,37);
+			TNT1 A 0 A_SetPitch(pitch+0.2);
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDG d 1 {A_WeaponOffset(frandom(-0.5,0.5),37);}
+			//TNT1 A 0 A_SetPitch(pitch+0.25);
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			TNT1 A 0 A_Refire;
+			PZDG d 2 Offset(0,34);
+			TNT1 A 0 A_WeaponReady;
+			PZDG d 2 Offset(0,33);
+			goto Ready;
+		FireHot2:
+			TNT1 A 0 A_FireProjectile ("plazmaballx2",frandom(-0.9,0.9),1,0,0,0,frandom(-0.3,0.3));
+			TNT1 A 0 A_SetPitch(pitch-0.3);
+			PZDG e 1 {A_WeaponOffset(frandom(-1,1),37);}
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDG e 1 Offset(0,38);
+			TNT1 A 0 A_SetPitch(pitch+0.3);
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDG e 1 {A_WeaponOffset(frandom(-1,1),37);}
+			//TNT1 A 0 A_SetPitch(pitch+0.25);
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			TNT1 A 0 A_Refire;
+			PZDG e 2 Offset(0,34);
+			TNT1 A 0 A_WeaponReady;
+			PZDG e 2 Offset(0,33);
+			goto Ready;
+		FireHot3:
+			TNT1 A 0 A_FireProjectile ("plazmaballx3",frandom(-1.1,1.1),1,0,0,0,frandom(-0.4,0.4));
+			TNT1 A 0 A_SetPitch(pitch-0.3);
+			PZDG F 1 {A_WeaponOffset(random(-1,1),37);}
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDG F 1 Offset(0,39);
+			TNT1 A 0 A_SetPitch(pitch+0.3);
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDG F 1 {A_WeaponOffset(random(-1,1),37);}
+			//TNT1 A 0 A_SetPitch(pitch+0.25);
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			TNT1 A 0 A_Refire;
+			goto Hot;
+		Hot:
+			TNT1 A 0 A_Playsound("weapons/plzhot",7,2);
+			TNT1 A 0 A_TakeInventory("hotToken",16);
+			PZDD A 2 Offset(-1,33);
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-10);
+			TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-10);
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDD B 2 Offset(0,32);
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDD C 2;
+			TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-20);
+			TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-20);
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDD D 1;
+			TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-30);
+			TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-30);
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDD E 4 Offset(0,32);
+			TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-30);
+			TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-30);
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDD E 3 Offset(-1,31);
+			TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-40);
+			TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-40);
+			TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-40);
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDD E 6 Offset(-1,31); 
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDD E 6 Offset(-1,31);
+			TNT1 A 0 A_Playsound("weapons/plzclick",7,2);
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDD E 3 Offset(0,32);
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDD D 2;
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDD C 1;
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDD B 2;
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDD A 2 Offset(-3,34);
+			PZDG A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			PZDD A 2 Offset(-2,33) A_WeaponReady();
+			PZDG A 3 Offset(-1,32) A_WeaponReady();
+			PZDG B 4 Offset(0,32) A_WeaponReady();
+			Goto Ready	;
+		Flash:
+			TNT1 A 0 A_PlaySound("weapons/protfire", 1, 0.90, 0, 0.7);
+			TNT1 A 0 A_JumpIf(callacs("prettyparticles")==0,2);
+			TNT1 A 0 A_FireProjectile("PlasmaParticles",0,0,0,-(56-height)/7,FPF_NOAUTOAIM,0);
+			TNT1 A 0 A_AlertMonsters;
+			TNT1 A 0 A_zoomfactor(0.997,ZOOM_INSTANT|ZOOM_NOSCALETURNING);
+			TNT1 A 0 A_JumpifInventory("hotToken",16,2);
+			TNT1 A 0 A_Jump(256,4);
+			TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,0);
+			TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,0);
+			TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,0);
+			TNT1 A 0 {
+				if (callacs("glflashes")==1){
+					A_SpawnItemEx("GunFlashPlasma");
+				}
 			}
-		}
-		PZDM B 1 Bright;
-		TNT1 A 0 A_zoomfactor(1,ZOOM_NOSCALETURNING);
-		PZDM A 1 Bright;
-  	Goto LightDone;
-
+			PZDM B 1 Bright;
+			TNT1 A 0 A_zoomfactor(1,ZOOM_NOSCALETURNING);
+			PZDM A 1 Bright;
+		Goto LightDone;
 	}
 }
 

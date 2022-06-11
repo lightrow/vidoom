@@ -114,6 +114,7 @@ Class Spas : Shotgun
       TNT1 AAAAAAA 1 A_Lower;
       Loop;
 	Select:
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_GiveInventory("HasSwitchedWeapon",1);
 		spas A 1 Offset(67, 100) A_PlaySound("weapons/pumpup3",7);
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
@@ -134,6 +135,7 @@ Class Spas : Shotgun
 		spas A 2 Offset(1, 33);
 		TNT1 A 0 A_WeaponReady();
 		spas A 2 Offset(0, 32);
+		TNT1 A 0 A_WeaponReady();
 		goto ready;
 	Fire:
 		TNT1 A 0 A_JumpIfInventory("LoadedShell",1,2);
@@ -145,7 +147,9 @@ Class Spas : Shotgun
 		TNT1 A 0 A_PlaySound("weapons/pumpfire", CHAN_WEAPON);
 		TNT1 A 0 a_setpitch(pitch-1*invoker.recoil);
 		TNT1 A 0 a_setangle(angle+frandom(-0.2,0.2)*invoker.recoil);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
 		spas a 1 Offset(0,41);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
 		spab a 1 A_WeaponOffset(random(-1,1),44);
 		TNT1 A 0 A_spawnitemex ("shellcasing", 30, 8, 22, random(3,4), random(7,8), random(7,9), 0);
 		TNT1 A 0 A_zoomfactor(0.997,ZOOM_INSTANT|ZOOM_NOSCALETURNING);
@@ -167,6 +171,7 @@ Class Spas : Shotgun
 		TNT1 A 0 A_WeaponReady();
 		spas A 2 Offset(0,32)  A_ReFire ;
 		TNT1 A 0 A_JumpIfInventory("LoadedShell",1,"Ready");
+		TNT1 A 0 A_WeaponReady();
 		goto Reload;
 	Altfire:
 		TNT1 A 0;
@@ -212,6 +217,7 @@ Class Spas : Shotgun
 		TNT1 A 0 A_JumpIfInventory("LoadedShell", 2, 1);
 		Goto UnloadLast;
 		TNT1 A 0 A_PlaySound("weapons/drrrnk",7);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
 		SPAS f 2 Offset(0,31);
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE) ;
 		SPAS f 3 Offset(-4,29);
@@ -223,6 +229,7 @@ Class Spas : Shotgun
 		SPAS f 1 Offset(-2,31);
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
 		SPAS f 1 Offset(0,32) ;
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
 		Goto UnitUnload;
 	Reload:
 		TNT1 A 0 A_JumpIfInventory("LoadedShell",0,"Ready");
@@ -307,11 +314,12 @@ Class Spas : Shotgun
 		TNT1 A 0 A_WeaponReady();
 		spas A 2 offset(0,32) ;
 		TNT1 A 0 A_WeaponReady();
-		//SGDR E 1 A_WeaponReady(WRF_NOFIRE);
 		goto Ready;
 	DryFire:
 		TNT1 A 0 A_CheckReload;
+		SPAS c 1 A_WeaponReady(WRF_NOFIRE);
 		SPAS A 5 A_PlaySound("weapons/akclick",CHAN_WEAPON);
+		SPAS c 1 A_WeaponReady(WRF_NOFIRE);
 		goto Ready;
 
 	}
