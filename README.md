@@ -21,60 +21,55 @@ Hand-crafted sprite work, curated selection of sfx, emphasis on good feels.
 
 
 Smooth Doom
-- some puffs
-- some doom64 ssg intermittent reloading sprites
-    - pistol hand
-- water splashes
-- bullet casings
-- inspiration ( this whole thing started as a personal edit of smooth doom )
+- sprites (some puffs, bullet casings, water splashes)
 
 Demonsteele
-- sword puffs and decals
+- sprites (sword puffs and decals)
 
 High Noon Drifter
-- shrapnel sprites
+- sprites (shrapnel)
 
 Final Doomer
-- some sfx ( backpack, map, radsuit )
+- sounds (pickup sfx for backpack, map, radsuit)
 
 Beautiful Doom
 - tweaked bullet tracers
 
 BDLite
-- floor fire column and smoke
+- sprites (floor fire column with smoke)
 
 id
-- some doom3 sfx, plasmarifle model as reference for plasmarifle
+- sounds (sfx), plasmarifle model as reference for plasmarifle
 
 valve + gamebanana community
-- some weapon sfx
+- sounds (foley, weapon sfx)
 
 sketchfab contributors
 - lots of reference models for item and weapon sprites
 
 pond5
-- some sfx
+- sounds (foley)
 
 bethesda
-- voice acting
+- sounds (female voice)
 
 DaZombieKiller + vsonnier
-- footsteps module, zscriptified
+- zscript (footsteps module)
 
 pfenh
-- explosions
+- sprites (explosions)
 
 naku-naru
-- gunsmoke
+- sprites (gun smoke)
 
 AeniPuffs
 - tweaked bullet puffs
 
 Evilternity
-- DBIGFONT for hud
+- hud font (DBIGFONT)
 
 Nash
-- epic gibs sprites
+- sprites (gibs)
 
 
-tools used: SLADE, Photoshop, Audition
+tools used: SLADE, Adobe Photoshop, Adobe Audition
