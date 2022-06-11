@@ -1,0 +1,293 @@
+ACTOR WeaponPickup : CustomInventory 
+{
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.NEVERRESPAWN
+  +FORCEXYBILLBOARD
+  Radius 16
+  Height 14
+  Inventory.Amount 0
+  Inventory.PickupMessage ""
+  Inventory.PickupSound "misc/w_pkup"
+  States
+  {
+  Spawn:
+    CLIP A -1
+    Stop
+  Pickup:
+    TNT1 A 0 A_GiveInventory ("HealthBonus", 1)
+    TNT1 A 0 A_Log("borrowed from finaldoomer")
+    Stop
+  Nope:
+    TNT1 A 0
+    Fail
+  }
+}
+
+
+ACTOR PistolPickup : WeaponPickup
+{
+  Tag "Pistol Pickup"
+  	inventory.pickupmessage "a LAW-12"
+	scale 0.8
+  States
+  {
+  Spawn:
+	TNT1 A 0 
+	DEAG p -1
+	Stop
+  Pickup:
+	TNT1 A 0
+  	TNT1 A 0 A_JumpifInventory("HandCannon",1,"JustAmmo")
+	TNT1 A 0 A_GiveInventory("HandCannon",1)
+	Stop
+  JustAmmo:
+	TNT1 A 0 A_GiveInventory("Clip", 10)
+	Stop
+}
+}
+
+
+ACTOR LAWPickup : WeaponPickup
+{
+  Tag "Super Shotgun Pickup"
+  	inventory.pickupmessage "a LAW-12"
+	scale 0.8
+  States
+  {
+  Spawn:
+	TNT1 A 0 
+	SPAS p -1
+	Stop
+  Pickup:
+	TNT1 A 0
+  	TNT1 A 0 A_JumpifInventory("Spas",1,"JustAmmo")
+	TNT1 A 0 A_GiveInventory("Spas",1)
+	Stop
+  JustAmmo:
+	TNT1 A 0 A_GiveInventory("Shell", 4)
+	Stop
+}
+}
+
+
+ACTOR TTNPickup : WeaponPickup
+{
+  Tag "Shotgun Pickup"
+	inventory.pickupmessage "a TTN Colt 1878"
+
+  States
+  {
+  Spawn:
+	DBRL p -1
+	Stop
+  Pickup:
+	TNT1 A 0
+	TNT1 A 0 A_JumpifInventory("DoubleRifle",1,"JustAmmo")
+	TNT1 A 0 A_GiveInventory("DoubleRifle",1)
+	Stop
+  JustAmmo:
+	TNT1 A 0 A_GiveInventory("Shell", 4)
+	Stop}
+}
+
+ACTOR SSGPickup : WeaponPickup replaces SuperShotgun
+{
+  States
+  {
+  Spawn:
+	TNT1 A 0 
+	TNT1 A 0 A_SpawnItemEx("TTNPickup")
+	//TNT1 A 0 A_JumpIf(GetCvar("vi_swapshotguns"),"TTNSpawn")
+	stop
+  LAWSpawn:
+	TNT1 A 0 A_SpawnItemEx("LAWPickup")
+	Stop
+  TTNSpawn:
+	TNT1 A 0 A_SpawnItemEx("TTNPickup")
+	Stop
+}
+}
+
+ACTOR ShotgunPickup : WeaponPickup replaces Shotgun
+{
+  States
+  {
+  Spawn:
+	TNT1 A 0 
+	//TNT1 A 0 A_JumpIf(GetCvar("vi_swapshotguns"),"LAWSpawn")
+  	TNT1 A 0 A_SpawnItemEx("LAWPickup")
+	stop
+TTNSpawn:
+	TNT1 A 0 A_SpawnItemEx("TTNPickup")
+	Stop
+  LAWSpawn:
+	TNT1 A 0 A_SpawnItemEx("LAWPickup")
+	Stop
+}
+}
+
+
+ACTOR ChaingunPickup : WeaponPickup replaces Chaingun
+{
+  Tag "Chaingun Pickup"
+  	inventory.pickupmessage "an FN Minimi"
+
+  scale 0.65
+  States
+  {
+  Spawn:
+	MNMP A -1
+	Stop
+  Pickup:
+	TNT1 A 0
+	TNT1 A 0 A_JumpifInventory("Minimi",1,"JustAmmo")
+	TNT1 A 0 A_GiveInventory("Minimi",1)
+	Stop
+  JustAmmo:
+	TNT1 A 0 A_GiveInventory("Clip", 10)
+	Stop}
+}
+
+
+ACTOR BazookaPickup : WeaponPickup replaces RocketLauncher
+{
+	Tag "Bazooka Pickup"
+	inventory.pickupmessage "an M202-T"
+	scale 0.6
+	States
+	{
+	Spawn:
+		RLAP a -1
+		stop
+	Pickup:
+		TNT1 A 0
+		TNT1 A 0 A_JumpifInventory("Bazooka",1,"JustAmmo")
+		TNT1 A 0 A_GiveInventory("Bazooka",1)
+		TNT1 A 0 A_GiveInventory("RocketAmmo",4)
+		Stop
+	JustAmmo:
+		TNT1 A 0 A_GiveInventory("RocketAmmo", 4)
+		Stop
+	}
+}
+
+
+
+ACTOR PlasmaPickup : WeaponPickup replaces PlasmaRifle
+{
+  Tag "Plasma Cannon Pickup"
+  scale 0.8
+  	inventory.pickupmessage "an XF-20"
+
+  States
+  {
+  Spawn:
+	PZDP A -1
+	Stop
+  Pickup:
+	TNT1 A 0
+	TNT1 A 0 A_JumpifInventory("PlasmaCannon",1,"JustAmmo")
+	TNT1 A 0 A_GiveInventory("PlasmaCannon",1)
+	Stop
+  JustAmmo:
+	TNT1 A 0 A_GiveInventory("Cell", 20)
+	Stop}
+}
+
+
+ACTOR BFGPickup : WeaponPickup replaces BFG9000
+{
+  Tag "BFG Pickup"
+	inventory.pickupmessage "an XF-900"
+
+  States
+  {
+  Spawn:
+	BFGP A -1
+	Stop
+  Pickup:
+	TNT1 A 0
+	TNT1 A 0 A_JumpifInventory("PlasmaHowitzer",1,"JustAmmo")
+	TNT1 A 0 A_GiveInventory("PlasmaHowitzer",1)
+	Stop
+  JustAmmo:
+	TNT1 A 0 A_GiveInventory("Cell", 50)
+	Stop}
+}
+
+Actor MegaspherePickup: Actor replaces Megasphere {
+	States
+	{
+	Spawn:
+		TNT1 A 1 
+		TNT1 A 0 A_SpawnItemEx("NewMegasphere")
+		stop
+	}
+}
+Actor SoulspherePickup: Actor replaces Soulsphere {
+	States
+	{
+	Spawn:
+		TNT1 A 1 
+		TNT1 A 0 A_SpawnItemEx("NewSoulsphere")
+		stop
+	}
+}
+Actor BerserkPickup: Actor replaces Berserk {
+	States
+	{
+	Spawn:
+		TNT1 A 1 
+		TNT1 A 0 A_SpawnItemEx("RageSphere")
+		stop
+	}
+}
+
+Actor ChainsawPickup: Actor replaces Chainsaw {
+	States
+	{
+	Spawn:
+		TNT1 A 1 
+		TNT1 A 0 A_SpawnItemEx("WrathSphere")
+		stop
+	}
+}
+
+Actor HealthBonusPickup: Actor replaces HealthBonus {
+	States
+	{
+	Spawn:
+		TNT1 A 1 
+		TNT1 A 0 A_SpawnItemEx("healthvial")
+		stop
+	}
+}
+
+Actor StimpackPickup: Actor replaces Stimpack {
+	States
+	{
+	Spawn:
+		TNT1 A 1 
+		TNT1 A 0 A_SpawnItemEx("MediumHealth")
+		stop
+	}
+}
+
+Actor MedikitPickup: Actor replaces Medikit {
+	States
+	{
+	Spawn:
+		TNT1 A 1 
+		TNT1 A 0 A_SpawnItemEx("BigHealth")
+		stop
+	}
+}
+
+
+
+
+
+
+
+
+

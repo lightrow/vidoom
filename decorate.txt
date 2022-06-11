@@ -1,11 +1,10 @@
-#include "deco/Player/General.txt"
-
+#include "deco/General.txt"
+#include "deco/AeniPuffs.txt"
 #include "deco/Particles.txt"
 #include "deco/Items.txt"
-
-
-#include "deco/Player/Spawner.txt"
-
+#include "deco/Spawner.txt"
+#include "deco/Liquids.txt"
+#include "deco/Gore.txt"
 //#include "deco/Player/Nade.txt"
 
 

@@ -40,5 +40,388 @@ DECAL ProtDecal
     LowerDecal ProtDecalLower
 }
 
+/***** Bullet Chips *****/
+
+decal bullet1
+{
+	pic CHIP1
+	shade "00 00 00"
+	x-scale 0.5
+	y-scale 0.5
+	randomflipx
+	randomflipy
+}
+
+decal bullet2
+{
+	pic CHIP2
+	shade "00 00 00"
+	x-scale 0.6
+	y-scale 0.6
+	randomflipx
+	randomflipy
+}
+
+decal bullet3
+{
+	pic CHIP3
+	shade "00 00 00"
+	x-scale 0.5
+	y-scale 0.5
+	randomflipx
+	randomflipy
+}
+
+decal bullet4
+{
+	pic CHIP4
+	shade "00 00 00"
+	x-scale 0.4
+	y-scale 0.5
+	randomflipx
+	randomflipy
+}
+
+decal bullet5
+{
+	pic CHIP5
+	shade "00 00 00"
+	x-scale 0.5
+	y-scale 0.5
+	randomflipx
+	randomflipy
+}
+
+decalgroup bullet
+{
+	bullet1	1
+	bullet2	1
+	bullet3	1
+	bullet4	1
+	bullet5	1
+}
 
 
+
+fader GoAway4
+{
+	DecayStart	5.0
+	DecayTime	8.0
+}
+
+fader GoAway3
+{
+	DecayStart	3.0
+	DecayTime	6.0
+}
+
+fader CGoAway
+{
+	DecayStart	0.3 //0.5
+	DecayTime	0.7 //1.0
+}
+
+fader CGoAway2
+{
+	DecayStart	0.5
+	DecayTime	1.0
+}
+
+
+decal CBulletScorch1
+{
+	pic P2FFA0
+	add 1.0
+	x-scale 0.1
+	y-scale 0.1
+	fullbright
+	animator CGoAway
+	lowerdecal bullet
+}
+
+decal CBulletScorch2
+{
+	pic PLASMA2
+	shade "00 00 00"
+	x-scale 0.1
+	y-scale 0.1
+	randomflipx
+	randomflipy
+	animator CGoAway
+	lowerdecal bullet
+
+}
+
+
+decalgroup BulletChip
+{
+	CBulletScorch1 1
+	bullet 1
+}
+
+
+decal BulletChipBig
+{
+	pic P2FFA0
+	add 1.0
+	x-scale 0.1
+	y-scale 0.1
+	fullbright
+	animator CGoAway
+	lowerdecal CBulletScorch2
+}
+
+
+fader FastGoAway
+{
+	DecayStart	0.2
+	DecayTime	0.5
+}
+
+fader GoAway
+{
+	DecayStart	0.5
+	DecayTime	1.0
+}
+
+fader GoAway2
+{
+	DecayStart	1.0
+	DecayTime	3.0
+}
+
+
+colorchanger ToBlack
+{
+	FadeStart	0.5
+	FadeTime	1.0
+}
+
+
+// BLOOD - smooth doom
+
+/*
+ * Blood splats just stick to the walls.
+ * Blood smears crawl down walls a bit like in Blood.
+ *
+ * These do not need generators; the engine will create them automatically
+ * when something bleeds. If a blood color is set, the shade color will be ignored,
+ * and the actor's blood color will be used instead.
+ */
+decal BlueBloodSplat1
+{
+	pic BSPLAT1
+	shade "00 00 255"
+	x-scale 0.75
+	y-scale 0.75
+	randomflipx
+	randomflipy
+}
+
+decal BlueBloodSplat2
+{
+	pic BSPLAT2
+	shade "00 00 255"
+	x-scale 0.75
+	y-scale 0.75
+	randomflipx
+	randomflipy
+}
+
+decal BlueBloodSplat3
+{
+	pic BSPLAT3
+	shade "00 00 255"
+	x-scale 0.75
+	y-scale 0.75
+	randomflipx
+	randomflipy
+}
+
+decal BlueBloodSplat4
+{
+	pic BSPLAT4
+	shade "00 00 255"
+	x-scale 0.75
+	y-scale 0.75
+	randomflipx
+	randomflipy
+}
+
+decal BlueBloodSplat5
+{
+	pic BSPLAT5
+	shade "00 00 255"
+	x-scale 0.75
+	y-scale 0.75
+	randomflipx
+	randomflipy
+}
+
+decal BlueBloodSplat6
+{
+	pic BSPLAT6
+	shade "00 00 255"
+	x-scale 0.75
+	y-scale 0.75
+	randomflipx
+	randomflipy
+}
+
+decal BlueBloodSplat7
+{
+	pic BSPLAT7
+	shade "00 00 255"
+	x-scale 0.75
+	y-scale 0.75
+	randomflipx
+	randomflipy
+}
+
+// The smaller blood splats are more common than the big ones.
+
+decalgroup BlueBloodSplat
+{
+	BlueBloodSplat1	2
+	BlueBloodSplat2	1
+	BlueBloodSplat3	5
+	BlueBloodSplat4	5
+	BlueBloodSplat5	5
+	BlueBloodSplat6	5
+	BlueBloodSplat7	6
+}
+
+decal BlueBloodSmear1
+{
+	pic BSMEAR1
+	x-scale 0.625
+	y-scale 0.625
+	shade "00 00 255"
+	randomflipx
+	animator BloodSmearer
+}
+
+decal BlueBloodSmear2
+{
+	pic BSMEAR1
+	x-scale 0.625
+	y-scale 0.625
+	shade "00 00 255"
+	randomflipx
+	animator BloodSmearer
+}
+
+decalgroup BlueBloodSmear
+{
+	BlueBloodSmear1	1
+	BlueBloodSmear2	1
+}
+
+/////////GREEN/////////
+
+decal GreenBloodSplat1
+{
+	pic BSPLAT1
+	shade "00 255 00"
+	x-scale 0.75
+	y-scale 0.75
+	randomflipx
+	randomflipy
+}
+
+decal GreenBloodSplat2
+{
+	pic BSPLAT2
+	shade "00 255 00"
+	x-scale 0.75
+	y-scale 0.75
+	randomflipx
+	randomflipy
+}
+
+decal GreenBloodSplat3
+{
+	pic BSPLAT3
+	shade "00 255 00"
+	x-scale 0.75
+	y-scale 0.75
+	randomflipx
+	randomflipy
+}
+
+decal GreenBloodSplat4
+{
+	pic BSPLAT4
+	shade "00 255 00"
+	x-scale 0.75
+	y-scale 0.75
+	randomflipx
+	randomflipy
+}
+
+decal GreenBloodSplat5
+{
+	pic BSPLAT5
+	shade "00 255 00"
+	x-scale 0.75
+	y-scale 0.75
+	randomflipx
+	randomflipy
+}
+
+decal GreenBloodSplat6
+{
+	pic BSPLAT6
+	shade "00 255 00"
+	x-scale 0.75
+	y-scale 0.75
+	randomflipx
+	randomflipy
+}
+
+decal GreenBloodSplat7
+{
+	pic BSPLAT7
+	shade "00 255 00"
+	x-scale 0.75
+	y-scale 0.75
+	randomflipx
+	randomflipy
+}
+
+decalgroup GreenBloodSplat
+{
+	GreenBloodSplat1	2
+	GreenBloodSplat2	1
+	GreenBloodSplat3	5
+	GreenBloodSplat4	5
+	GreenBloodSplat5	5
+	GreenBloodSplat6	5
+	GreenBloodSplat7	6
+}
+
+decal GreenBloodSmear1
+{
+	pic BSMEAR1
+	x-scale 0.625
+	y-scale 0.625
+	shade "00 255 00"
+	randomflipx
+	animator BloodSmearer
+}
+
+decal GreenBloodSmear2
+{
+	pic BSMEAR1
+	x-scale 0.625
+	y-scale 0.625
+	shade "00 255 00"
+	randomflipx
+	animator BloodSmearer
+}
+
+decalgroup GreenBloodSmear
+{
+	GreenBloodSmear1	1
+	GreenBloodSmear2	1
+}

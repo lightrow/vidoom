@@ -1,3 +1,17 @@
 clearplayerclasses
 addplayerclass VoyageGal
 
+weaponsection "VoyageInfernal"
+
+setslot 1 FireAxe
+setslot 2 Handcannon
+setslot 3 Spas DoubleRifle
+setslot 4 Minimi
+setslot 5 Bazooka
+setslot 6 PlasmaCannon
+setslot 7 PlasmaHowitzer
+
+
+addkeysection "Voyage Infernal" "vi"
+addmenukey "Throw grenade" "+user1"
+defaultbind "g" "+user1"

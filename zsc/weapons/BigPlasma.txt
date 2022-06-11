@@ -5,9 +5,10 @@ Class PlasmaHowitzer : BFG9000
 	{Weapon.BobStyle "Alpha";
 	Weapon.BobSpeed 3.12;
 	Weapon.BobRangeX 0.2;
-	Weapon.BobRangeY 0.3;
-	inventory.pickupmessage "a lost XF-500";
-	tag "XF-500";}
+	Weapon.BobRangeY 0.2;
+	weapon.slotnumber 7;
+	inventory.pickupmessage "a lost XF-900";
+	tag "XF-900";}
 	States
 	{
 	Spawn:
@@ -116,58 +117,78 @@ Class PlasmaHowitzer : BFG9000
 		BFGR b 1 Offset (-3,31) A_SetAngle(angle-1.0);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		TNT1 A 0 a_setpitch(pitch-0.1);
+		TNT1 A 0 A_zoomfactor(0.9995,ZOOM_NOSCALETURNING);
 		BFGR c 1 Offset (3,34) A_SetAngle(angle+1.0);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		TNT1 A 0 a_setpitch(pitch+0.9);
-    	BFGR d 1 Offset (-3,34);
+   		TNT1 A 0 A_zoomfactor(0.999,ZOOM_NOSCALETURNING);
+		BFGR d 1 Offset (-3,34);
 		TNT1 A 0 A_SetAngle(angle-1.5) ;
 		TNT1 A 0 a_setpitch(pitch+0.4);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 A_zoomfactor(0.998,ZOOM_NOSCALETURNING);
 		BFGR a 1 Offset (4,31) A_SetAngle(angle+1.5);
 		TNT1 A 0 a_setpitch(pitch-1.0);
 		BFGR b 0 A_PlaySound("weapons/bfgf",1);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 A_zoomfactor(0.996,ZOOM_NOSCALETURNING);
 		BFGR c 1 Offset (-4,27) A_SetAngle(angle-2.0) ;
 		TNT1 A 0 a_setpitch(pitch-0.5);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 A_zoomfactor(0.994,ZOOM_NOSCALETURNING);
 		BFGR d 1 Offset (4,31) A_SetAngle(angle+2.0) ;
 		TNT1 A 0 a_setpitch(pitch+0.4);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 A_zoomfactor(0.992,ZOOM_NOSCALETURNING);
 		BFGR a 1 Offset (-5,36) A_SetAngle(angle-2.0) ;
 		TNT1 A 0 a_setpitch(pitch-2.0);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 A_zoomfactor(0.99,ZOOM_NOSCALETURNING);
 		BFGR b 1 Offset (5,29) A_SetAngle(angle+2.0) ;
 		TNT1 A 0 a_setpitch(pitch+1.0);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 A_zoomfactor(0.986,ZOOM_NOSCALETURNING);
 		BFGR c 1 Offset (-5,32) A_SetAngle(angle-3.0) ;
 		TNT1 A 0 a_setpitch(pitch-2.0);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 A_zoomfactor(0.983,ZOOM_NOSCALETURNING);
 		BFGR d 1 Offset (6,32) A_SetAngle(angle+3.0) ;
 		TNT1 A 0 a_setpitch(pitch+0.6);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 A_zoomfactor(0.98,ZOOM_NOSCALETURNING);
 		BFGR a 1 Offset (-6,34) A_SetAngle(angle-4.0) ;
 		TNT1 A 0 a_setpitch(pitch+2.0);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
-		BFGR b 1 Offset (6,36) A_SetAngle(angle+3.0) ;
+		TNT1 A 0 A_zoomfactor(0.975,ZOOM_NOSCALETURNING);
+		BFGR b 1 Offset (6,36) A_SetAngle(angle+4.0) ;
+		TNT1 A 0 A_FireProjectile("howitzerball", 0, 1);
 		TNT1 A 0 a_setpitch(pitch-1.0);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
-		BFGR c 1 Offset(0,55)  A_FireProjectile("howitzerball", 0, 1);
+		TNT1 A 0 A_zoomfactor(0.97,ZOOM_NOSCALETURNING);
+		BFGR c 1 Offset(0,55);
+		TNT1 A 0 A_zoomfactor(0.96,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		BFGR d 1 Offset(0,55) a_setpitch(pitch-2.0);
+		TNT1 A 0 A_zoomfactor(0.95,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		BFGR a 1 Offset(0,53) a_setpitch(pitch-1.6);
+		TNT1 A 0 A_zoomfactor(0.96,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
-		BFGR b 1 Offset(0,53) a_setpitch(pitch+0.6);
+		BFGR b 1 Offset(0,53) a_setpitch(pitch+0.7);
+		TNT1 A 0 A_zoomfactor(0.97,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
-		BFGR c 1 Offset(0,47) a_setpitch(pitch+0.7);
+		BFGR c 1 Offset(0,47) a_setpitch(pitch+0.8);
+		TNT1 A 0 A_zoomfactor(0.98,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
-		BFGR d 1 Offset(0,47) a_setpitch(pitch+0.7);
+		BFGR d 1 Offset(0,47) a_setpitch(pitch+0.8);
+		TNT1 A 0 A_zoomfactor(0.99,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
-		BFGR a 1 Offset(0,41) a_setpitch(pitch+0.6);
+		BFGR a 1 Offset(0,41) a_setpitch(pitch+0.8);
+		TNT1 A 0 A_zoomfactor(1,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
-		BFGR b 1 Offset(0,41) a_setpitch(pitch+0.5);
+		BFGR b 1 Offset(0,41) a_setpitch(pitch+0.7);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
-		BFGR c 1 Offset(0,36) a_setpitch(pitch+0.4);
+		BFGR c 1 Offset(0,36) a_setpitch(pitch+0.6);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		BFGR d 1 Offset(0,36) a_setpitch(pitch+0.4);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
@@ -265,52 +286,70 @@ Class PlasmaHowitzer : BFG9000
 		TNT1 A 0 A_SetAngle(angle-1.5) ;
 		TNT1 A 0 a_setpitch(pitch+0.4);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 A_zoomfactor(0.999,ZOOM_NOSCALETURNING);
 		BFGR a 1 Offset (4,31) A_SetAngle(angle+1.5);
 		TNT1 A 0 a_setpitch(pitch-1.0);
 		BFGR b 0 A_PlaySound("weapons/bfgf",1);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 A_zoomfactor(0.998,ZOOM_NOSCALETURNING);
 		BFGR c 1 Offset (-4,27) A_SetAngle(angle-2.0) ;
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		TNT1 A 0 a_setpitch(pitch-0.5);
+		TNT1 A 0 A_zoomfactor(0.994,ZOOM_NOSCALETURNING);
 		BFGR d 1 Offset (4,31) A_SetAngle(angle+2.0) ;
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		TNT1 A 0 a_setpitch(pitch+0.4);
+		TNT1 A 0 A_zoomfactor(0.992,ZOOM_NOSCALETURNING);
 		BFGR a 1 Offset (-5,36) A_SetAngle(angle-2.0) ;
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		TNT1 A 0 a_setpitch(pitch-2.0);
+		TNT1 A 0 A_zoomfactor(0.99,ZOOM_NOSCALETURNING);
 		BFGR b 1 Offset (5,29) A_SetAngle(angle+2.0) ;
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		TNT1 A 0 a_setpitch(pitch+1.0);
+		TNT1 A 0 A_zoomfactor(0.986,ZOOM_NOSCALETURNING);
 		BFGR c 1 Offset (-5,32) A_SetAngle(angle-3.0) ;
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		TNT1 A 0 a_setpitch(pitch-2.0);
+		TNT1 A 0 A_zoomfactor(0.983,ZOOM_NOSCALETURNING);
 		BFGR d 1 Offset (6,32) A_SetAngle(angle+3.0) ;
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		TNT1 A 0 a_setpitch(pitch+0.6);
+		TNT1 A 0 A_zoomfactor(0.98,ZOOM_NOSCALETURNING);
 		BFGR a 1 Offset (-6,45) A_SetAngle(angle-4.0) ;
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		TNT1 A 0 a_setpitch(pitch+2.0);
-		BFGR b 1 Offset (6,45) A_SetAngle(angle+3.0) ;
+		TNT1 A 0 A_zoomfactor(0.975,ZOOM_NOSCALETURNING);
+		BFGR b 1 Offset (6,45) A_SetAngle(angle+4.0) ;
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
+		TNT1 A 0 A_FireProjectile("howitzerball", 0, 1);
 		TNT1 A 0 a_setpitch(pitch-1.0);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
-		BFGR c 1 Offset(0,50)  A_FireProjectile("howitzerball", 0, 1);
+		TNT1 A 0 A_zoomfactor(0.97,ZOOM_NOSCALETURNING);
+		BFGR c 1 Offset(0,55) ;
+		TNT1 A 0 A_zoomfactor(0.96,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		BFGR d 1 Offset(0,55) a_setpitch(pitch-2.0);
+		TNT1 A 0 A_zoomfactor(0.95,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		BFGR a 1 Offset(0,53) a_setpitch(pitch-1.6);
+		TNT1 A 0 A_zoomfactor(0.96,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
-		BFGR b 1 Offset(0,53) a_setpitch(pitch+0.6);
+		BFGR b 1 Offset(0,53) a_setpitch(pitch+0.7);
+		TNT1 A 0 A_zoomfactor(0.97,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
-		BFGR c 1 Offset(0,47) a_setpitch(pitch+0.7);
+		BFGR c 1 Offset(0,47) a_setpitch(pitch+0.8);
+		TNT1 A 0 A_zoomfactor(0.98,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
-		BFGR d 1 Offset(0,47) a_setpitch(pitch+0.7);
+		BFGR d 1 Offset(0,47) a_setpitch(pitch+0.8);
+		TNT1 A 0 A_zoomfactor(0.99,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
-		BFGR a 1 Offset(0,41) a_setpitch(pitch+0.6);
+		BFGR a 1 Offset(0,41) a_setpitch(pitch+0.8);
+		TNT1 A 0 A_zoomfactor(1,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
-		BFGR b 1 Offset(0,41) a_setpitch(pitch+0.5);
+		BFGR b 1 Offset(0,41) a_setpitch(pitch+0.7);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
-		BFGR c 1 Offset(0,36) a_setpitch(pitch+0.4);
+		BFGR c 1 Offset(0,36) a_setpitch(pitch+0.6);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		BFGR d 1 Offset(0,36) a_setpitch(pitch+0.4);
 		TNT1 A 0 A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
@@ -372,13 +411,20 @@ Class PlasmaHowitzer : BFG9000
 		BFGC E 3 bright;
 		BFGC F 2 bright;
 		BFGC G 2 bright;
+		TNT1 A 0 {
+			if (callacs("glflashes")==1){
+				A_SpawnItemEx("GunFlashPlasmaBig");
+			} else {
+				A_Light2();
+			}
+		}
 		BFGf A 1 bright;
 		TNT1 A 0 bright A_FireProjectile("BFGParticles",0,0,0,-(56-height)/7,FPF_NOAUTOAIM,0);
-		BFGf b 2 bright;
-		BFGf c 2 bright;
-		BFGf d 3 bright;
-		BFGf e 3 bright;
-		BFGf f 4 bright;
+		BFGf b 2 bright A_Light(-1);
+		BFGf c 2 bright A_Light(-2);
+		BFGf d 3 bright A_Light(-3);
+		BFGf e 3 bright A_Light(-2);
+		BFGf f 4 bright A_Light(-1);
     Goto LightDone;
 	}
 }
@@ -390,7 +436,9 @@ Class howitzerball : fastprojectile replaces BFGball
     decal "BFGlightning";
     DeathSound "weapons/bfgx";
     speed 60;
+	Damage 100; // thanks Toberone
     scale 0.6;
+	+EXTREMEDEATH;
   }
 states
 {
@@ -429,10 +477,11 @@ death:
 	TNT1 A 0 A_Playsound("misc/zap",1);
 	BFGB b 1 bright;
 	TNT1 A 0 A_Playsound("misc/zap",5);
+	TNT1 A 0 A_RadiusThrust(20000, 100, RTF_NOIMPACTDAMAGE);
 	BFGB c 1 bright;
 	BFGB d 1 bright;
 	TNT1 A 0 A_Playsound("misc/zap",3);
-	BFGB e 1 bright a_BFGspray;
+	BFGB e 1 bright a_BFGspray("howitzersparks",40,15,90,1024,32,0);
 	TNT1 A 0 A_Playsound("misc/zap",4);
 	BFGB f 1 bright;
 	TNT1 A 0 A_Playsound("misc/zap",7);
@@ -446,6 +495,11 @@ death:
 
 Class howitzersparks : BFGextra replaces BFGextra
 {
+default
+{
++EXTREMEDEATH;
+
+}
 states
 	{
 	spawn:

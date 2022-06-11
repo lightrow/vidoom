@@ -11,7 +11,7 @@ class PistolStartHandler : EventHandler
 		//IntroChance = random(0,3);
 		//if (IntroChance == 3) { player.mo.a_playsound("player/greet",2); }
 
-		if (G_SkillPropertyInt(SKILLP_ACSReturn) == 666 || G_SkillPropertyInt(SKILLP_ACSReturn) == 999) {
+		if (G_SkillPropertyInt(SKILLP_ACSReturn) == 666 || CVar.GetCvar("vi_pistolstart").getBool()) {
 			player.mo.ClearInventory();
 			PlayerPawn(player.mo).ACS_NamedExecute("ResetHealth");
 			player.mo.GiveInventory("Rage", 1);
@@ -19,200 +19,91 @@ class PistolStartHandler : EventHandler
 			player.mo.GiveInventory("Clip", 35);
 			player.mo.GiveInventory("PistolLoad", 10);
 			player.mo.GiveInventory("Handcannon", 1);
-		}
+			player.mo.GiveInventory("Nade", 1);
+			Player.mo.GiveInventory("NadeAmmo", 2);
+	}
 		
    }
  }
  
  
-/*
- 
- class WeaponSelectHud : EventHandler 
-{	
-
-	bool loaded;
-	bool isOpen;
-	bool centered;
-	
-	Array<WeaponIcon> toDraw;
-	
-	static const String weapons[] = {
-		"FireAxe",
-		"HandCannon",
-		"Famas",
-		"DoubleRifle",
-		"Spas",
-		"Bazooka",
-		"PlasmaCannon",
-		"PlasmaHowitzer"
-	};
-	
-	static const String ammos[] = {
-		"Rage",
-		"Clip",
-		"Clip",
-		"Shell",
-		"Shell",
-		"RocketAmmo",
-		"Cell",
-		"Cell"
-	};
-	
-	static const String weaponIconsActive[] = {
-		"iaxe",
-		"ijeri",
-		"ifamas",
-		"icolt",
-		"ispas",
-		"ibazoo",
-		"iplasma",
-		"ibfg"
-	};
-	
-	static const String weaponIconsInactive[] = {
-		"ixaxe",
-		"ixjeri",
-		"ixfamas",
-		"ixcolt",
-		"ixspas",
-		"ixbazoo",
-		"ixplasma",
-		"ixbfg"
-	};
-	
-	static const String weaponIconsEmpty[] = {
-		"iyaxe",
-		"iyjeri",
-		"iyfamas",
-		"iycolt",
-		"iyspas",
-		"iybazoo",
-		"iyplasma",
-		"iybfg"
-	};
-	
-	static const int weaponIconsWidths[] = {
-		14,
-		16,
-		21,
-		30,
-		26,
-		26,
-		25,
-		25
-	};
-	
-	
-
-	
-	void doStuff()
+class GibHandler: EventHandler
+{
+	override void WorldThingSpawned(WorldEvent e)
 	{
-		if (players[consoleplayer].mo == null){
-		} else {
-			if (players[consoleplayer].mo.checkInventory("IsChoosingWeapon",1)){
-				isOpen = true;
-			} else if (isOpen) {
-				isOpen = false;
-			}
-			CVar centeredCvar = CVar.FindCVar('vi_wm_centered');
-			centered = centeredCvar.GetBool();
-			drawThings();
+		if (!e.Thing) return;
+
+		bool isMonster = e.Thing.bIsMonster;
+
+		if (isMonster && !e.Thing.CountInv("GibChecker"))
+		{
+			e.Thing.A_GiveInventory("GibChecker", 1);
 		}
 	}
-	
+}
 
-	
-	// PLAY scope : collect data
-	override void WorldTick()
-	{	
-		doStuff();
-		Super.WorldTick();
+class GibChecker: Inventory 
+{
+	bool gibbing;
+	bool gibsOut;
+	bool hardGib;
+	int HARD_GIB_HEALTH;
+
+	override void BeginPlay() {
+		HARD_GIB_HEALTH = -30;
 	}
-	
-	void drawThings() {
-		PlayerPawn player = players[consoleplayer].mo;
-		Array<WeaponIcon> toDrawNew;
-		for (int i=0; i < weapons.size(); i++){
-			if (player.checkInventory(weapons[i],1)){
-				WeaponIcon newIcon = new("WeaponIcon");
-				if (players[consoleplayer].readyweapon.getclass()==weapons[i]){
-					newIcon.setIcon(weapons[i],weaponIconsActive[i],weaponIconsWidths[i],1);
-				} else {
-					bool gotAmmo = false;
-					
-					switch(i){
-						case 0:
-							gotAmmo = true;
-							break;
-						case 1:
-							if (player.checkInventory("PistolLoad",1) || player.checkInventory("Clip",1)){
-								gotAmmo = true;
-							}
-							break;
-						case 3:
-							if (player.checkInventory("Shell",2)){
-								gotAmmo = true;
-							}
-							break;
-						case 4:
-							if (player.checkInventory("LoadedShell",1) || player.checkInventory("Shell",1)){
-								gotAmmo = true;
-							}
-							break;
 
-						case 7:
-							if (player.checkInventory("Cell",40)){
-								gotAmmo = true;
-							}
-							break;
-						default:
-							if (player.checkInventory(ammos[i],1)){
-								gotAmmo = true;
-							}
-							break;
-					}
-					
-					if (gotAmmo){
-						newIcon.setIcon(weapons[i],weaponIconsInactive[i],weaponIconsWidths[i],0);
-					} else {
-						newIcon.setIcon(weapons[i],weaponIconsEmpty[i],weaponIconsWidths[i],0);
-					}
-				}
-				toDrawNew.push(newIcon);
-			}
+	override void Tick() {
+		if (!Owner || gibsOut || !CVar.getCvar("vi_gore").getBool()) {
+			return;
 		}
-		toDraw.Move(toDrawNew);
-	}
-
-	// UI Scope: you cannot alter data here
-	override void renderOverlay(RenderEvent e)
-	{		
-		int width = Screen.GetWidth();
-		int height = Screen.GetHeight();
-		double center = 160;
-		double y = 155;
-		double yCentered = 10;
-		if (isOpen && toDraw.Size() > 0){
-			int totalWidth = 0;
-			int totalHeight = 0;
-			for (int i = 0; i < toDraw.Size(); i++) {
-				totalWidth+=1+toDraw[i]._width;
-				totalheight+=15;
-			}
-			int currentWidth = 0;
-			int currentHeight = 0;
-			for (int i = 0; i < toDraw.Size(); i++) {
-				TextureID thing = TexMan.CheckForTexture (toDraw[i]._tex, TexMan.Type_Any);
-				if (centered){
-					double x = center - totalWidth/2; 
-					Screen.DrawTexture(thing, false, x + currentWidth,yCentered-toDraw[i]._yoffset, DTA_320X200,true);
-					currentWidth += toDraw[i]._width + 1;
-				}else {
-					Screen.DrawTexture(thing, false, 345 - toDraw[i]._width/2,y-totalHeight+currentHeight, DTA_320X200,true);
-					currentHeight+=15;
-				}
-				
-			}
+		
+		if (Owner is "LostSoul"){
+			return;
 		}
+		
+		if (!hardGib && Owner.GetGibHealth() < HARD_GIB_HEALTH){
+			hardGib = true;
+		}
+		
+		bool isExploding = Owner is "PainElemental" || Owner is "CyberDemon";
+		
+		if (HARD_GIB_HEALTH != 0 && isExploding) {
+			HARD_GIB_HEALTH = 0;
+			hardGib = true;
+			// meat pinata elementals
+		}
+		
+		if (gibbing && !gibsOut){
+			gibsOut = true;
+			if (Owner.FindState('XDeath', true) != NULL && !Owner.InStateSequence(Owner.CurState, Owner.ResolveState('XDeath'))){
+				Owner.setstatelabel("XDeath");
+			}
+			if (Owner is "Cacodemon"){
+				Owner.A_SpawnItemEx("BlueGoreController",0,0,0,Owner.VelX,Owner.VelY,Owner.VelZ,Owner.Angle,SXF_ABSOLUTEANGLE|SXF_ABSOLUTEPOSITION|SXF_ABSOLUTEVELOCITY);
+			} else 
+			if (Owner is "HellKnight" || Owner is "BaronOfHell"){
+				Owner.A_SpawnItemEx("GreenGoreController",0,0,0,Owner.VelX,Owner.VelY,Owner.VelZ,Owner.Angle,SXF_ABSOLUTEANGLE|SXF_ABSOLUTEPOSITION|SXF_ABSOLUTEVELOCITY);
+			} else if (isExploding) {
+				Owner.A_SpawnItemEx("PainElementalGoreController",0,0,0,Owner.VelX,Owner.VelY,Owner.VelZ,Owner.Angle,SXF_ABSOLUTEANGLE|SXF_ABSOLUTEPOSITION|SXF_ABSOLUTEVELOCITY);
+			} else if (Owner.Mass > 100) {
+				Owner.A_SpawnItemEx("BigGoreController",0,0,0,Owner.VelX,Owner.VelY,Owner.VelZ,Owner.Angle,SXF_ABSOLUTEANGLE|SXF_ABSOLUTEPOSITION|SXF_ABSOLUTEVELOCITY);
+			} else  {
+				Owner.A_SpawnItemEx("GoreController",0,0,0,Owner.VelX,Owner.VelY,Owner.VelZ,Owner.Angle,SXF_ABSOLUTEANGLE|SXF_ABSOLUTEPOSITION|SXF_ABSOLUTEVELOCITY);
+			}	
+		}
+		
+		if (gibbing) {
+			return;
+		}
+		
+		if ((hardGib && Owner.Health <= HARD_GIB_HEALTH ) || Owner.Health < Owner.GetGibHealth() || (Owner.FindState('XDeath', true) != NULL && Owner.InStateSequence(Owner.CurState, Owner.ResolveState('XDeath')))) {
+			Owner.bSpriteFlip = RandomPick(false, true);
+			gibbing = true;
+		}
+		
+		
+		
+
 	}
-}*/
+}

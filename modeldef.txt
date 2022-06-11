@@ -20,3 +20,64 @@ Model RicochetBullet
 	
 	FrameIndex PUFF A 0 0
 }
+
+Model Ricochet2
+{ 
+   Path "models" 
+   SKIN 0 "tracer2.png"
+   MODEL 0 "tracer2.md3"
+   Scale 0.36 0.2 0.2
+   PITCHFROMMOMENTUM
+   
+   FrameIndex PAFF A 0 0
+}
+
+Model PuffEffect1
+{ 
+   Path "models" 
+   SKIN 0 "tracer2.png"
+   MODEL 0 "tracer2.md3"
+   Scale 0.2 0.2 0.2
+   PITCHFROMMOMENTUM
+   
+   FrameIndex PAFF A 0 0
+   FrameIndex PAFF B 0 0
+   FrameIndex PAFF C 0 0
+   FrameIndex PAFF D 0 0
+   FrameIndex PAFF E 0 0
+   FrameIndex PAFF F 0 0
+   FrameIndex PAFF G 0 0
+   FrameIndex PAFF H 0 0
+   FrameIndex PAFF I 0 0
+}
+
+Model PuffEffect2
+{ 
+   Path "models" 
+   SKIN 0 "tracer2.png"
+   MODEL 0 "tracer2.md3"
+   Scale 0.17 0.17 0.17
+   PITCHFROMMOMENTUM
+   
+   FrameIndex PAFF A 0 0
+   FrameIndex PAFF B 0 0
+   FrameIndex PAFF C 0 0
+   FrameIndex PAFF D 0 0
+   FrameIndex PAFF E 0 0
+   FrameIndex PAFF F 0 0
+   FrameIndex PAFF G 0 0
+   FrameIndex PAFF H 0 0
+   FrameIndex PAFF I 0 0
+}
+
+Model PuffEffect4
+{ 
+   Path "models" 
+   SKIN 0 "tracer2.png"
+   MODEL 0 "tracer2.md3"
+   Scale 0.12 0.12 0.12
+   PITCHFROMMOMENTUM
+   
+   FrameIndex PAFF A 0 0
+}
+

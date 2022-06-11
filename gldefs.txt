@@ -1,15 +1,68 @@
 
 flickerlight GUNFLASH
 {
-    color 1 1 0.0
+    color 0.6 0.6 0.3
+    size 170
+    secondarySize 250
+    chance 1
+}
+
+flickerlight GUNFLASH2
+{
+    color 0.5 0.5 0.2
+    size 150
+    secondarySize 200
+    chance 1
+}
+
+flickerlight GUNFLASH3
+{
+    color 0.4 0.4 0.1
+    size 130
+    secondarySize 160
+    chance 1
+}
+
+flickerlight GUNFLASHPLASMA
+{
+    color 0.0 0.4 0.2
+    size 90
+    secondarySize 110
+    chance 1
+}
+
+
+flickerlight GUNFLASHPLASMABIG
+{
+    color 0.0 0.7 0.3
     size 200
     secondarySize 300
-    chance 0.8
+    chance 1
 }
 
 object GunFlashLight 
 {
 frame TNT1 { light GUNFLASH }
+}
+
+object GunFlashLight2 
+{
+frame TNT1 { light GUNFLASH2 }
+}
+
+object GunFlashLight3 
+{
+frame TNT1 { light GUNFLASH3 }
+}
+
+object GunFlashPlasma
+{
+frame TNT1 { light GUNFLASHPLASMA }
+}
+
+object GunFlashPlasmaBig
+{
+frame TNT1 { light GUNFLASHPLASMABIG }
 }
 
 pointlight playerlight
@@ -85,11 +138,54 @@ flickerlight BPUFF2
     chance 0.8
 }
 
-object SmoothBulletPuff
+object WeaponBulletPuff
 {
-    frame PUFFA { light BPUFF1 }
-    frame PUFFB { light BPUFF2 }
+    frame PAFFA { light BPUFF1 }
+    frame PAFFB { light BPUFF2 }
 }
+
+object WeaponBulletPuffSmall
+{
+    frame PAFFA { light BPUFF1 }
+    frame PAFFB { light BPUFF2 }
+}
+
+object WeaponBulletPuffBig
+{
+    frame PAFFA { light BPUFF1 }
+    frame PAFFB { light BPUFF2 }
+}
+
+object WeaponBulletPuffGiblessSmall
+{
+    frame PAFFA { light BPUFF1 }
+    frame PAFFB { light BPUFF2 }
+}
+
+object WeaponBulletPuffGibless
+{
+    frame PAFFA { light BPUFF1 }
+    frame PAFFB { light BPUFF2 }
+}
+
+object WeaponBulletPuffGiblessSmall
+{
+    frame PAFFA { light BPUFF1 }
+    frame PAFFB { light BPUFF2 }
+}
+
+object WeaponBulletPuffPainless
+{
+    frame PAFFA { light BPUFF1 }
+    frame PAFFB { light BPUFF2 }
+}
+
+object WeaponBulletPuffPainlessSmall
+{
+    frame PAFFA { light BPUFF1 }
+    frame PAFFB { light BPUFF2 }
+}
+
 
 // Rocket
 pointlight ROCKET
@@ -198,7 +294,27 @@ flickerlight PLASMA_X4
     chance 0.4
 }
 
+flickerlight FIREFOG
+{
+    color 1.0 0.7 0
+    size 48
+    secondarySize 64
+    chance 0.4
+}
 
+flickerlight CYANFOG
+{
+    color 0.4 0.7 1
+    size 48
+    secondarySize 64
+    chance 0.4
+}
+
+object fieryfog
+{
+	frame TFOG { light FIREFOG }
+	frame TFGG { light CYANFOG }
+}
 
 object plazmaball
 {
@@ -442,10 +558,20 @@ object TechLamp
 // -- Doom Items --
 // ----------------
 
-// Soul Sphere
+
 pulselight RAGESPHERE
 {
     color 1.0 0.0 0.2
+    size 120
+    secondarySize 80
+    interval 2.0
+    offset 0 0 0
+	attenuate 0
+}
+
+pulselight WRATHSPHERE
+{
+    color 0.5 0.0 0.6
     size 120
     secondarySize 80
     interval 2.0
@@ -458,12 +584,12 @@ object RageSphere
     frame BERS { light RAGESPHERE }
 }
 
-object RageSphere2
+object WrathSphere
 {
-    frame BERS { light RAGESPHERE }
+    frame WRTH { light WRATHSPHERE }
 }
 
-//berserk sphere
+
 pulselight SOULSPHERE
 {
     color 0.0 0.0 1.0
@@ -474,7 +600,7 @@ pulselight SOULSPHERE
 	attenuate 0
 }
 
-object newsoulsphere
+object NewSoulSphere
 {
     frame BLUS { light SOULSPHERE }
 }
@@ -507,7 +633,7 @@ pulselight INVULN
 
 object newinvulnsphere
 {
-    frame SPHC { light INVULN }
+    frame SPHB { light INVULN }
 }
 
 // Blur Sphere

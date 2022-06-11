@@ -1,0 +1,25 @@
+ACTOR CustomFunction : CustomInventory
+{
+  -COUNTITEM
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.PickupMessage ""
+  Inventory.PickupSound ""
+  States
+  {
+  Spawn:
+    TNT1 A 1
+    Stop
+  Pickup:
+    TNT1 A 0 
+	TNT1 A 0
+    Stop
+  }
+}
+
+
+
+ACTOR NewPowerIronFeet : PowerIronFeet
+{
+  Powerup.Duration -60
+  Powerup.Color 90, 90, 100, 0.125
+}

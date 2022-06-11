@@ -1,23 +1,34 @@
 Class Handcannon : Pistol replaces Pistol
 {
+	float recoil;
+	bool fullauto;
+
+	override void BeginPlay() {	
+		recoil = 2;
+		fullauto = true;
+		Super.BeginPlay();
+	}
+
 	default
-  {
-    Weapon.BobStyle "Alpha";
-    Weapon.BobSpeed 3.12;
-    Weapon.BobRangeX 0.3;
-    Weapon.BobRangeY 0.3;
-    decal "bulletchip";
-    Weapon.AmmoType1 "PistolLoad";
-    inventory.pickupmessage "a lost Jericho 941";
-    Weapon.AmmoGive1 10;
-    Weapon.AmmoUse1 1;
-    Weapon.AmmoUse2 1;
-    Weapon.AmmoType2 "Clip";
-    tag "941 FBL";
-    scale 0.8;
-    +WEAPON.NOAUTOFIRE;
-    +WEAPON.AMMO_CHECKBOTH;
-  }
+	{
+		Weapon.BobStyle "Alpha";
+		Weapon.BobSpeed 3.12;
+		Weapon.BobRangeX 0.2;
+		Weapon.BobRangeY 0.3;
+		decal "bulletchip";
+		Weapon.AmmoType1 "PistolLoad";
+		inventory.pickupmessage "a lost Jericho 941";
+		Weapon.AmmoGive1 10;
+		Weapon.slotnumber 2;
+		Weapon.AmmoUse1 1;
+		Weapon.AmmoUse2 1;
+		Weapon.AmmoType2 "Clip";
+		tag "941 FBL";
+		scale 0.8;
+		+WEAPON.NOAUTOFIRE;
+		+WEAPON.AMMO_CHECKBOTH;
+	}
+	
 	States
 	{
 	Spawn:
@@ -30,9 +41,15 @@ Class Handcannon : Pistol replaces Pistol
 		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,0);
 		TNT1 A 0 A_JumpIf(callacs("tracers")==0,2);
 		TNT1 A 0 A_FireProjectile("BulletTracer",frandom(-1,1),0,0,0);
-		64P2 G 2 Bright A_Light2;
-		64P2 F 1 Bright A_Light1;
-		Goto LightDone	;
+		TNT1 A 0 {
+			if (callacs("glflashes")==1){
+				A_SpawnItemEx("GunFlashLight3");
+			} else {
+				A_Light1();
+			}
+		}		64P2 G 2 Bright;
+		64P2 F 1 Bright;
+		Goto LightDone;
 	Ready:
 		bi64 A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
@@ -65,9 +82,19 @@ Class Handcannon : Pistol replaces Pistol
 		bi64 A 2 Offset(0,33);
 		goto Ready;
 	AltFire:
-		TNT1 A 0 A_JumpIfInventory("PistolLoad",10,"Ready");
-		TNT1 A 0 A_JumpIfInventory("Clip",1,"Reload");
-		goto DryFire;
+// 		TNT1 A 0 A_JumpIfInventory("PistolLoad",10,"Ready");
+// 		TNT1 A 0 A_JumpIfInventory("Clip",1,"Reload");
+// 		goto DryFire;
+		TNT1 A 0 {
+			A_PlaySound("menu/cursor");
+			invoker.fullauto = !invoker.fullauto;
+			if (invoker.fullauto)  {
+				A_Print("Full auto");
+			} else {
+				A_Print("Semi auto");
+			}
+		}
+		goto Ready;
   Deselect: 
 	TNT1 A 0 ;
 	TNT1 A 0 A_JumpIf(CallACS("WasReloadPressed"),1);
@@ -105,32 +132,52 @@ Class Handcannon : Pistol replaces Pistol
 		TNT1 A 0 A_JumpIfNoAmmo("Reload");
 		TNT1 A 0 A_JumpIfInventory("PistolLoad",2,2);
 		goto FireLast;
-		TNT1 A 0;
+		TNT1 A 0; 
 		TNT1 a 0 ACS_NamedExecute("CheckReloadButton");
 		bi64 A 0 Offset(0,36) A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		TNT1 A 0 A_JumpIfInventory("PistolSpam",0,3);
-		bi64 C 0 A_FireBullets (0, 0, -1, 17, "BulletPuffGibless");
+		bi64 C 0 A_FireBullets (0, 0, -1, 13, "WeaponBulletPuffGibless");
 		TNT1 A 0 A_Jump(256,2);
-		bi64 C 0 A_FireBullets (5, 4, -1, 15, "BulletPuffGibless");
+		bi64 C 0 A_FireBullets (5, 4, -1, 12, "WeaponBulletPuffGibless");
 		TNT1 A 0 A_GiveInventory("PistolSpam");
 		bi64 C 0 A_PlaySound("weapons/1911", 1);
 		bi64 C 0 A_GunFlash;
 		bi64 B 0 A_spawnitemex ("bulletcasing", 40, 0, 25, random(4,6), random(7,8), random(7,9), 0);
 		bi64 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		TNT1 A 0 a_setpitch(pitch-0.2);
-		bi64 B 2 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+		TNT1 A 0 a_setpitch(pitch-0.2*invoker.recoil);
+		TNT1 A 0 a_setangle(angle+frandom(-0.05,0.05)*invoker.recoil);
+		bi64 B 2 {
+			A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			A_WeaponOffset(frandom(-1.5,1.5),32);
+		}
+		TNT1 A 0 a_setpitch(pitch-0.2*invoker.recoil);
+		TNT1 A 0 a_setangle(angle+frandom(-0.03,0.03)*invoker.recoil);
 		TNT1 A 0 A_zoomfactor(0.998,ZOOM_INSTANT|ZOOM_NOSCALETURNING);
-		bi64 C 1 A_WeaponReady(WRF_NOFIRE|WRF_NOSECONDARY|WRF_NOSWITCH);
+		bi64 C 1 {
+			A_WeaponReady(WRF_NOFIRE|WRF_NOSECONDARY|WRF_NOSWITCH);
+			A_WeaponOffset(frandom(-2.5,2.5),32);
+		}
 		TNT1 A 0 A_zoomfactor(0.999,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+		TNT1 A 0 a_setpitch(pitch+0.2*invoker.recoil);
 		bi64 D 1 Offset(0,35);
-		TNT1 A 0 a_setpitch(pitch+0.2);
 		TNT1 A 0 A_zoomfactor(1,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSECONDARY);
 		bi64 E 1 Offset(0,35);
+		TNT1 A 0 a_setpitch(pitch+0.2*invoker.recoil);
 		TNT1 A 0 A_WeaponReady(WRF_NOSECONDARY);
+		TNT1 A 0 {
+			if (invoker.fullauto && random(0,1)==1) {
+				A_Refire();
+			}
+		}
 		bi64 E 1 Offset(0,35);
 		TNT1 A 0 A_WeaponReady(WRF_NOSECONDARY);
+		TNT1 A 0 {
+			if (invoker.fullauto) {
+				A_Refire();
+			}
+		}
 		bi64 E 2 Offset(0,40);
 		TNT1 A 0 A_WeaponReady(WRF_NOSECONDARY);
 		bi64 D 2 Offset(0,45);
@@ -151,13 +198,13 @@ Class Handcannon : Pistol replaces Pistol
 		TNT1 A 0 A_JumpIf(CallACS("WasReloadPressed"),"Reload");
 		bi64 A 2 Offset(0,40);
 		TNT1 A 0 A_JumpIf(CallACS("WasReloadPressed"),"Reload");
-		TNT1 A 0 A_WeaponReady();
+		TNT1 A 0 A_WeaponReady(WRF_NOSECONDARY);
 		bi64 A 2 Offset(0,37);
 		TNT1 A 0 A_JumpIf(CallACS("WasReloadPressed"),"Reload");
-		TNT1 A 0 A_WeaponReady();
+		TNT1 A 0 A_WeaponReady(WRF_NOSECONDARY);
 		bi64 A 3 Offset(0,35);
 		TNT1 A 0 A_JumpIf(CallACS("WasReloadPressed"),"Reload");
-		TNT1 A 0 A_WeaponReady();
+		TNT1 A 0 A_WeaponReady(WRF_NOSECONDARY);
 		TNT1 A 0 A_JumpIf(CallACS("WasReloadPressed"),"Reload");
 		bi64 A 4 Offset(0,33);
 		TNT1 A 0 A_JumpIf(CallACS("WasReloadPressed"),"Reload");
@@ -172,24 +219,26 @@ Class Handcannon : Pistol replaces Pistol
 		TNT1 a 0 ACS_NamedExecute("CheckFireReload");
 		bi64 A 0 Offset(0,36) A_WeaponReady(WRF_NoFire|WRF_NoSwitch);
 		TNT1 A 0 A_JumpIfInventory("PistolSpam",0,3);
-		bi64 C 0 A_FireBullets (0, 0, -1, 17, "BulletPuffGibless");
+		bi64 C 0 A_FireBullets (0, 0, -1, 13, "WeaponBulletPuffGibless");
 		TNT1 A 0 A_Jump(256,2);
-		bi64 C 0 A_FireBullets (6, 5, -1, 15, "BulletPuffGibless");
+		bi64 C 0 A_FireBullets (6, 5, -1, 12, "WeaponBulletPuffGibless");
 		TNT1 A 0 A_TakeInventory("PistolSpam");
 		bi64 C 0 A_PlaySound("weapons/1911", 1);
 		bi64 C 0 A_GunFlash;
 		bi64 B 0 A_spawnitemex ("bulletcasing", 40, 0, 25, random(4,6), random(7,8), random(7,9), 0);
 		bi64 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-		TNT1 A 0 a_setpitch(pitch-0.2);
+		TNT1 A 0 a_setpitch(pitch-0.2*invoker.recoil);
+		TNT1 A 0 a_setangle(angle+frandom(-0.05,0.05)*invoker.recoil);
 		bi64 B 2  ;
 		bi64 C 1 ;
-		TNT1 A 0 ;
+		TNT1 A 0 a_setpitch(pitch+0.2*invoker.recoil);
 		bi64 D 1  Offset(0,40);
-		TNT1 A 0 a_setpitch(pitch+0.2);
 		TNT1 A 0 ;
 		bi64 E 2 Offset(0,40);
+		TNT1 A 0 a_setpitch(pitch+0.1*invoker.recoil);
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
 		bi64 E 2 Offset(0,45);
+		TNT1 A 0 a_setpitch(pitch+0.1*invoker.recoil);
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
 		bi64 D 2 Offset(0,50);
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
@@ -206,16 +255,17 @@ Class Handcannon : Pistol replaces Pistol
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_JumpIf(CallACS("WasReloadPressed"),"ReloadManual");
 		bi64 A 2 Offset(0,40);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_JumpIf(CallACS("WasReloadPressed"),"ReloadManual");
 		bi64 A 2 Offset(0,40);
 		TNT1 A 0 A_JumpIf(CallACS("WasReloadPressed"),"ReloadManual");
-		TNT1 A 0 A_WeaponReady();
+		TNT1 A 0 A_WeaponReady(WRF_NOSECONDARY);
 		bi64 A 2 Offset(0,37);
 		TNT1 A 0 A_JumpIf(CallACS("WasReloadPressed"),"ReloadManual");
-		TNT1 A 0 A_WeaponReady();
+		TNT1 A 0 A_WeaponReady(WRF_NOSECONDARY);
 		bi64 A 3 Offset(0,35);
 		TNT1 A 0 A_JumpIf(CallACS("WasReloadPressed"),"ReloadManual");
-		TNT1 A 0 A_WeaponReady();
+		TNT1 A 0 A_WeaponReady(WRF_NOSECONDARY);
 		TNT1 A 0 A_JumpIf(CallACS("WasReloadPressed"),"ReloadManual");
 		bi64 A 4 Offset(0,33);
 		TNT1 A 0 A_JumpIf(CallACS("WasReloadPressed"),"ReloadManual");

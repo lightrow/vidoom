@@ -13,7 +13,14 @@ OptionValue PistolStart
 	1.0, "Yes"
 }
 
+
 OptionValue PrettyParticles
+{
+	0.0, "No"
+	1.0, "Yes"
+}
+
+OptionValue GLFlashes
 {
 	0.0, "No"
 	1.0, "Yes"
@@ -32,11 +39,36 @@ OptionValue RedScreen
 	1.0, "Yes"
 }
 
-OptionValue WMCentered
+OptionValue Autoreload
 {
-	0.0, "Vertical"
-	1.0, "Horizonal"
+	0.0, "No"
+	1.0, "Yes"
 }
+
+OptionValue OldHud
+{
+	0.0, "No"
+	1.0, "Yes"
+}
+
+OptionValue CrouchSlide
+{
+	0.0, "No"
+	1.0, "Yes"
+}
+
+OptionValue PuffParticles
+{
+	0.0, "No"
+	1.0, "Yes"
+}
+
+OptionValue Gore
+{
+	0.0, "No"
+	1.0, "Yes"
+}
+
 
 
 
@@ -47,10 +79,20 @@ title "Voyage Infernal Options"
 
 StaticText " "
 StaticText " "
-// option "Pistol start", "vi_pistolstart", "PistolStart"
 option "Muzzleflash particles", "vi_prettyparticles", "PrettyParticles"
+option "Muzzleflash dynamic lights", "vi_glflashes", "GLFlashes"
 option "Bullet tracers", "vi_tracers", "Tracers"
-option "Weapon List", "vi_wm_centered", "WMCentered"
+option "Bullet puff particles", "vi_puffparticles", "PuffParticles"
+option "Gore", "vi_gore", "Gore"
+StaticText " "
+option "Autoreload LAW-12", "vi_autoreload", "Autoreload"
+option "Pistol start", "vi_pistolstart", "PistolStart"
+option "Crouch-slide", "vi_crouchslide", "CrouchSlide"
+StaticText " "
+StaticText "Old HUD was made for 1920x1080 with fullscreen hud scaling set to 4."
+StaticText "Other resolutions or scaling values will probably look wrong, playing around with scaling settings might fix it"
+option "Use old HUD", "vi_oldhud", "OldHud"
+StaticText " "
 StaticText " "
 StaticText "Requires level restart"
 Slider "Crouch-slide duration", "vi_crouchduration", 5, 150, 1

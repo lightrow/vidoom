@@ -6,15 +6,27 @@
 // --------------------------------------------------
 // CVAR GETTERS
 // 
-
-script "sgswaptoggle" (void)
+script "bloodspot" (void)
 {
-    SetResultValue(GetCVar("vi_sgswaptoggle"));
+    SetResultValue(GetCVar("vi_bloodspot"));
+}
+script "autoreload" (void)
+{
+    SetResultValue(GetCVar("vi_autoreload"));
+}
+script "swapshotguns" (void)
+{
+    SetResultValue(GetCVar("vi_swapshotguns"));
 }
 
 script "prettyparticles" (void)
 {
     SetResultValue(GetCVar("vi_prettyparticles"));
+}
+
+script "glflashes" (void)
+{
+    SetResultValue(GetCVar("vi_glflashes"));
 }
 
 script "tracers" (void)
@@ -30,6 +42,11 @@ script "crouchduration" (void)
 script "redscreen" (void)
 {
     SetResultValue(GetCVar("vi_redscreen"));
+}
+
+script "puffparticles" (void)
+{
+    SetResultValue(GetCVar("vi_puffparticles"));
 }
 
 
@@ -57,11 +74,11 @@ Script "CheckReloadButton" (void)
 			DoCheckReload = false;
 
 		}
-		if (buttons & BT_ALTATTACK) 
-		{
-			GottaReload = true;
-			DoCheckReload = false;
-		}
+// 		if (buttons & BT_ALTATTACK)
+// 		{
+// 			GottaReload = true;
+// 			DoCheckReload = false;
+// 		}
 		Delay(1);
 	}
 }
@@ -160,4 +177,70 @@ Script "CountCharges" (void)
 	
 }
 
+
+// brutal doom checker script by TerminusEst
+script "EL_BRUTALIDAD" ENTER
+{
+    int isbrutal;
+    int k = unusedTID(37000, 47000);
+    int playerangle;
+
+    if (SpawnForced("BrutalPistol",GetActorX(0),GetActorY(0),GetActorZ(0),k) || SpawnForced("Shot_Gun",GetActorX(0),GetActorY(0),GetActorZ(0),k))
+    {
+        Thing_Remove(k);
+        isbrutal = 1;
+    }
+
+    while(1)
+    {
+        playerangle = GetActorAngle(0) >> 8;
+		int buttons = GetPlayerInput(-1, INPUT_BUTTONS);
+		if (buttons & BT_ATTACK && isbrutal == 1) 
+        {
+			Print(s:"such brootal...");
+            SpawnProjectile(0,"XDeath1",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"XDeath2",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"XDeath3",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"XDeathOrgan1",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"XDeathStomach",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"Gib_Arm",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"XDeathImpArm",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"XDeathDemonArm",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"XDeathChainArm",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"XDeathZombieManHead",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"XDeathSargeLeg1",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"Brutal_Blood",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"Brutal_Blood",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"Brutal_Blood",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"Brutal_FlyingBlood",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"Brutal_FlyingBlood",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"Brutal_FlyingBlood",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"Big_Blood",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"Big_Blood",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+            SpawnProjectile(0,"Big_Blood",playerangle+(random(-15,15)),random(35,105),random(48,64),0.5,0);
+        }
+
+        delay(2);
+        if (isbrutal == 0) { terminate; }
+    }
+}
+
+
+function int unusedTID(int start, int end)
+{
+    int ret = start - 1;
+    int tidNum;
+
+    if (start > end) { start ^= end; end ^= start; start ^= end; }  // good ol' XOR swap
+
+    while (ret++ != end)
+    {
+        if (ThingCount(0, ret) == 0)
+        {
+            return ret;
+        }
+    }
+
+    return -1;
+}
 

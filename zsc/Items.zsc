@@ -83,8 +83,33 @@ class RageSphere: CustomInventory replaces Berserk
 
 }
 
-class RageSphere2: RageSphere replaces Chainsaw
+class WrathSphere: RageSphere replaces Chainsaw
 {
+	default
+	{
+	scale 0.5;
+	Inventory.PickupSound "none";
+	inventory.pickupmessage "wrathsphere";
+	FloatBobStrength 0.2;
+	+FLOATBOB;
+	}
+	States
+	{
+		Spawn:
+			WRTH XWVUTSRQPONMLKJIHGFEDCBA 1 BRIGHT;
+			Loop;
+		Pickup:
+			TNT1 A 0
+			{
+				//HealThing(100, 0);
+				A_PlaySound("misc/berserk_pickup",6,1,0,0.1);
+				A_GiveInventory("Rage",100);
+				//A_GiveInventory("PowerStrength");
+				A_SelectWeapon("FireAxe");
+				A_SetBlend("000000",1,70,"000000",0);
+			} 
+		Stop;
+	}
 }
 
 class healthvial : healthbonus replaces healthbonus

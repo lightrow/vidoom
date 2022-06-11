@@ -1,7 +1,9 @@
 gameinfo
 {
-	AddEventHandlers = "PistolStartHandler"
+	AddEventHandlers = "PistolStartHandler", "GibHandler"
 	statusbarclass = "VoyageHUD"
+	weaponslot = 1, "Axe", "Nade"
+	weaponslot = 2, "Pistol"
 }
 
 

@@ -1,9 +1,8 @@
 Stuff i took from others:
 
 Smooth Doom 
-    - some puffs
-	- some doom64 ssg intermittent reloading sprites
-	- water splashes
+    - gore sprites
+	- splashes
 	- bullet casings
 	- inspiration ( this whole thing started as a personal edit of smooth doom )
 Demonsteele
@@ -32,3 +31,5 @@ pfenh
 	- explosions
 naku-naru
 	- gunsmoke, bulletpuffs
+nash
+    - gib sprites

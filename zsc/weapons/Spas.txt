@@ -1,21 +1,29 @@
 Class Spas : Shotgun
 {	
-default
-{
-	Weapon.BobStyle "Alpha";
-	Weapon.BobSpeed 3.12;
-	Weapon.BobRangeX 0.3;
-	Weapon.BobRangeY 0.3;
-	Weapon.SlotNumber 4;
-	Weapon.AmmoUse1 1;
-	Weapon.AmmoUse2 1;
-	Weapon.AmmoType1 "LoadedShell";
-	Weapon.AmmoType2 "Shell";
-	decal "bulletchip";
-	+WEAPON.AMMO_CHECKBOTH;
-	inventory.pickupmessage "a lost LAW-12";
-	scale 0.8;
-	tag "LAW-12";
+	float recoil;
+
+	override void BeginPlay() {	
+		recoil = 1.6;
+		Super.BeginPlay();
+	}
+	
+	default
+	{	
+		Weapon.BobStyle "Alpha";
+		Weapon.BobSpeed 3.12;
+		Weapon.BobRangeX 0.2;
+		Weapon.BobRangeY 0.3;
+		Weapon.SlotPriority 1;
+		Weapon.SlotNumber 3;
+		Weapon.AmmoUse1 1;
+		Weapon.AmmoUse2 1;
+		Weapon.AmmoType1 "LoadedShell";
+		Weapon.AmmoType2 "Shell";
+		decal "bulletchip";
+		+WEAPON.AMMO_CHECKBOTH;
+		inventory.pickupmessage "a lost LAW-12";
+		scale 0.8;
+		tag "LAW-12";
 	}
 	States
 	{
@@ -25,8 +33,13 @@ default
 	Ready:
 		spas A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
+		TNT1 A 0 A_JumpIf(callacs("autoreload")==0,"Ready");
 		TNT1 A 0 A_JumpIfInventory("LoadedShell",0,"Ready");
 		TNT1 A 0 A_JumpIfInventory("Shell",1,"Reload");
+		loop;
+	UnloadedReady:
+		spas A 1 A_WeaponReady(WRF_ALLOWRELOAD);
+		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart");
 		loop;
 	SlideStart:
 		spas A 1 Offset(0,33);
@@ -55,17 +68,47 @@ default
 		goto Ready;
 	flash:
 		TNT1 A 0;
-		TNT1 A 0 A_JumpIf(callacs("tracers")==0,21);
-		TNT1 AAAAAAAAAA 0 A_FireProjectile("BulletTracer",frandom(-9,9),0,0,frandom(-10,5));
-		TNT1 AAAAAAAAAA 0 A_FireProjectile("BulletTracer",frandom(-9,9),0,0,frandom(-10,5));
-		TNT1 A 0 A_JumpIf(callacs("prettyparticles")==0,2);
-		TNT1 A 0 A_FireProjectile("ShotgunParticles",0,0,0,-(56-height)/7,FPF_NOAUTOAIM,0);
-		TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,0);
-		TNT1 A 0;
-		SPAS Z 1 Bright  A_Light2;
-		SPAS Y 1 Bright  A_Light1;
+		TNT1 A 0 {
+			A_FireProjectile("SmokeSpawner",0,0,0);
+			if (callacs("tracers")==1){
+				A_FireProjectile("BulletTracer",frandom(-4,4),0,0,0,0,frandom(-2,2));
+				A_FireProjectile("BulletTracer",frandom(-4,4),0,0,0,0,frandom(-2,2));
+				A_FireProjectile("BulletTracer",frandom(-4,4),0,0,0,0,frandom(-2,2));
+				A_FireProjectile("BulletTracer",frandom(-4,4),0,0,0,0,frandom(-2,2));
+				A_FireProjectile("BulletTracer",frandom(-4,4),0,0,0,0,frandom(-2,2));
+				A_FireProjectile("BulletTracer",frandom(-4,4),0,0,0,0,frandom(-2,2));
+				A_FireProjectile("BulletTracer",frandom(-4,4),0,0,0,0,frandom(-2,2));
+				A_FireProjectile("BulletTracer",frandom(-4,4),0,0,0,0,frandom(-2,2));
+			}
+			if (callacs("prettyparticles")==1){
+				A_FireProjectile("ShotgunParticles",0,0,0,-(56-height)/7,FPF_NOAUTOAIM,0);
+			}
+			if (callacs("glflashes")==1){
+				A_SpawnItemEx("GunFlashLight2");
+			} else {
+				A_Light2();
+			}
+		}
+		TNT1 A 0 A_Jump(256,"Flash1","Flash2");
+	Flash1:
 		SPAS Z 1 Bright;
-		Goto LightDone	;
+		TNT1 A 0 {
+			if (callacs("glflashes")!=1){
+				A_Light1();
+			}
+		}
+		SPAS Y 1 Bright;
+		SPAS Z 1 Bright;
+		Goto LightDone;
+	Flash2:
+		SPAS Z 1 Bright;
+		TNT1 A 0 {
+			if (callacs("glflashes")!=1){
+				A_Light1();
+			}
+		}
+		SPAS Y 1 Bright;
+		Goto LightDone;
    Deselect: 
       TNT1 AAAAAAAAAAAAAAAA 0 A_Lower;
       TNT1 AAAAAAA 1 A_Lower;
@@ -96,39 +139,93 @@ default
 		TNT1 A 0 A_JumpIfInventory("LoadedShell",1,2);
 		TNT1 A 0 A_Jump(256,"Reload");
 		TNT1 A 0 ;
-		TNT1 A 0 A_FireBullets (15, 11, 2, 3, "WeaponBulletPuff",FBF_USEAMMO);
-		TNT1 A 0 A_FireBullets (15, 11, 21, 2, "PainlessBulletPuff",0);
+		TNT1 A 0 A_FireBullets (4, 2, 1, 3, "WeaponBulletPuffSmall",FBF_USEAMMO);
+		TNT1 A 0 A_FireBullets (4, 2, 14, 2, "WeaponBulletPuffPainlessSmall",0);
 		TNT1 A 0 A_gunflash;
 		TNT1 A 0 A_PlaySound("weapons/pumpfire", CHAN_WEAPON);
-		TNT1 A 0 a_setpitch(pitch-1);
-		spas a 1 Offset(0,46);
-		spas a 1 Offset(0,46);
+		TNT1 A 0 a_setpitch(pitch-1*invoker.recoil);
+		TNT1 A 0 a_setangle(angle+frandom(-0.2,0.2)*invoker.recoil);
+		spas a 1 Offset(0,41);
+		spab a 1 A_WeaponOffset(random(-1,1),44);
 		TNT1 A 0 A_spawnitemex ("shellcasing", 30, 8, 22, random(3,4), random(7,8), random(7,9), 0);
 		TNT1 A 0 A_zoomfactor(0.997,ZOOM_INSTANT|ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
-		TNT1 A 0 a_setpitch(pitch-0.25);
-		spas a 1 Offset(0,43);
+		TNT1 A 0 a_setpitch(pitch-0.25*invoker.recoil);
+		TNT1 A 0 a_setangle(angle+frandom(-0.1,0.1)*invoker.recoil);
+		spab a 1 Offset(0,40);
 		TNT1 A 0 A_zoomfactor(0.9985,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
-		TNT1 A 0 a_setpitch(pitch+0.3);
-		spas a 2 Offset(0,42);
+		TNT1 A 0 a_setpitch(pitch+0.3*invoker.recoil);
+		spas a 2 Offset(0,37);
 		TNT1 A 0 A_zoomfactor(1,ZOOM_NOSCALETURNING);
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
-		TNT1 A 0 a_setpitch(pitch+0.6);
-		spas A 2 Offset(0,38);
-		TNT1 A 0 a_setpitch(pitch+0.35);
+		TNT1 A 0 a_setpitch(pitch+0.6*invoker.recoil);
+		spas A 2 Offset(0,34);
+		TNT1 A 0 a_setpitch(pitch+0.35*invoker.recoil);
 		TNT1 A 0 A_WeaponReady();
-		spas A 1 Offset(0,34);
+		spas A 2 Offset(0,33);
 		TNT1 A 0 A_WeaponReady();
-		spas A 1 Offset(0,33);
-		TNT1 A 0 A_WeaponReady();
-		spas A 1 Offset(0,32);
 		spas A 2 Offset(0,32)  A_ReFire ;
 		TNT1 A 0 A_JumpIfInventory("LoadedShell",1,"Ready");
 		goto Reload;
 	Altfire:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIfInventory("LoadedShell",1,"UnloadStart");
+		goto Ready;
+	UnloadStart:
+		SPAS b 1 A_WeaponReady(WRF_NOFIRE);
+		SPAS c 1 A_WeaponReady(WRF_NOFIRE);
+		SPAS d 1 A_WeaponReady(WRF_NOFIRE);
+		SPAS e 1 A_WeaponReady(WRF_NOFIRE);
+		SPAS f 2 A_WeaponReady(WRF_NOFIRE);
+		goto UnitUnload;
+	UnloadLast:
+		TNT1 A 0 A_PlaySound("weapons/drrrnk",7);
+		SPAS f 2 Offset(0,31);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE) ;
+		SPAS f 3 Offset(-4,29);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_GiveInventory("Shell", countinv("LoadedShell"));
+		TNT1 A 0 A_TakeInventory("LoadedShell", 0);
+		SPAS f 2 Offset(-3,31);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		SPAS f 2 Offset(-2,31);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		SPAS f 1 Offset(0,32) ;
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		SPAS f 1 Offset(0,32) ;
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		SPAS e 1 Offset(-2,31);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		SPAS d 1 A_WeaponReady(WRF_NOFIRE);
+		SPAS c 1 A_WeaponReady(WRF_NOFIRE);
+		SPAS b 2 offset(2,31);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		spas A 2 offset(2,31) ;
+		TNT1 A 0 A_WeaponReady();
+		spas A 2 offset(1,32);
+		TNT1 A 0 A_WeaponReady();
+		spas A 2 offset(0,32) ;
+		TNT1 A 0 A_WeaponReady();
+		goto UnloadedReady;
+	UnitUnload:
+		TNT1 A 0 A_JumpIfInventory("LoadedShell", 2, 1);
+		Goto UnloadLast;
+		TNT1 A 0 A_PlaySound("weapons/drrrnk",7);
+		SPAS f 2 Offset(0,31);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE) ;
+		SPAS f 3 Offset(-4,29);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_GiveInventory("Shell", 1);
+		TNT1 A 0 A_TakeInventory("LoadedShell", 1);
+		SPAS f 2 Offset(-3,31);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		SPAS f 1 Offset(-2,31);
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		SPAS f 1 Offset(0,32) ;
+		Goto UnitUnload;
 	Reload:
-		TNT1 A 0 A_JumpIfInventory("LoadedShell",6,"Ready");
+		TNT1 A 0 A_JumpIfInventory("LoadedShell",0,"Ready");
 		TNT1 A 0 A_CheckReload();
 		TNT1 A 0 A_JumpIfInventory("Shell",1,2);
 		TNT1 A 0 A_Jump(256,"DryFire");
@@ -138,24 +235,24 @@ default
 		SPAS c 1 A_WeaponReady(WRF_NOFIRE);
 		SPAS d 1 A_WeaponReady(WRF_NOFIRE);
 		SPAS e 1 A_WeaponReady(WRF_NOFIRE);
-		SPAS f 2 A_WeaponReady(WRF_NOFIRE);
+		SPAS f 1 A_WeaponReady(WRF_NOFIRE);
 		goto UnitReload;
 	StartReloadShootable:
 		SPAS b 1 A_WeaponReady(WRF_NOSECONDARY);
 		SPAS c 1 A_WeaponReady(WRF_NOSECONDARY);
 		SPAS d 1 A_WeaponReady(WRF_NOSECONDARY);
 		SPAS e 1 A_WeaponReady(WRF_NOSECONDARY);
-		SPAS f 2 A_WeaponReady(WRF_NOSECONDARY);
+		SPAS f 1 A_WeaponReady(WRF_NOSECONDARY);
 		goto UnitReload;
 	UnitReload:
 		TNT1 A 0 A_JumpIfInventory("Shell", 2, 1);
 		Goto ReloadFinish;
-		TNT1 A 0 A_JumpIfInventory("LoadedShell", 5, "ReloadFinish")     ;
+		TNT1 A 0 A_JumpIfInventory("LoadedShell", 7, "ReloadFinish")     ;
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_PlaySound("weapons/shellinsert",7);
 		SPAS f 2 Offset(0,31);
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE) ;
-		SPAS f 3 Offset(-4,29);
+		SPAS f 2 Offset(-4,29);
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_TakeInventory("Shell", 1, TIF_NOTAKEINFINITE);
 		TNT1 A 0 A_GiveInventory("LoadedShell", 1);
@@ -172,7 +269,7 @@ default
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
 		Goto UnitReload    ;
 	QuickFire:
-		TNT1 A 0 A_PlaySound("weapons/gunfoley4",6,0.6);
+		TNT1 A 0 A_PlaySound("weapons/gunfoley4",6,1);
 		SPAS d 1 A_WeaponReady(WRF_NOFIRE);
 		SPAS c 1 A_WeaponReady(WRF_NOFIRE);
 		SPAS b 2 A_WeaponReady(WRF_NOFIRE);
@@ -223,7 +320,7 @@ default
 Class LoadedShell : Ammo
 {
 	default{
-   Inventory.MaxAmount 6;
+   Inventory.MaxAmount 8;
 }}
 
 

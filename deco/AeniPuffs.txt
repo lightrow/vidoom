@@ -1,0 +1,467 @@
+actor SSTBulletPUFF : BulletPUFF 
+{
+  Game Doom
+  SpawnID 131
+  //+DONTSPLASH
+  +NOBLOCKMAP
+  +NOGRAVITY
+  -ALLOWPARTICLES
+  -RANDOMIZE
+  -DONTSPLASH
+	+THRUGHOST
+  +NOEXTREMEDEATH
+  +PUFFONACTORS
+  +PUFFGETSOWNER
+  +MTHRUSPECIES
+  +THRUSPECIES
+  +NOTIMEFREEZE
+  +HITTRACER
+  +NOTELEPORT
+  +FORCEXYBILLBOARD
+  -ALLOWPARTICLES
+  -RANDOMIZE
+  RenderStyle translucent
+  Alpha 1.0
+  VSpeed 0
+  Scale 0.3
+  Mass 1
+  +THRUGHOST
+  States
+  {  
+  Melee:
+  Crash:
+	TNT1 A 0 A_JumpIf(CallACS("LiquidCheck"),"Disappear")
+    PAFF A 0 bright
+    PAFF A 0 A_Jump(127,"spawn3")
+    PAFF A 0 A_Jump(127,"Spawn2")
+    TNT1 A 0 A_Playsound("weapons/trace")
+    PAFF A 1 bright
+	TNT1 A 0 A_Jump(127,2)
+	FRTB A 0 A_SpawnItemEx ("Wallsmoke", 0,0,0, 0,0,0, 0, 160, 64) 
+	NULL A 0 A_SpawnItemEx ("PUFFEffectSpawner", 0,0,0, 0,0,0, 0, 160) 
+    PAFF B 1 bright A_FadeOut(0.1)
+	goto Die
+  Disappear:
+	TNT1 A 1
+	Stop
+  Die:
+	PAFF CD 1 bright A_FadeOut(0.1)
+    stop
+  Spawn:
+  XDeath:
+	TNT1 A 5 A_PlaySound("weapons/flesh")
+    PAFF CD 1 bright A_FadeOut(0.1)
+    stop
+  Spawn3:
+	PAFF A 2 Bright A_SpawnItemEx("ricochetspawner",0,0,0, 0,0,0, 0, SXF_NOCHECKPOSITION|SXF_CLIENTSIDE)
+	PAFF BCD 1 Bright
+    Stop
+  Spawn2:
+    PAFF A 0 bright
+    TNT1 A 0 A_Playsound("weapons/trace")
+    PAFF A 1 bright A_FadeOut(0.1)
+	TNT1 A 0 A_Jump(127,2)
+	FRTB A 0 A_SpawnItemEx ("Wallsmoke", 0,0,0, 0,0,0, 0, 160, 64) 
+	NULL A 0 A_SpawnItemEx ("PUFFEffectSpawner", 0,0,0, 0,0,0, 0, 160) 
+    PAFF A 1 bright A_FadeOut(0.1)
+    PAFF B 1 bright A_FadeOut(0.1)
+	goto Die
+  }
+}
+
+actor SSTBulletPUFFBig : SSTBulletPUFF 
+{
+  States
+  {
+  Melee:
+  Crash:
+  	TNT1 A 0 A_JumpIf(CallACS("LiquidCheck"),"Disappear")
+    PAFF A 0 bright
+    PAFF A 0 A_Jump(127,"Crash2")
+    TNT1 A 0 A_Playsound("weapons/ricohard")
+    PAFF A 1 bright
+	TNT1 A 0 A_Jump(127,2)
+	FRTB A 0 A_SpawnItemEx ("Wallsmoke", 0,0,0, 0,0,0, 0, 160, 64) 
+	TNT1 A 0 A_JumpIf(callacs("puffparticles")==0,2)
+	NULL A 0 A_SpawnItemEx ("PUFFEffectSpawnerBig", 0,0,0, 0,0,0, 0, 160) 
+    PAFF B 1 bright A_FadeOut(0.1)
+	goto Die
+  Disappear:
+	TNT1 A 1
+	Stop
+  Die:
+	PAFF CD 1 bright A_FadeOut(0.1)
+    stop
+  Spawn:
+  XDeath:
+	TNT1 A 0 A_PlaySound("weapons/flesh")
+	TNT1 A 0 A_SpawnItem("XBlood2")
+	PAFF AAAAAACDCD 1 bright A_FadeOut(0.1)
+    stop
+  Crash2:
+    PAFF A 0 bright
+    TNT1 A 0 A_Playsound("weapons/ricohard")
+    PAFF A 1 bright A_FadeOut(0.1)
+	TNT1 A 0 A_Jump(127,2)
+	FRTB A 0 A_SpawnItemEx ("Wallsmoke", 0,0,0, 0,0,0, 0, 160, 64) 
+	TNT1 A 0 A_JumpIf(callacs("puffparticles")==0,2)
+	NULL A 0 A_SpawnItemEx ("PUFFEffectSpawnerBig", 0,0,0, 0,0,0, 0, 160) 
+    PAFF A 1 bright A_FadeOut(0.1)
+    PAFF B 1 bright A_FadeOut(0.1)
+    goto Die
+  }
+}
+
+actor SSTBulletPUFFSmall : SSTBulletPUFF 
+{
+ 
+  States
+  {
+  Melee:
+  Crash:
+   	TNT1 A 0 A_JumpIf(CallACS("LiquidCheck"),"Disappear")
+	PAFF A 0 bright
+    PAFF A 0 A_Jump(25,"spawn3")
+    PAFF A 0 A_Jump(127,"Spawn2")
+    TNT1 A 0 A_Playsound("weapons/trace")
+    PAFF A 1 bright
+	TNT1 A 0 A_Jump(127,2)
+	FRTB A 0 A_SpawnItemEx ("Wallsmoke", 0,0,0, 0,0,0, 0, 160, 64) 
+	NULL A 0 A_SpawnItemEx ("PUFFEffectSpawnerSmall", 0,0,0, 0,0,0, 0, 160) 
+    PAFF B 1 bright A_FadeOut(0.1)
+	goto Die
+  Disappear:
+	TNT1 A 1
+	Stop
+  Die:
+	PAFF CD 1 bright A_FadeOut(0.1)
+    stop
+  Spawn:
+  XDeath:
+	TNT1 A 5 A_PlaySound("weapons/flesh")
+    PAFF CD 1 bright A_FadeOut(0.1)
+    stop
+  Spawn3:
+	PAFF A 2 Bright A_SpawnItemEx("ricochetspawner",0,0,0, 0,0,0, 0, SXF_NOCHECKPOSITION|SXF_CLIENTSIDE)
+	PAFF BCD 1 Bright
+    Stop
+  Spawn2:
+    PAFF A 0 bright
+    TNT1 A 0 A_Playsound("weapons/trace")
+    PAFF A 1 bright A_FadeOut(0.1)
+	TNT1 A 0 A_Jump(127,2)
+	FRTB A 0 A_SpawnItemEx ("Wallsmoke", 0,0,0, 0,0,0, 0, 160, 64) 
+	NULL A 0 A_SpawnItemEx ("PUFFEffectSpawnerSmall", 0,0,0, 0,0,0, 0, 160) 
+    PAFF A 1 bright A_FadeOut(0.1)
+    PAFF B 1 bright A_FadeOut(0.1)
+	goto Die
+  }
+}
+
+actor ricochetspawner
+{
++NOCLIP
++NOGRAVITY
+states
+{
+Spawn:
+TNT1 A 0
+Death:
+TNT1 A 0 A_CustomMissile("Ricochet2",0,0,Random(-180,180), 2, Random(-50,50))
+Stop
+}
+}
+
+ACTOR Ricochet2
+{
+Radius 2
+Height 2
+Mass 1
+Speed 45
+Damage 0
+Health 1
+SeeSound ""//"PAFF/ricochet"
+PROJECTILE
++DOOMBOUNCE
+-DONTSPLASH
++CLIENTSIDEONLY
++NOTELEPORT
++THRUACTORS
++PAINLESS
++BLOODLESSIMPACT
+renderstyle add
+States
+{
+Spawn:
+    TNT1 A 0
+        PAFF A 1 Bright A_FadeOut(0.1)
+    TNT1 A 0 A_PlaySound("PUFF/ricochet")
+Spawn2:
+        PAFF A 1 Bright A_FadeOut(0.1)
+        Loop
+Death:
+        TNT1 A 1
+        Stop
+        }
+} 
+
+
+
+ACTOR PUFFEffectSpawner
+{
+	+NOTELEPORT
+  Radius 1
+  Height 1
+  +NOBLOCKMAP
+  +NOTELEPORT
+  +NOGRAVITY
+  +NOCLIP
+  -SOLID
+  -SHOOTABLE
+  +DONTSPLASH
+  RENDERSTYLE NONE
+  States
+  {
+  Spawn:
+    TNT1 A 0
+      TNT1 A 0 Bright A_CustomMissile("PUFFEffect4",0,0,random(-180,180),2,random(-80,80))//60,90
+      TNT1 AA 0 Bright A_CustomMissile("PUFFEffect3",0,0,random(-180,180),2,random(-80,80))//45,90
+      TNT1 AAA 0 Bright A_CustomMissile("PUFFEffect2",0,0,random(-180,180),2,random(0,90))
+      TNT1 AAAA 0 Bright A_CustomMissile("PUFFEffect1",0,0,random(-180,180),2,random(-45,90))
+      Stop
+  }
+}
+
+ACTOR PUFFEffectSpawnerSmall
+{
+	+NOTELEPORT
+  Radius 1
+  Height 1
+  +NOBLOCKMAP
+  +NOTELEPORT
+  +NOGRAVITY
+  +NOCLIP
+  -SOLID
+  -SHOOTABLE
+  +DONTSPLASH
+  RENDERSTYLE NONE
+  States
+  {
+  Spawn:
+    TNT1 A 0
+      TNT1 A 0 Bright A_CustomMissile("PUFFEffect2",0,0,random(-180,180),2,random(0,90))
+      TNT1 AA 0 Bright A_CustomMissile("PUFFEffect1",0,0,random(-180,180),2,random(0,90))
+      Stop
+  }
+}
+
+
+ACTOR PUFFEffectSpawnerBig
+{
+	+NOTELEPORT
+  Radius 1
+  Height 1
+  +NOBLOCKMAP
+  +NOTELEPORT
+  +NOGRAVITY
+  +NOCLIP
+  -SOLID
+  -SHOOTABLE
+  +DONTSPLASH
+  RENDERSTYLE NONE
+  States
+  {
+  Spawn:
+    TNT1 A 0
+      TNT1 A 0 Bright A_CustomMissile("PUFFEffect4",0,0,random(-180,180),2,random(-80,80))//60,90
+      TNT1 AAA 0 Bright A_CustomMissile("PUFFEffect3",0,0,random(-180,180),2,random(-80,80))//45,90
+      TNT1 AAAA 0 Bright A_CustomMissile("PUFFEffect2",0,0,random(-180,180),2,random(0,90))
+      TNT1 AAAAA 0 Bright A_CustomMissile("PUFFEffect1",0,0,random(-180,180),2,random(-45,90))
+      Stop
+  }
+}
+
+
+ACTOR PUFFEffect1
+{
+	+NOTELEPORT
+  Radius 1
+  Height 1
+  Speed 8//2
+  Damage 0
+  Projectile
+  -RANDOMIZE
+  //+NOCLIP
+  +DONTSPLASH
+  RenderStyle Add
+  Alpha 0.85
+  scale 0.4
+  -NOGRAVITY
+  //Gravity 0.5
+  +HEXENBOUNCE
+  States
+  {
+  Spawn:
+    PAFF A 0
+    PAFF A 0 A_Jump(184,1)
+	Stop
+    PAFF AAABBBCCCDDDDDDDDDDDD 1 bright A_FadeOut(0.05)
+    stop
+  }
+}
+
+ACTOR PUFFEffect2 : PUFFEffect1
+{
+  Radius 1
+  Height 1
+  Speed 12//3
+  Damage 0
+  Projectile
+  -RANDOMIZE
+  //+NOCLIP
+  //BounceType Doom //MEHHHH
+  RenderStyle Add
+  Alpha 0.85
+  scale 0.35
+  -NOGRAVITY
+  //Gravity 0.5
+  States
+  {
+  Spawn:
+    PAFF A 0
+    PAFF A 0 A_Jump(184,1)
+	Stop
+    PAFF AAABBBCCCDDDDDDDDDDDD 1 bright A_FadeOut(0.05)
+    stop
+  }
+}
+
+ACTOR PUFFEffect3 : PUFFEffect1
+{
+  Radius 1
+  Height 1
+  Speed 20//5
+  Damage 0
+  Projectile
+  BounceType Hexen
+  BounceFactor 1
+  -RANDOMIZE
+  //+NOCLIP
+  RenderStyle Add
+  Alpha 0.85
+  scale 0.3
+  -NOGRAVITY
+  //Gravity 0.5
+  States
+  {
+  Spawn:
+    PAFF A 0
+    PAFF A 0 A_Jump(184,1)
+	Stop
+    PAFF AAAAAAAAAAAAAAAA 1 bright A_FadeOut(0.05)
+    stop
+  }
+}
+
+ACTOR PUFFEffect4 : PUFFEffect1
+{
+  Radius 1
+  Height 1
+  Speed 16//4
+  Damage 0
+  Projectile
+  BounceType Hexen
+  BounceFactor 1
+  -RANDOMIZE
+  //+NOCLIP
+  RenderStyle Add
+  Alpha 0.85
+  scale 0.25
+  -NOGRAVITY
+  //Gravity 0.5
+  States
+  {
+  Spawn:
+    PAFF A 0
+    PAFF A 0 A_Jump(184,1)
+	Stop
+    PAFF AAAAAAAAAAAAAAAA 1 bright A_FadeOut(0.05)
+    stop
+  }
+}
+
+ACTOR Wallsmoke
+{
+    //Projectile
+    Speed 0
+    vspeed 0
+    -FLOAT
+    +NOCLIP
+    +NOBLOCKMAP
+    -SOLID
+    -SHOOTABLE
+    +NOGRAVITY
+    -Friendly
+   Radius 1
+   Height 1
+    Scale 0.2
+    renderstyle add
+    Alpha 0.8
+	+CLIENTSIDEONLY
+    -Randomize
+    +NOTARGET
+    States
+    {
+      Spawn:
+        P2FF A 0
+      Missile:
+        P2FF A 0 A_FaceTarget
+        P2FF A 0 A_CustomMissile ("Wallsmoke2", 1, 0, random(-8,8), 8, 1) 
+        Stop
+    }
+}
+
+ACTOR Wallsmoke2
+{
+    Projectile
+    +Missile
+   Radius 1
+   Height 1
+    -FLOAT
+    Speed 1
+    vspeed 0
+    YScale 0.6//.3
+    XScale 0.34//.17
+    renderstyle translucent
+    Alpha 0.3//.5
+    -Randomize
+    +NOTARGET
+    +NOCLIP
+    +NOBLOCKMAP
+    -SOLID
+    -SHOOTABLE
+    +RIPPER
+	+CLIENTSIDEONLY
+    States
+    {
+      Spawn:
+        PUF5 ABC 2 ThrustThingZ(0, 1, 0, 0) 
+        PUF5 DEFGH 2 ThrustThingZ(0, 1, 0, 0) 
+      Spawn2:
+        PUF5 IJKK 2 ThrustThingZ(0, 1, 0, 0)
+	  Spawn3:
+	    PUF5 M 0 A_Jump(120,2)
+		PUF5 M 0 A_FadeOut(0.05)
+		Goto Spawn2
+	  Spawn4:
+        PUF5 LLMMMNNN 2 ThrustThingZ(0, 1, 0, 0) 
+	  Spawn5:
+	    PUF5 M 0 A_Jump(120,2)
+		PUF5 M 0 A_FadeOut(0.05)
+		Goto Spawn4
+        PUF5 OOOPPPP 2 ThrustThingZ(0, 1, 0, 0) 
+        Stop
+    }
+}
+
+

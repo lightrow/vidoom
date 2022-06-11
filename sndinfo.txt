@@ -12,6 +12,22 @@ weapons/pistol			famas1
 
 quiet  QUIET
 
+// gore
+$random gore/blech {splat1 splat2 splat3 splat4 splat5 splat6 splat7 splat8 }
+splat1 splat1
+splat2 splat2
+splat3 splat3
+splat4 splat4
+splat5 splat5
+splat6 splat6
+splat7 splat7
+splat8 splat8
+
+$random gore/gibbed {gib1 gib2 gib3}
+gib1 gibbed1
+gib2 gibbed2
+gib3 gibbed3
+
 // health pickups
 misc/L_HP_pickup BOTLBIG
 misc/N_HP_pickup BOTLSML
@@ -112,33 +128,40 @@ $playeralias    player  male    *death      player/death
 player/xdeath death2
 $playeralias    player  male    *xdeath      player/xdeath
 
-$random player/pain100	{ pp11 pp12 pp13 }
-pp11 med1
-pp12 med2
-pp13 med3
-$playeralias    player  male    *pain100    player/pain100
-
-$random player/pain75	{ pp21 pp22 pp23 }
-pp21 high1
-pp22 high2
-pp23 high3
-$playeralias    player  male    *pain75   player/pain75
-$playeralias    player  male    *pain50    player/pain75
-
-/*
-$random player/pain50	{ pp31 pp32 pp33 }
-pp31 high1
-pp32 high2
-pp32 high3
-$playeralias    player  male    *pain50    player/pain50
-*/
-
-
-$random player/pain25	{ pp41 pp42 pp43 }
+$random player/paincrit	{ pp41 pp42 pp43 }
 pp41 crit1
 pp42 crit2
 pp43 crit3
-$playeralias    player  male    *pain25    player/pain25
+
+
+$random player/painmed	{ pp11 pp12 pp13 }
+pp11 med1
+pp12 med2
+pp13 med3
+
+
+$random player/painhigh	{ pp21 pp22 pp23 }
+pp21 high1
+pp22 high2
+pp23 high3
+
+$random player/painlight	{ pp31 pp32 pp33 }
+pp31 light1
+pp32 light2
+pp32 light3
+
+
+
+$playeralias    player  male    *pain100    player/painmed
+$playeralias    player  male    *pain75   player/painmed
+$playeralias    player  male    *pain50    player/painhigh
+$playeralias    player  male    *pain25    player/paincrit
+
+
+
+
+
+
 
 
 $random player/jump	{ pjmp1 pjmp2 }
@@ -161,6 +184,17 @@ plnd21 grunt4
 plnd22 grunt5
 plnd23 grunt6
 $playeralias    player  male    *land    player/land1
+
+
+$playeralias    player  female    *death      player/death
+$playeralias    player  female    *xdeath      player/xdeath
+$playeralias    player  female    *pain100    player/pain100
+$playeralias    player  female    *pain75   player/pain75
+$playeralias    player  female    *pain50    player/pain75
+$playeralias    player  female    *pain25    player/pain25
+$playeralias    player  female    *land    player/land1
+$playeralias    player  female    *grunt    player/land1
+$playeralias    player  female    *jump    player/jump
 
 
 $random Slide	{slide1 slide2 slide3}
@@ -313,6 +347,8 @@ sh1			shlin1
 sh2			shlin2
 sh3			shlin3
 
+weapons/drrrnk drrrnk
+
 $random weapons/pumpfire	{ m901 m902 m903 }
 m901			m901
 m902			m902
@@ -431,6 +467,20 @@ weapons/bfgloop			bfg_fly
 
 weapons/bfgx			plasexpl
 
+// Nade
+weapons/nadeup nadeup
+weapons/nadetick nadetk
+weapons/nadeclick nadeclk
+$random weapons/nadebounce {nadebon1 nadebon2 nadebon3}
+nadebon1 nadebon1
+nadebon2 nadebon2
+nadebon3 nadebon3
+weapons/nadethrow putaway7
+$random weapons/nadeboom {boomsm1 boomsm2 boomsm3}
+boomsm1 nadebm1
+boomsm2 nadebm2
+boomsm3 nadebm3
+
 // Problem: weapons/rocklx needs to be unlimited but
 // is also used for the MAP30 brain explosion.
 // This alias remaps to the original but has its own limit
@@ -452,9 +502,14 @@ $limit weapons/rocklx 0		// and the cyberdemon shoots 3 at once
 
 misc/w_pkup			WEAPUP	// Pickup weapon
 
-misc/teleport			teleport
-
-
+misc/teleport silence
+$random misc/tele {tele1 tele2 tele3}
+tele1 tele1
+tele2 tele2
+tele3 tele3
+$attenuation misc/tele 0.7
+$volume misc/tele 1
+$pitchshift misc/tele 7
 
 
 
@@ -466,7 +521,7 @@ weapons/tracerwhizz3	TRACER3
 
 
 $random weapons/ricochet { rico1 rico2 rico3 rico4  rico5 rico6 rico7 rico8 }
-$limit weapons/ricochet 1
+$limit weapons/ricochet 5
 rico1 rico1
 rico2 rico2
 rico3 rico3
@@ -476,7 +531,42 @@ rico6 rico6
 rico7 rico7
 rico8 rico8
 
+$random weapons/ricohard { rica1 rica3 rica4  rica5 rica6 rica7 rica8 }
+$limit weapons/ricohard 5
+rica1 rica1
+//rica2 rica2
+rica3 rica3
+rica4 rica4
+rica5 rica5
+rica6 rica6
+rica7 rica7
+rica8 rica8
 
+$rolloff weapons/ricohard 400 2720
+
+
+weapons/trace1                  dssrico1
+weapons/trace2                  dssrico2
+weapons/trace3                  dssrico3
+weapons/trace4                  dssrico4
+weapons/trace5                  dssrico5
+weapons/trace6                  dssrico6
+weapons/trace7                  dssrico7
+weapons/trace8                  dssrico8
+weapons/trace9                  dssrico9
+weapons/trace10                 dssric10
+weapons/trace11                 dssric11
+weapons/trace12                 dssric12
+weapons/trace13                 dssric13
+weapons/trace14                 dssric14
+weapons/trace15                 dssric15
+weapons/trace16                 dssric16
+weapons/trace17                 dssric17
+$random weapons/trace           { weapons/trace2 weapons/trace3 weapons/trace4 weapons/trace5 weapons/trace6 weapons/trace10 weapons/trace11 }
+$rolloff weapons/trace 400 2720
+$volume weapons/trace 1
+$random puff/ricochet {weapons/trace1 weapons/trace7 weapons/trace8 weapons/trace9 weapons/trace12 weapons/trace13 weapons/trace14 weapons/trace15 weapons/trace16 weapons/trace17 misc/null misc/null misc/null}
+$rolloff puff/ricochet 364 2384
 
 $random weapons/flesh { flesh1 flesh2 flesh3 flesh4 flesh5 }
 $limit weapons/flesh 1

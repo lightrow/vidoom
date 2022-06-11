@@ -1,10 +1,17 @@
-server int vi_sgswaptoggle = 0; 
-//server int vi_pistolstart = 0; // baked in game difficulty
+server int vi_swapshotguns = 1; 
 server int vi_prettyparticles = 1;
 server int vi_tracers = 1;
 server int vi_crouchduration = 10;
 server int vi_redscreen = 1;
 server int vi_wm_centered = 1;
+server int vi_autoreload = 1;
+server int vi_oldhud = 1;
+server int vi_crouchslide = 1;
+server int vi_glflashes = 1;
+server int vi_pistolstart = 0;
+server int vi_puffparticles = 1;
+server int vi_bloodspot = 1;
+server int vi_gore = 1;
 
 // FOOTSTEPS
 server float fs_volume_mul = 0.06;

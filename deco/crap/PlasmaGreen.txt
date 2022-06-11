@@ -1,0 +1,207 @@
+// boring
+
+ACTOR PlasmaCannon : PlasmaRifle
+{
+	Weapon.BobStyle Alpha
+	Weapon.BobSpeed 2.5
+	Weapon.BobRangeX 0.2
+	Weapon.BobRangeY 0.5
+	Weapon.UpSound "weapons/plzdown"
+	+WEAPON.ALT_USES_BOTH
+	scale 0.8
+   	States
+   	{
+	Spawn:
+		PROT P -1
+		Stop
+	Ready:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("isSliding",1,"SlideStart")
+		PROT a 1 
+		TNT1 a 0 A_WeaponReady
+		Loop
+	SlideStart:
+		PROT A 1 Offset(0,35)
+		PROT A 1 Offset(0,39)
+		PROT A 1 Offset(0,44)
+		PROT A 1 Offset(0,45)
+		goto Sliding
+	Sliding:
+		TNT1 A 0 A_JumpIfInventory("isSliding",1,2)
+		TNT1 A 0 A_Jump(256,"SlideEnd")
+		PROT A 1 Offset(0,45)
+		TNT1 A 0 A_WeaponReady(WRF_ALLOWRELOAD)
+		Loop
+	SlideEnd:
+		PROT A 1 Offset(0,45)
+		PROT A 1 Offset(0,44)
+		PROT A 1 Offset(0,39)
+		PROT A 1 Offset(0,35)
+		goto Ready
+   Deselect: 
+      TNT1 A 0 A_StopSound(7)
+      TNT1 AAAAAAAAAAAAAAAA 0 A_Lower
+      TNT1 AAAAAAA 1 A_Lower
+      Loop
+	Select:
+		PROT A 1 Offset(67, 100)
+		PROT A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PROT A 1 Offset(54, 81)
+		PROT A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PROT a 1 Offset(32, 69)
+		PROT A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PROT a 1 Offset(22, 58)
+		PROT A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PROT a 1 Offset(16, 53)
+		PROT A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PROT a 1 Offset(10, 47)
+		PROT A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PROT A 1 Offset(7, 39)
+		PROT A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		PROT A 1 Offset(3, 36)
+		TNT1 A 0 A_WeaponReady
+		PROT A 1 Offset(2, 34)
+		TNT1 A 0 A_WeaponReady
+		PROT A 2 Offset(1, 33)
+		TNT1 A 0 A_WeaponReady
+		PROT A 2 Offset(0, 32)
+		goto Ready
+	Fire:
+		TNT1 A 0 A_gunflash
+		TNT1 A 0 A_PlaySound("weapons/protfire", CHAN_WEAPON, 1, 0, 0.7)
+		TNT1 A 0 a_firecustommissile ("ProtoBullet",1,1,-1,0,0,0)
+		TNT1 A 0 a_firecustommissile ("ProtoBullet",1,1,-1,0,0,0)
+		TNT1 A 0 A_ZoomFactor(0.998,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
+		TNT1 A 0 A_setpitch(pitch-0.3)
+		PROT C 2 Offset(0,36)
+		TNT1 A 0 a_setpitch(pitch+0.2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		TNT1 A 0 A_ZoomFactor(0.999,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
+		PROT B 2 Offset(0,37)
+		TNT1 A 0 a_setpitch(pitch+0.1)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		TNT1 A 0 A_ZoomFactor(1,ZOOM_NOSCALETURNING)
+		PROT A 1 Offset(0,34)
+		TNT1 A 0 A_gunflash
+		TNT1 A 0 A_PlaySound("weapons/protfire", CHAN_WEAPON, 1, 0, 0.7)
+		TNT1 A 0 a_firecustommissile ("ProtoBullet",-1,1,1,0,0,0)
+		TNT1 A 0 a_firecustommissile ("ProtoBullet",-1,1,1,0,0,0)
+		TNT1 A 0 a_setpitch(pitch-0.3)
+		TNT1 A 0 A_ZoomFactor(0.998,ZOOM_NOSCALETURNING)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		PROT C 2 Offset(0,36)
+		TNT1 A 0 A_ZoomFactor(0.999,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
+		TNT1 A 0 a_setpitch(pitch+0.2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		PROT B 2 Offset(0,37)
+		TNT1 A 0 a_setpitch(pitch+0.1)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		TNT1 A 0 A_ZoomFactor(1,ZOOM_NOSCALETURNING)
+		PROT A 1 Offset(0,34)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		PROT b 1 Offset(0,33) A_Refire
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		PROT b 1 Offset(0,32)
+		goto Ready
+	AltFire:
+		TNT1 A 0 A_PlaySound("weapons/protfire", CHAN_WEAPON, 1, 0, 0.7)
+		TNT1 A 0 a_firecustommissile ("ProtoBullet",1,1,-1,0,0,0)
+		TNT1 A 0 a_firecustommissile ("ProtoBullet",-1,1,1,0,0,0)
+		TNT1 A 0 A_gunflash
+		PROT E 1 Offset(0,42)
+		TNT1 A 0 a_firecustommissile ("ProtoBullet",1,1,-1,0,0,0)
+		TNT1 A 0 a_firecustommissile ("ProtoBullet",-1,1,1,0,0,0)
+		TNT1 A 0 A_PlaySound("weapons/protfire", CHAN_WEAPON, 1, 0, 0.7)
+		PROT E 1 Offset(0,42)
+		TNT1 A 0 a_firecustommissile ("ProtoBullet",1,1,-1,0,0,0)
+		TNT1 A 0 a_firecustommissile ("ProtoBullet",-1,1,1,0,0,0)
+		TNT1 A 0 A_PlaySound("weapons/protfire", CHAN_WEAPON, 1, 0, 0.7)
+		TNT1 A 0 A_ZoomFactor(0.996,ZOOM_INSTANT|ZOOM_NOSCALETURNING)
+		TNT1 A 0 a_setpitch(pitch-0.6)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		PROT d 2 Offset(0,43)
+		TNT1 A 0 a_setpitch(pitch-0.1)
+		TNT1 A 0 A_ZoomFactor(0.997,ZOOM_NOSCALETURNING)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		PROT d 1 Offset(0,42)
+		TNT1 A 0 a_setpitch(pitch+0.2)
+		TNT1 A 0 A_ZoomFactor(0.9985,ZOOM_NOSCALETURNING)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		PROT c 2 Offset(0,38)
+		TNT1 A 0 A_ZoomFactor(1,ZOOM_NOSCALETURNING)
+		TNT1 A 0 a_setpitch(pitch+0.2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		PROT c 1 Offset(0,35)
+		TNT1 A 0 a_setpitch(pitch+0.2)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		PROT b 1 Offset(0,34)
+		TNT1 A 0 a_setpitch(pitch+0.1)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		PROT b 1 Offset(0,33)
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
+		PROT b 1 Offset(0,32)
+		goto Ready
+	Flash:
+		TNT1 A 0 A_AlertMonsters
+		TNT1 A 0 A_FireCustomMissile("SmokeSpawner",0,0,0)
+		TNT1 A 0 A_FireCustomMissile("SmokeSpawner",0,0,0)
+		PROT Y 1 Bright
+		PROT X 1 Bright
+      	Goto LightDone
+
+	}
+}
+
+
+actor ProtoBullet : fastprojectile
+{
+	+notimefreeze
+	projectile
+	+THRUSPECIES
+	species "friendly"
+	missiletype "ProtoTrail"
+	missileheight 8
+	+FORCEXYBILLBOARD
+	+Bloodsplatter
+	+LOOKALLAROUND
+	+EXTREMEDEATH
+	+bright
+	height 8
+	radius 1
+	speed 170
+	damage 6
+	scale 0.7
+	decal ProtDecal
+	states
+	{
+	spawn:
+		// BLPL abcd 2 bright
+		HRBL A 1 A_SpawnItemEx("ProtoTrail")
+		loop
+	death:
+		TNT1 A 0 A_SetScale(0.5)
+		TNT1 A 0 A_PlaySound("weapons/plasmax",6|CHAN_NOPAUSE,1,1,1.5)
+		SPLS ji 2 bright
+		SPLS ijkl 4 bright
+		TNT1 A 10
+		stop
+	}
+}
+
+actor ProtoTrail
+{
+	+NOINTERACTION
+	+clientsideonly
+	Radius 1
+	Height 5
+	Renderstyle add
+	scale 0.60
+	Alpha 0.85
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		HRBL A 1 Bright a_fadeout (0.50)
+		wait
+	}
+}

@@ -36,7 +36,8 @@ actor newradsuit: PowerupGiver replaces radsuit
 	inventory.pickupmessage "hazard suit"
 	Inventory.MaxAmount 0
 	Height 46
-	  Powerup.Type "NewPowerIronFeet"
+	radius 20
+	Powerup.Type "NewPowerIronFeet"
     +INVENTORY.AUTOACTIVATE
 	+INVENTORY.ALWAYSPICKUP
 	States
@@ -95,7 +96,7 @@ states
 	{
 	spawn:
 	TNT1 A 0 //A_PlaySound("misc/invulnerability_loop", 7, 1, 1.2)
-	SPHC abcd 1 bright
+	SPHB abcd 1 bright
 	loop
 	Pickup:
 	TNT1 A 0 A_GiveInventory("actualInvul")
@@ -248,15 +249,20 @@ ACTOR NewCellBig : CellPack replaces CellPack
 
 
 
-ACTOR NewPack : Backpack replaces Backpack
+ACTOR NewPack : CustomInventory replaces Backpack
 {
 	INVENTORY.PICKUPSOUND "misc/backpack_pickup"
 	inventory.pickupmessage "a backpack"
+	scale 0.8
 	States
 	{
 	Spawn:
 	TNT1 A 0
     BPAK A -1
+	stop
+	Pickup:
+	TNT1 A 0 A_GiveInventory("Backpack")
+	TNT1 A 0 A_GiveInventory("NadeAmmo",1)
     stop
 	}
 }
