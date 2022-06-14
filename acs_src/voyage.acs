@@ -16,7 +16,7 @@ script "autoreload" (void)
 }
 script "swapshotguns" (void)
 {
-    SetResultValue(GetCVar("vi_swapshotguns"));
+    SetResultValue(GetCVar("vi_swapshotgunss"));
 }
 
 script "prettyparticles" (void)

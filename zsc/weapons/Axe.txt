@@ -422,7 +422,7 @@ Class AxeSlash : FastProjectile
 default{    Radius 1;
     Height 1;
     Speed 70;
-    DamageFunction (15);
+    DamageFunction (10);
     DamageType "Melee";
     Species "Player";
     Projectile;

@@ -1,4 +1,4 @@
-Class Spas : Shotgun
+Class Spas : SuperShotgun
 {	
 	float recoil;
 
@@ -328,7 +328,7 @@ Class Spas : Shotgun
 Class LoadedShell : Ammo
 {
 	default{
-   Inventory.MaxAmount 8;
+   Inventory.MaxAmount 4;
 }}
 
 

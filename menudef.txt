@@ -70,6 +70,11 @@ OptionValue Gore
 }
 
 
+OptionValue SwapShotguns
+{
+	0.0, "No"
+	1.0, "Yes"
+}
 
 
 
@@ -88,6 +93,7 @@ StaticText " "
 option "Autoreload LAW-12", "vi_autoreload", "Autoreload"
 option "Pistol start", "vi_pistolstart", "PistolStart"
 option "Crouch-slide", "vi_crouchslide", "CrouchSlide"
+option "Swap shotguns", "vi_swapshotgunss", "SwapShotguns"
 StaticText " "
 StaticText "Old HUD was made for 1920x1080 with fullscreen hud scaling set to 4."
 StaticText "Other resolutions or scaling values will probably look wrong, playing around with scaling settings might fix it"
