@@ -9,7 +9,8 @@ Hand-crafted sprite work, curated selection of sfx, emphasis on good feels.
 ![](./screenshots/1.png)
 
 ## [Download from releases (latest .pk3 file)](https://github.com/lightrow/vidoom/releases)
-# 
+
+### [ZDoom thread link](https://forum.zdoom.org/viewtopic.php?f=43&t=66956)
 
 **Note**: There are two hud variants, one with scaled fonts and one with non-scaled. If the scaled variant doesn't look right on your monitor, try changing it to non-scaled in options ( set "Use old HUD" to off ), or play around with hud scaling options
 
