@@ -8,7 +8,7 @@ Hand-crafted sprite work, curated selection of sfx, emphasis on good feels.
 
 ![](./screenshots/1.png)
 
-## [Download from releases (latest .pk3 file)](https://github.com/lightrow/vidoom/releases)
+### [Download from releases (latest .pk3 file)](https://github.com/lightrow/vidoom/releases)
 
 ### [ZDoom thread link](https://forum.zdoom.org/viewtopic.php?f=43&t=66956)
 
