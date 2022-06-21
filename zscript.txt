@@ -1,6 +1,7 @@
 Version "3.8"
 
 #include "zsc/Player.zsc"
+#include "zsc/Gore.zsc"
 #include "zsc/Events.zsc"
 #include "zsc/Tokens.zsc"
 #include "zsc/Items.zsc"

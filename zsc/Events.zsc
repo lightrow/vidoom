@@ -27,83 +27,69 @@ class PistolStartHandler : EventHandler
  }
  
  
-class GibHandler: EventHandler
-{
-	override void WorldThingSpawned(WorldEvent e)
-	{
-		if (!e.Thing) return;
+class GibHandler: EventHandler {
+	override void WorldThingSpawned(WorldEvent e) {
+		if (!CVar.getCvar("vi_gore").getBool()) {
+			return;
+		};
 
-		bool isMonster = e.Thing.bIsMonster;
-
-		if (isMonster && !e.Thing.CountInv("GibChecker"))
-		{
-			e.Thing.A_GiveInventory("GibChecker", 1);
+		if (!e.Thing) {
+			return;
 		}
+
+		if (!e.Thing.bIsMonster) {
+			return;
+		}
+
+		if (e.Thing is "LostSoul") {
+			return;
+		}
+
+		e.Thing.A_GiveInventory("GibChecker", 1);		
 	}
 }
 
 class GibChecker: Inventory 
 {
-	bool gibbing;
-	bool gibsOut;
-	bool hardGib;
-	int HARD_GIB_HEALTH;
+	bool didGib;
+	int gibHealthThreshold;
 
 	override void BeginPlay() {
-		HARD_GIB_HEALTH = -30;
+		gibHealthThreshold = -35;
 	}
 
 	override void Tick() {
-		if (!Owner || gibsOut || !CVar.getCvar("vi_gore").getBool()) {
+		if (!Owner || didGib || !gibHealthThreshold) {
 			return;
 		}
-		
-		if (Owner is "LostSoul"){
-			return;
-		}
-		
-		if (!hardGib && Owner.GetGibHealth() < HARD_GIB_HEALTH){
-			hardGib = true;
-		}
-		
-		bool isExploding = Owner is "PainElemental" || Owner is "CyberDemon";
-		
-		if (HARD_GIB_HEALTH != 0 && isExploding) {
-			HARD_GIB_HEALTH = 0;
-			hardGib = true;
-			// meat pinata elementals
-		}
-		
-		if (gibbing && !gibsOut){
-			gibsOut = true;
-			if (Owner.FindState('XDeath', true) != NULL && !Owner.InStateSequence(Owner.CurState, Owner.ResolveState('XDeath'))){
+
+		bool isGibbyMonster = Owner is "PainElemental" || Owner is "CyberDemon";
+		bool isInXDeathState = Owner.FindState('XDeath', true) != NULL && Owner.InStateSequence(Owner.CurState, Owner.ResolveState('XDeath'));
+		bool isGibbed = isInXDeathState || Owner.Health < gibHealthThreshold || (Owner.Health <= 0 && isGibbyMonster);
+
+		if (!didGib && isGibbed) {
+			Owner.bSpriteFlip = RandomPick(false, true);
+
+			didGib = true;
+
+			// force XDeath state (is there a way to just override Owner.GibHealth?)
+			if (!isInXDeathState && Owner.FindState('XDeath', true) != NULL) {
 				Owner.setstatelabel("XDeath");
 			}
-			if (Owner is "Cacodemon"){
+
+			if (Owner is "Cacodemon") {
 				Owner.A_SpawnItemEx("BlueGoreController",0,0,0,Owner.VelX,Owner.VelY,Owner.VelZ,Owner.Angle,SXF_ABSOLUTEANGLE|SXF_ABSOLUTEPOSITION|SXF_ABSOLUTEVELOCITY);
-			} else 
-			if (Owner is "HellKnight" || Owner is "BaronOfHell"){
+			} else if (Owner is "HellKnight" || Owner is "BaronOfHell") {
 				Owner.A_SpawnItemEx("GreenGoreController",0,0,0,Owner.VelX,Owner.VelY,Owner.VelZ,Owner.Angle,SXF_ABSOLUTEANGLE|SXF_ABSOLUTEPOSITION|SXF_ABSOLUTEVELOCITY);
-			} else if (isExploding) {
+			} else if (isGibbyMonster) {
 				Owner.A_SpawnItemEx("PainElementalGoreController",0,0,0,Owner.VelX,Owner.VelY,Owner.VelZ,Owner.Angle,SXF_ABSOLUTEANGLE|SXF_ABSOLUTEPOSITION|SXF_ABSOLUTEVELOCITY);
 			} else if (Owner.Mass > 100) {
 				Owner.A_SpawnItemEx("BigGoreController",0,0,0,Owner.VelX,Owner.VelY,Owner.VelZ,Owner.Angle,SXF_ABSOLUTEANGLE|SXF_ABSOLUTEPOSITION|SXF_ABSOLUTEVELOCITY);
 			} else  {
 				Owner.A_SpawnItemEx("GoreController",0,0,0,Owner.VelX,Owner.VelY,Owner.VelZ,Owner.Angle,SXF_ABSOLUTEANGLE|SXF_ABSOLUTEPOSITION|SXF_ABSOLUTEVELOCITY);
-			}	
-		}
-		
-		if (gibbing) {
+			}
+
 			return;
 		}
-		
-		if ((hardGib && Owner.Health <= HARD_GIB_HEALTH ) || Owner.Health < Owner.GetGibHealth() || (Owner.FindState('XDeath', true) != NULL && Owner.InStateSequence(Owner.CurState, Owner.ResolveState('XDeath')))) {
-			Owner.bSpriteFlip = RandomPick(false, true);
-			gibbing = true;
-		}
-		
-		
-		
-
 	}
 }

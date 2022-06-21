@@ -4,8 +4,6 @@
 #include "deco/Items.txt"
 #include "deco/Spawner.txt"
 #include "deco/Liquids.txt"
-#include "deco/Gore.txt"
-//#include "deco/Player/Nade.txt"
 
 
 

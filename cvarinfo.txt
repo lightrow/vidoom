@@ -12,6 +12,7 @@ server int vi_pistolstart = 0;
 server int vi_puffparticles = 1;
 server int vi_bloodspot = 1;
 server int vi_gore = 1;
+server int vi_maxgibs = 1500;
 
 // FOOTSTEPS
 server float fs_volume_mul = 0.06;
