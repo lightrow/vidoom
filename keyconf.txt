@@ -12,6 +12,9 @@ setslot 6 PlasmaCannon
 setslot 7 PlasmaHowitzer
 
 
+
 addkeysection "Voyage Infernal" "vi"
 addmenukey "Throw grenade" "+user1"
+addmenukey "Quick Sonic blast" "+user2"
 defaultbind "g" "+user1"
+defaultbind "z" "+user2"

@@ -31,3 +31,12 @@ class isSprinting: Inventory
 		Inventory.maxamount 1;
 	}
 }
+
+
+class isQuickMelee: Inventory
+{
+	default
+	{
+		Inventory.maxamount 1;
+	}
+}

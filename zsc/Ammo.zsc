@@ -1,0 +1,90 @@
+
+Class SonicAmmo: Ammo 
+{
+	Default {
+		inventory.pickupmessage "you feel a sense of vibration";
+		INVENTORY.PICKUPSOUND "misc/sonic_pickup";
+		Inventory.Amount 1;
+		Inventory.MaxAmount 10;
+		Ammo.BackpackAmount 0;
+		Ammo.BackpackMaxAmount 0;
+		Inventory.Icon "VIBRA0";
+	}
+
+	States
+	{
+		Spawn:
+			TNT1 A 0;
+			VIBR A -1;
+			stop;
+	}
+
+}
+
+Class NewShell : Shell replaces Shell
+{
+	Default {
+		INVENTORY.PICKUPSOUND "misc/shell_pickup";
+		inventory.pickupmessage "some shells";
+		scale 0.5;
+	}
+	
+	States
+	{
+		Spawn:
+			SHEB A -1;
+			stop;
+	}
+
+}
+
+Class NewShellBox : ShellBox replaces ShellBox
+{
+	Default {
+		INVENTORY.PICKUPSOUND "misc/shellbox_pickup";
+		inventory.pickupmessage "a box of shells";
+		scale 0.55;
+	}
+
+	States
+	{
+		Spawn:
+			TNT1 A 0;
+			SH64 A -1;
+			stop;
+	}
+}
+
+
+Class NewCell : Cell replaces Cell
+{
+	Default {
+		INVENTORY.PICKUPSOUND "misc/cell_pickup";
+		inventory.pickupmessage "a battery";
+		scale 0.4;
+	}
+	States
+	{
+		Spawn:
+		CELS A -1;
+		stop;
+  }
+}
+
+Class NewCellBig : CellPack replaces CellPack
+{
+	Default {
+		INVENTORY.PICKUPSOUND "misc/bulkcell_pickup";
+		inventory.pickupmessage "a bigger battery";
+		scale 0.5;
+	}
+
+	States
+	{
+		Spawn:
+		TNT1 A 0;
+		CELB A -1;
+		stop;
+	}
+}
+

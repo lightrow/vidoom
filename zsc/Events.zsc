@@ -1,5 +1,74 @@
+class Tachometer : EventHandler 
+{	
+
+	bool hasMachreaper;
+	int ammo;
+	int speed;
+	
+	void doStuff() {
+		let player = players[consoleplayer];
+		let mo = player.mo;
+		hasMachreaper = mo.CheckInventory("Machreaper", 1);
+		int newSpeed = sqrt(mo.vel.x * mo.vel.x + mo.vel.y * mo.vel.y + mo.vel.z * mo.vel.z);
+		if (newSpeed != speed) {
+			speed += (newSpeed - speed) / 2;
+		}
+		ammo = mo.CountInv("SonicAmmo");
+	}
+	
+	// PLAY scope : collect data
+	override void WorldTick() {	
+		doStuff();
+		Super.WorldTick();
+	}
+
+	// UI Scope: you cannot alter data here
+	override void renderOverlay(RenderEvent e) {	
+		if (!hasMachreaper) {
+			return;
+		}
+		int width = Screen.GetWidth();
+		int height = Screen.GetHeight();
+		int viewportWidth = 320;
+		int viewportHeight = 200;
+		
+		int offsetX = -viewportWidth/4;
+		
+		int tachoWidth = 40;
+		int tachoHeight = 17;
+		
+		int tachoArrowWidth = 14;
+		int tachoArrowHeight = 1;
+		
+		int x1 = viewportWidth/2 + offsetX;
+		int y1 = viewportHeight;
+		
+		string image;
+		image.appendFormat("%s%d", "ispeed", ammo);
+		
+		TextureID tacho = TexMan.CheckForTexture (image, TexMan.Type_Any);
+		TextureID arrow = TexMan.CheckForTexture ("tacharr", TexMan.Type_Any);
+		
+		Screen.DrawTexture(tacho, false, x1 - tachoWidth/2, y1 - tachoHeight,
+			DTA_KeepRatio, true, DTA_VirtualWidth, viewportWidth, DTA_VirtualHeight, viewportHeight);
+				
+	
+
+		double speedDegrees = 180 - speed * 8;
+		if (speedDegrees < 10) {
+			speedDegrees = 10;
+		}
+		
+
+		Screen.DrawTexture(arrow, false, x1 - 3, y1 - tachoArrowHeight,
+			DTA_KeepRatio, true, DTA_VirtualWidth, viewportWidth, DTA_VirtualHeight, viewportHeight, DTA_Rotate, speedDegrees, DTA_Alpha, 0.7);
+
+	}
+}
+
 class PistolStartHandler : EventHandler
  {
+	
    override void PlayerEntered (PlayerEvent e)
    {
 		PlayerInfo player = players[e.PlayerNumber];
@@ -13,6 +82,7 @@ class PistolStartHandler : EventHandler
 
 		if (G_SkillPropertyInt(SKILLP_ACSReturn) == 666 || CVar.GetCvar("vi_pistolstart").getBool()) {
 			player.mo.ClearInventory();
+			player.mo.A_TakeInventory("Machreaper");
 			PlayerPawn(player.mo).ACS_NamedExecute("ResetHealth");
 			player.mo.GiveInventory("Rage", 1);
 			player.mo.GiveInventory("FireAxe", 1);

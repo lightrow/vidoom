@@ -72,6 +72,56 @@ pointlight playerlight
 }
 
 
+
+flickerlight FDMachreaperGlow1
+{
+    color 0.0 0.9 0.6
+    size 60
+    secondarySize 80
+    chance 0.5
+}
+
+flickerlight FDMachreaperGlow2
+{
+    color 0.0 0.6 0.5
+    size 80
+    secondarySize 100
+    chance 0.5
+}
+
+flickerlight FDMachreaperGlow3
+{
+    color 0.0 0.4 0.3
+    size 100
+    secondarySize 120
+    chance 0.5
+}
+
+flickerlight FDMachreaperGlow4
+{
+    color 0.0 0.2 0.15
+    size 120
+    secondarySize 140
+    chance 0.5
+}
+
+flickerlight FDMachreaperShockwaveGlow1
+{
+    color 0.0 0.8 0.7
+    size 400
+    secondarySize 450
+    chance 0.5
+}
+
+flickerlight FDMachreaperShockwaveGlow2
+{
+    color 0.0 0.4 0.3
+    size 200
+    secondarySize 250
+    chance 0.5
+}
+
+
 brightmap sprite CELBA0
 {
 	map "brightmaps/CELBA0.png"
@@ -83,7 +133,71 @@ brightmap sprite CELSA0
 	map "brightmaps/CELSA0.png"
 }
 
+brightmap sprite XBULA0
+{
+   map "brightmaps/XBULA0"
+}
 
+brightmap sprite XSSGA0
+{
+   map "brightmaps/XSSGA0"
+}
+brightmap sprite XSSGF0
+{
+   map "brightmaps/XSSGF0"
+}
+brightmap sprite XSSGG0
+{
+   map "brightmaps/XSSGG0"
+}
+brightmap sprite XSSGH0
+{
+   map "brightmaps/XSSGH0"
+}
+brightmap sprite XSSGL0
+{
+   map "brightmaps/XSSGL0"
+}
+brightmap sprite XSSGM0
+{
+   map "brightmaps/XSSGM0"
+}
+brightmap sprite XSSGN0
+{
+   map "brightmaps/XSSGN0"
+}
+brightmap sprite XSSGR0
+{
+   map "brightmaps/XSSGR0"
+}
+brightmap sprite XSSGS0
+{
+   map "brightmaps/XSSGS0"
+}
+brightmap sprite XSSGT0
+{
+   map "brightmaps/XSSGT0"
+}
+brightmap sprite XSSGU0
+{
+   map "brightmaps/XSSGU0"
+}
+brightmap sprite XSSGV0
+{
+   map "brightmaps/XSSGV0"
+}
+brightmap sprite XSSGW0
+{
+   map "brightmaps/XSSGW0"
+}
+brightmap sprite XSSGX0
+{
+   map "brightmaps/XSSGX0"
+}
+brightmap sprite XSSGZ0
+{
+   map "brightmaps/XSSGZ0"
+}
 pointlight cellsmall
 {
 	color 0 1 0.2

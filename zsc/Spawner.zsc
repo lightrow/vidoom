@@ -1,0 +1,357 @@
+Class WeaponPickup : CustomInventory 
+{
+	Default {
+  +INVENTORY.AUTOACTIVATE;
+  +INVENTORY.NEVERRESPAWN;
+  +FORCEXYBILLBOARD;
+  Radius 16;
+  Height 14;
+  Inventory.Amount 0;
+  Inventory.PickupMessage "";
+  Inventory.PickupSound "misc/w_pkup";
+	}
+
+  States
+  {
+  Spawn:
+    CLIP A -1;
+    Stop;
+  Pickup:
+    TNT1 A 0 A_GiveInventory ("HealthBonus", 1);
+    TNT1 A 0 A_Log("borrowed from finaldoomer");
+    Stop;
+  Nope:
+    TNT1 A 0;
+    Fail;
+  }
+}
+
+
+Class PistolPickup : WeaponPickup
+{
+	Default {
+		Tag "Pistol Pickup";
+		inventory.pickupmessage "a LAW-12";
+		scale 0.8;
+	}
+
+  States
+  {
+  Spawn:
+	TNT1 A 0 ;
+	DEAG p -1;
+	Stop;
+  Pickup:
+	TNT1 A 0;
+  	TNT1 A 0 A_JumpifInventory("HandCannon",1,"JustAmmo");
+	TNT1 A 0 A_GiveInventory("HandCannon",1);
+	Stop;
+  JustAmmo:
+	TNT1 A 0 A_GiveInventory("Clip", 10);
+	Stop;
+}
+}
+
+
+Class LAWPickup : WeaponPickup
+{
+	Default {
+		Tag "Shotgun Pickup";
+		inventory.pickupmessage "a LAW-12";
+		scale 0.8;
+	}
+
+  States
+  {
+  Spawn:
+	TNT1 A 0 ;
+	SPAS p -1;
+	Stop;
+  Pickup:
+	TNT1 A 0;
+  	TNT1 A 0 A_JumpifInventory("Spas",1,"JustAmmo");
+	TNT1 A 0 A_GiveInventory("Spas",1);
+	Stop;
+  JustAmmo:
+	TNT1 A 0 A_GiveInventory("Shell", 4);
+	Stop;
+}
+}
+
+
+Class TTNPickup : WeaponPickup
+{
+	Default {
+		Tag "Super Shotgun Pickup";
+		inventory.pickupmessage "a TTN Colt 1878";
+	}
+
+  States
+  {
+  Spawn:
+	DBRL p -1;
+	Stop;
+  Pickup:
+	TNT1 A 0;
+	TNT1 A 0 A_JumpifInventory("DoubleRifle",1,"JustAmmo");
+	TNT1 A 0 A_GiveInventory("DoubleRifle",1);
+	Stop;
+  JustAmmo:
+	TNT1 A 0 A_GiveInventory("Shell", 4);
+	Stop;
+	}
+}
+
+
+Class BerserkPickup: WeaponPickup replaces Berserk {
+	States {
+		Spawn:
+			TNT1 A 1;
+			TNT1 A 0 {
+				PlayerInfo p = players[consoleplayer];
+				bool hasMach = p.mo.CheckInventory("Machreaper",1);
+				
+				if (!hasMach) {
+					return ResolveState("MachSpawn");
+				}
+				
+				return ResolveState("RageSpawn");
+			}
+			stop;
+		MachSpawn:
+			TNT1 A 0 A_SpawnItemEx("MachreaperPickup");
+			stop;
+		RageSpawn:
+			TNT1 A 0 A_SpawnItemEx("RageSphere");
+			stop;
+	}
+}
+
+Class ChainsawPickup: BerserkPickup replaces Chainsaw
+{
+
+}
+
+Class MachreaperPickup : WeaponPickup
+{
+	Default {
+  		Tag "Machreaper Pickup";
+		inventory.pickupmessage "a Machreaper";
+	}
+
+  States
+  {
+  Spawn:
+	XSSG Z -1;
+	Stop;
+  Pickup:
+	TNT1 A 0;
+	TNT1 A 0 A_JumpifInventory("Machreaper",1,"JustAmmo");
+	TNT1 A 0 A_GiveInventory("Machreaper",1);
+	Stop;
+  JustAmmo:
+	TNT1 A 0 A_GiveInventory("SonicAmmo", 10);
+	Stop;
+	}
+}
+
+Class SSGPickup : WeaponPickup replaces SuperShotgun
+{
+  States
+  {
+  Spawn:
+	TNT1 A 1;
+	TNT1 A 0 {
+		PlayerInfo p = players[consoleplayer];
+		bool hasTTN = p.mo.CheckInventory("DoubleRifle",1);
+		bool hasLAW = p.mo.CheckInventory("Spas",1);
+		
+		if (!hasLAW) {
+			return ResolveState("LAWSpawn");
+		}
+		return ResolveState("TTNSpawn");
+	}
+	stop;
+  Drop:
+    TNT1 A 1;
+	TNT1 A 0 {
+		PlayerInfo p = players[consoleplayer];
+		bool hasTTN = p.mo.CheckInventory("DoubleRifle",1);
+		
+		if (hasTTN) {
+			return ResolveState("AmmoSpawn");
+		}
+		
+		return ResolveState("TTNSpawn");
+	}
+    stop;
+  AmmoSpawn:
+	TNT1 A 0 A_SpawnItemEx("Shell");
+	stop;
+  LAWSpawn:
+	TNT1 A 0 A_SpawnItemEx("LAWPickup");
+	Stop;
+  TTNSpawn:
+	TNT1 A 0 A_SpawnItemEx("TTNPickup");
+	Stop;
+	}
+}
+
+Class ShotgunPickup: SSGPickup replaces Shotgun {}
+
+
+Class ChaingunPickup : WeaponPickup replaces Chaingun
+{
+	Default {
+		Tag "Chaingun Pickup";
+		inventory.pickupmessage "an FN Minimi";
+		scale 0.65;
+	}
+  States
+  {
+  Spawn:
+	MNMP A -1;
+	Stop;
+  Pickup:
+	TNT1 A 0;
+	TNT1 A 0 A_JumpifInventory("Minimi",1,"JustAmmo");
+	TNT1 A 0 A_GiveInventory("Minimi",1);
+	Stop;
+  JustAmmo:
+	TNT1 A 0 A_GiveInventory("Clip", 10);
+	Stop;
+	}
+}
+
+
+Class BazookaPickup : WeaponPickup replaces RocketLauncher
+{
+	Default {
+		Tag "Bazooka Pickup";
+		inventory.pickupmessage "an M202-T";
+		scale 0.6;
+	}
+	States
+	{
+	Spawn:
+		RLAP a -1;
+		stop;
+	Pickup:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpifInventory("Bazooka",1,"JustAmmo");
+		TNT1 A 0 A_GiveInventory("Bazooka",1);
+		TNT1 A 0 A_GiveInventory("RocketAmmo",4);
+		Stop;
+	JustAmmo:
+		TNT1 A 0 A_GiveInventory("RocketAmmo", 4);
+		Stop;
+	}
+}
+
+
+Class XF20Pickup : WeaponPickup replaces PlasmaRifle
+{
+	Default {
+		Tag "XF20 Pickup";
+		scale 0.8;
+  		inventory.pickupmessage "an XF-20";
+	}
+
+  States
+  {
+  Spawn:
+  
+	PZDP A -1;
+	Stop;
+  Pickup:
+	TNT1 A 0;
+	TNT1 A 0 A_JumpifInventory("PlasmaCannon",1,"JustAmmo");
+	TNT1 A 0 A_GiveInventory("PlasmaCannon",1);
+	Stop;
+  JustAmmo:
+	TNT1 A 0 A_GiveInventory("Cell", 20);
+	Stop;
+	}
+}
+
+
+Class BFGPickup : WeaponPickup replaces BFG9000
+{
+	Default {
+		Tag "BFG Pickup";
+		inventory.pickupmessage "an XF-900";
+	}
+
+  States
+  {
+  Spawn:
+	BFGP A -1;
+	Stop;
+  Pickup:
+	TNT1 A 0;
+	TNT1 A 0 A_JumpifInventory("PlasmaHowitzer",1,"JustAmmo");
+	TNT1 A 0 A_GiveInventory("PlasmaHowitzer",1);
+	Stop;
+  JustAmmo:
+	TNT1 A 0 A_GiveInventory("Cell", 50);
+	Stop;
+	}
+}
+
+Class MegaspherePickup: Actor replaces Megasphere {
+	States
+	{
+	Spawn:
+		TNT1 A 1 ;
+		TNT1 A 0 A_SpawnItemEx("NewMegasphere");
+		stop;
+	}
+}
+Class SoulspherePickup: Actor replaces Soulsphere {
+	States
+	{
+	Spawn:
+		TNT1 A 1 ;
+		TNT1 A 0 A_SpawnItemEx("NewSoulsphere");
+		stop;
+	}
+}
+
+Class HealthBonusPickup: Actor replaces HealthBonus {
+	States
+	{
+	Spawn:
+		TNT1 A 1 ;
+		TNT1 A 0 A_SpawnItemEx("healthvial");
+		stop;
+	}
+}
+
+Class StimpackPickup: Actor replaces Stimpack {
+	States
+	{
+	Spawn:
+		TNT1 A 1 ;
+		TNT1 A 0 A_SpawnItemEx("MediumHealth");
+		stop;
+	}
+}
+
+Class MedikitPickup: Actor replaces Medikit {
+	States
+	{
+	Spawn:
+		TNT1 A 1 ;
+		TNT1 A 0 A_SpawnItemEx("BigHealth");
+		stop;
+	}
+}
+
+
+
+
+
+
+
+
+

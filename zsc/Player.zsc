@@ -16,6 +16,8 @@ Class VoyageGal : DoomPlayer replaces DoomPlayer
 	
 	int overhealTick;
 	
+	double sonicAccumulator;
+	
 	bool playRelief;
 	
 	//Weapon menu
@@ -50,7 +52,7 @@ Class VoyageGal : DoomPlayer replaces DoomPlayer
 	Player.StartItem "Clip", 35;
 	Player.StartItem "PistolLoad", 10;
 	Player.StartItem "NadeAmmo", 2;
-	Player.WeaponSlot 1, "FireAxe";
+	Player.WeaponSlot 1, "Machreaper", "FireAxe";
 	Player.WeaponSlot 2, "HandCannon";
 	Player.WeaponSlot 3, "Spas", "DoubleRifle"; 
 	Player.WeaponSlot 4, "Minimi";
@@ -96,6 +98,7 @@ Class VoyageGal : DoomPlayer replaces DoomPlayer
 		CROUCHDURATION = GetCvar("vi_crouchduration");
 		lastHealth = health;
 		tickCount = 0;
+		sonicAccumulator = 0;
 		WeaponMenuMaxCD = 60;
 		WeaponMenuMaxCDCancelable = 30;
 		redscreenTick = 0;
@@ -120,11 +123,14 @@ Class VoyageGal : DoomPlayer replaces DoomPlayer
 		checkFootsteps();
 		checkSlide();
 		checkRage();
+		checkSonic();
 		checkHeartBeat();	
 		checkRedScreen();
 		checkOverheal();
-		checkSwitchWeapon();
+		// was used for old hud
+		//checkSwitchWeapon();
 		checkNade();
+		checkMelee();
 		Super.Tick();
 	}
 	
@@ -134,7 +140,7 @@ Class VoyageGal : DoomPlayer replaces DoomPlayer
 			if (!player.readyweapon){
 				return;
 			}
-			if (countinv("NadeAmmo")<1){
+			if (countinv("NadeAmmo") < 1){
 				return;
 			}
 			string curWeapon = player.readyweapon.getClassName();
@@ -145,6 +151,33 @@ Class VoyageGal : DoomPlayer replaces DoomPlayer
 			A_SelectWeapon("Nade");
 		}
 	}
+	
+	void checkMelee() {
+		if (player.cmd.buttons & BT_USER2) {
+			if (!player.readyweapon){
+				return;
+			}
+			
+			bool hasMachreaper = CheckInventory("Machreaper",1);
+			bool hasMachreaperAmmo = CheckInventory("SonicAmmo",1);
+			string meleeWeapon = "FireAxe";
+			
+			if (hasMachreaper && hasMachreaperAmmo) {
+				meleeWeapon = "Machreaper";
+			}
+			
+			string curWeapon = player.readyweapon.getClassName();
+			if (curWeapon != meleeWeapon && curWeapon != "Machreaper"){
+				LastWeapon = curWeapon;
+			}
+			
+			A_GiveInventory("isQuickMelee",1);
+			A_SelectWeapon(meleeWeapon);
+		}  else {
+			A_TakeInventory("isQuickMelee");
+		}
+	}
+
 	
 	void checkSwitchWeapon() {
 		UserCmd cmd = player.cmd;
@@ -248,6 +281,28 @@ Class VoyageGal : DoomPlayer replaces DoomPlayer
 		double rage = countinv("Rage");
 		double damageReductionFactor = min((rage / 20), 0.5);
 		damagefactor = 1.2 - damageReductionFactor;
+	}
+	
+	void checkSonic(){
+		if (!CheckInventory("Machreaper",1)) {
+			return;
+		}
+		
+		double playerSpeed = sqrt(self.vel.x * self.vel.x + self.vel.y * self.vel.y + self.vel.z * self.vel.z);
+		double diffSpeed = (playerSpeed - 8) / 20;
+		
+		
+		if (diffSpeed <= 0) {
+			return;
+		}
+				
+		sonicAccumulator += diffSpeed;
+		
+		if (sonicAccumulator >= 60) {
+			sonicAccumulator = 0;
+			A_GiveInventory("SonicAmmo", 1);
+			A_PlaySound("weapons/machload",2);
+		}
 	}
 	
 	void checkHeartBeat()

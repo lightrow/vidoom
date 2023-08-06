@@ -152,40 +152,6 @@ ACTOR NewClipBox : ClipBox replaces ClipBox
 	}
 }
 
-Actor NewShell : Shell replaces Shell
-{
-	//Inventory.Amount 2
-	inventory.pickupmessage "some shells"
-	INVENTORY.PICKUPSOUND "misc/shell_pickup"
-	scale 0.5
-		States
-	{
-	Spawn:
-    TNT1 A 0
-	SHEB A -1
-    stop
-	}
-
-}
-
-ACTOR NewShellBox : ShellBox replaces ShellBox
-{
-	INVENTORY.PICKUPSOUND "misc/shellbox_pickup"
-	inventory.pickupmessage "a box of shells"
-	//Inventory.Amount 16
-	scale 0.55
-	States
-	{
-	Spawn:
-    TNT1 A 0
-	SH64 A -1
-    stop
-	
-	64Spawn:
-	SBOX A -1
-    stop
-	}
-}
 
 Actor NewRocketAmmo : RocketAmmo replaces RocketAmmo
 {
@@ -215,36 +181,6 @@ ACTOR NewRocketBox : RocketBox replaces RocketBox
 	ROCK R -1
     stop
   }
-}
-
-
-
-
-ACTOR NewCell : Cell replaces Cell
-{
-	INVENTORY.PICKUPSOUND "misc/cell_pickup"
-	inventory.pickupmessage "a battery"
-	scale 0.4
-	States
-	{
-	Spawn:
-	CELS A -1
-	stop
-  }
-}
-
-ACTOR NewCellBig : CellPack replaces CellPack
-{
-	INVENTORY.PICKUPSOUND "misc/bulkcell_pickup"
-	inventory.pickupmessage "a bigger battery"
-	scale 0.5
-	States
-	{
-	Spawn:
-	TNT1 A 0
-    CELB A -1
-    stop
-	}
 }
 
 

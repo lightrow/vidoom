@@ -2,7 +2,7 @@
 #include "deco/AeniPuffs.txt"
 #include "deco/Particles.txt"
 #include "deco/Items.txt"
-#include "deco/Spawner.txt"
+//#include "deco/Spawner.txt"
 #include "deco/Liquids.txt"
 
 

@@ -45,6 +45,9 @@ misc/ammo_pickup  AMMOUP
 // 2 shell
 misc/shell_pickup SHELLUP
 
+// sonic ammo
+misc/sonic_pickup VIBRPK
+
 // shell box
 misc/shellbox_pickup SHLBOXUP
 
@@ -386,6 +389,14 @@ ins2			INSERT2
 ins3			INSERT3
 
 weapons/sshotl INSERT
+
+// Machreaper
+
+weapons/machfire						XSSGFIRE
+$limit weapons/machfire				0
+weapons/machcharge						XSSGCHAR
+weapons/machup						XSSGUP
+weapons/machload						XSSGLOAD
 
 
 // FAMAS

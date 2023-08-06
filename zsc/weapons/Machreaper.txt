@@ -1,0 +1,977 @@
+ Class Machreaper : Chainsaw
+{
+	default {
+		inventory.pickupmessage "a lost Machreaper";
+		Weapon.AmmoType "SonicAmmo";
+		Weapon.AmmoUse 1;
+		Weapon.AmmoGive 1;
+		
+	    Weapon.UpSound "";
+		Weapon.ReadySound "";
+
+		Weapon.BobStyle "Alpha";
+		Weapon.BobSpeed 3.12;
+		Weapon.BobRangeX 0.6; 
+		Weapon.BobRangeY 0.5;
+
+		Weapon.SlotNumber 0;
+		tag "Machreaper";
+		+INVENTORY.UNDROPPABLE;
+		+WEAPON.NO_AUTO_SWITCH;
+
+	}
+	
+	float btsxmachreaperrange;
+	bool wasQuickMelee;
+
+	override void BeginPlay() {	
+		btsxmachreaperrange = 96;
+		Super.BeginPlay();
+	}
+
+  States
+  {
+  Spawn:
+	XSSG Z -1;
+	Stop;
+
+  Ready:
+    XSSG A 1 {
+		A_WeaponReady();
+		if (CheckInventory("isQuickMelee",1)) {
+			return ResolveState("Fire");
+		}
+		return ResolveState(null);
+	}
+    Loop;
+	
+  NoLongerEmpty:
+    XSSG E 1 A_SetPitch (pitch - (0.75 ));
+    XSSG E 1 A_SetPitch (pitch - (3.0 ));
+    Goto GonnaReload;
+	
+  Select:
+  	TNT1 A 0 {
+		if (CheckInventory("isQuickMelee",1)){
+			invoker.wasQuickMelee = true;
+		}
+	}
+	TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+	TNT1 A 0 A_GiveInventory("HasSwitchedWeapon",1);
+	TNT1 A 0 A_PlaySound("weapons/machup",7);
+	XSSG P 1 Offset(0, 120);
+	TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+    XSSG P 1 Offset(0, 110); 
+	TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+    XSSG Q 1 Offset(0, 100);
+	TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+    XSSG Q 1 Offset(0, 90);
+	TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+    XSSG R 1 Offset(0, 80);
+	TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+    XSSG R 1 Offset(0, 75);
+	TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+    XSSG W 1 Offset(0, 60);
+	TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+    XSSG W 1 Offset(0, 55);
+	TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+    XSSG X 1 Offset(0, 45);
+	TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+    XSSG X 1 Offset(0, 40);
+	TNT1 A 0 {
+		if (invoker.wasQuickMelee){
+			return ResolveState("Fire");
+		}
+		return ResolveState(null);
+	}
+	TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+    XSSG A 2 Offset(0, 34);
+	TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+    XSSG A 2 Offset(0, 33);
+	TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+    XSSG A 2 Offset(0, 32);	
+    Goto Ready;
+   Deselect: 
+      TNT1 AAAAAAAAAAAAAAAA 0 A_Lower;
+      TNT1 AAAAAAA 1 A_Lower;
+      Loop;
+	
+  Dryfire:
+    XSSG A 6 A_PlaySound("weapons/akclick", 5, 1, 0, 1.25);
+    Goto Ready;
+	
+  Fire:
+    TNT1 A 0 A_JumpIfInventory ("SonicAmmo", 1, 1);
+	Goto Dryfire;
+    TNT1 A 0 A_AlertMonsters;
+    TNT1 A 0 A_GunFlash;
+    TNT1 A 0 A_PlaySound("weapons/machfire", CHAN_WEAPON, 1, 0, 1);
+    TNT1 A 0 A_PlaySound("weapons/machfire", 7, 0.05, 0, 0.20);
+    TNT1 A 0 A_FireCustomMissile ("FDBTSXSuperShotgunProjectile", 0, 0);
+    TNT1 A 0 A_TakeInventory ("SonicAmmo", 1, TIF_NOTAKEINFINITE);
+	Goto THECRIMEZONEPLSNOLOOK;
+  ContinueAnimation:
+	TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-5,-5);
+	TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-5,-5);
+	TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,-5,-5);
+	TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,5,-5);
+	TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,5,-5);
+	TNT1 A 0 A_FireProjectile("SmokeSpawner",0,0,5,-5);
+	XSSG B 1 Bright Offset(0, 56) A_SetPitch (pitch - (3.0 ));
+    XSSG B 1 Bright Offset(0, 58) A_SetPitch (pitch - (1.1 ));
+    XSSG C 1 Bright Offset(0, 58) A_SetPitch (pitch - (0.33 ));
+    XSSG C 1 Bright Offset(0, 56) A_SetPitch (pitch - (0.06 ));
+    XSSG D 1 Bright Offset(0, 40) A_SetPitch (pitch - (0.01 )) ;
+    XSSG D 1 Bright Offset(0, 32);
+    XSSG Y 1 A_SetPitch (pitch + (0.75 )) ;
+    TNT1 A 0 A_JumpIfInventory ("SonicAmmo", 1, "GonnaReload");
+    XSSG Y 1 A_SetPitch (pitch + (2.5 ));
+    XSSG Y 1 A_SetPitch (pitch + (1.1 ));
+    XSSG Y 1 A_SetPitch (pitch + (0.15 ));
+	TNT1 A 0 {
+		if (invoker.wasQuickMelee && !CheckInventory("SonicAmmo",1)) {
+			return ResolveState("SelectLast");
+		}
+		A_Checkreload();
+		return ResolveState(null);
+	}
+	Goto Ready;
+  GonnaReload:
+    TNT1 A 0 A_PlaySound("weapons/machcharge", 6, 1.0, 0, 1.25);
+    XSSG E 1 A_SetPitch (pitch + (0.2 ));
+    XSSG E 1 A_SetPitch (pitch + (0.1 ));
+    XSSG F 1 A_SetPitch (pitch + (0.2 ));
+    XSSG F 1 A_SetPitch (pitch + (0.5 ));
+    XSSG G 1 A_SetPitch (pitch + (0.8 ));
+    XSSG G 1 A_SetPitch (pitch + (0.5 ));
+    XSSG H 1 A_SetPitch (pitch + (0.2 )) ;
+    XSSG H 1;
+    XSSG I 1;
+    XSSG I 1 A_SetPitch (pitch - (0.2 ));
+    XSSG J 1 A_SetPitch (pitch - (0.5 ));
+    XSSG J 1 A_SetPitch (pitch - (0.8 ));
+    XSSG K 1 A_SetPitch (pitch - (0.5 ));
+    XSSG K 1 A_SetPitch (pitch - (0.2 ) );
+	
+    XSSG L 1 A_SetPitch (pitch + (0.2 ));
+    XSSG L 1 A_SetPitch (pitch + (0.5 ));
+    XSSG M 1 A_SetPitch (pitch + (0.8 ));
+    XSSG M 1 A_SetPitch (pitch + (0.5 ));
+    XSSG N 1 A_SetPitch (pitch + (0.2 ) );
+    XSSG N 1;
+    XSSG O 1;
+    XSSG O 1 A_SetPitch (pitch - (0.2 ));
+    XSSG P 1 A_SetPitch (pitch - (0.5 ));
+    XSSG P 1 A_SetPitch (pitch - (0.8 ));
+    XSSG Q 1 A_SetPitch (pitch - (0.5 ));
+    XSSG Q 1 A_SetPitch (pitch - (0.2 ) );
+    XSSG R 3;
+    XSSG S 4;
+    XSSG T 6;
+	TNT1 A 0 {
+		A_Refire ("QuickFire");
+		if (CheckInventory("isQuickMelee",1)) {
+			return ResolveState("QuickFire");
+		}
+		if (invoker.wasQuickMelee) {
+			return ResolveState("SelectLast");
+		}
+		return ResolveState(null);
+	}
+	TNT1 A 0 A_WeaponReady();
+    XSSG U 3;
+	TNT1 A 0 A_WeaponReady();
+    XSSG V 1 A_SetPitch (pitch + (0.3 ));
+	TNT1 A 0 A_WeaponReady();
+    XSSG V 1 A_SetPitch (pitch + (1.0 ));
+	TNT1 A 0 A_WeaponReady();
+    XSSG W 1 A_SetPitch (pitch + (1.4 ));
+	TNT1 A 0 A_WeaponReady();
+    XSSG W 1 A_SetPitch (pitch + (0.7 ));
+	TNT1 A 0 A_WeaponReady();
+    XSSG X 1 Offset(2, 34); 
+    TNT1 A 0 A_SetPitch (pitch + (0.05 ) );
+	TNT1 A 0 A_WeaponReady();
+	XSSG X 1 Offset(2, 36);
+	TNT1 A 0 A_WeaponReady();
+	XSSG A 2 Offset(2, 32);
+	TNT1 A 0 A_WeaponReady();
+    XSSG A 2 Offset(1, 32);
+	TNT1 A 0 A_WeaponReady();
+    XSSG A 2 Offset(0, 32);
+	TNT1 A 0 A_WeaponReady();
+    XSSG AAAAA 1 {
+		A_Refire();
+		if (invoker.wasQuickMelee) {
+			return ResolveState("SelectLast");
+		}
+		return ResolveState(null);
+	}
+    Goto Ready;
+  QuickFire:
+    XSSG U 1 A_SetPitch (pitch + (0.3 ));
+    XSSG V 1 A_SetPitch (pitch + (1.0 ));
+    XSSG W 1 A_SetPitch (pitch + (1.4 ));
+    XSSG X 1 A_SetPitch (pitch + (0.7 ));
+    XSSG A 1 A_SetPitch (pitch + (0.05 ) );
+	
+    Goto Fire;
+	
+  Flash:
+    TNT1 A 2 A_Light1;
+    TNT1 A 2 A_Light2;
+    TNT1 A 2 A_Light1;
+    TNT1 A 0 A_Light0;
+	Goto LightDone;
+	
+	SelectLast:
+		TNT1 A 0;
+		TNT1 A 0 {
+			invoker.wasQuickMelee = false;
+			let gal = VoyageGal(player.mo);
+			string lastWeapon = gal.LastWeapon;
+			A_SelectWeapon(lastWeapon);
+		}
+		TNT1 A 0;
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE);
+		goto Select;
+		
+	
+  THECRIMEZONEPLSNOLOOK: 
+	
+	//-------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,11, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,11, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,11, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,11, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 11,3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -11,3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 11,1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -11,1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 11,-1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,-1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,-1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,-1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,-1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,-1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,-1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,-1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,-1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,-1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,-1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -11,-1, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 11,-3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,-3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,-3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,-3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,-3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,-3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,-3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,-3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,-3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,-3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,-3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -11,-3, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,-5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,-5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,-5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,-5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,-5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,-5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,-5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,-5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,-5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,-5, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,-7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,-7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,-7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,-7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,-7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,-7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,-7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,-7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,-7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,-7, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,-9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,-9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,-9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,-9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,-9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,-9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,-9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,-9, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,-11, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,-11, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,-11, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,-11, invoker.btsxmachreaperrange, 1, 1.0, 1.0);
+	
+	//-------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,11, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,11, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,11, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,11, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 11,3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -11,3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 11,1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -11,1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 11,-1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,-1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,-1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,-1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,-1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,-1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,-1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,-1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,-1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,-1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,-1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -11,-1, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 11,-3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,-3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,-3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,-3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,-3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,-3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,-3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,-3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,-3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,-3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,-3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -11,-3, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,-5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,-5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,-5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,-5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,-5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,-5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,-5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,-5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,-5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,-5, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 9,-7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,-7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,-7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,-7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,-7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,-7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,-7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,-7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,-7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -9,-7, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 7,-9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 5,-9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,-9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,-9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,-9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,-9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -5,-9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -7,-9, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 3,-11, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", 1,-11, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -1,-11, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperClosePuff", -3,-11, invoker.btsxmachreaperrange*2, 1, 1.0, 1.0);
+	
+	//-------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,11, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,11, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,11, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,11, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 11,3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -11,3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 11,1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -11,1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 11,-1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,-1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,-1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,-1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,-1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,-1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,-1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,-1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,-1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,-1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,-1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -11,-1, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 11,-3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,-3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,-3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,-3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,-3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,-3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,-3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,-3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,-3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,-3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,-3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -11,-3, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,-5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,-5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,-5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,-5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,-5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,-5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,-5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,-5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,-5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,-5, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,-7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,-7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,-7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,-7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,-7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,-7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,-7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,-7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,-7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,-7, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,-9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,-9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,-9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,-9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,-9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,-9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,-9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,-9, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,-11, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,-11, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,-11, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,-11, invoker.btsxmachreaperrange*3, 1, 1.0, 1.0);
+	
+	//-------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,11, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,11, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,11, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,11, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 11,3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -11,3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 11,1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -11,1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 11,-1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,-1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,-1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,-1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,-1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,-1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,-1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,-1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,-1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,-1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,-1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -11,-1, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 11,-3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,-3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,-3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,-3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,-3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,-3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,-3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,-3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,-3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,-3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,-3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -11,-3, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,-5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,-5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,-5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,-5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,-5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,-5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,-5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,-5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,-5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,-5, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 9,-7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,-7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,-7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,-7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,-7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,-7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,-7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,-7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,-7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -9,-7, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 7,-9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 5,-9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,-9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,-9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,-9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,-9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -5,-9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -7,-9, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+	
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 3,-11, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", 1,-11, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -1,-11, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+    TNT1 A 0 A_RailAttack (1, 0, 0, "", "", RGF_SILENT | RGF_EXPLICITANGLE, 0, "FDBTSXMachreaperPuff", -3,-11, invoker.btsxmachreaperrange*4, 1, 1.0, 1.0);
+	
+	Goto ContinueAnimation;
+  }
+}
+
+
+Class FDBTSXSuperShotgunRing : FastProjectile
+{
+	default {
+	  Radius 3;
+	  Height 3;
+	  Speed 5;
+	  Damage 0;
+	  Scale 0.4;
+	  Alpha 0.8;
+	  RenderStyle 'Add';
+	  PROJECTILE;
+	  +FORCEXYBILLBOARD;
+	  +THRUACTORS;
+	  +BLOODLESSIMPACT;
+	  +PAINLESS;
+	}
+
+  States
+  {
+      Spawn:
+          TNT1 A 0;
+          TNT1 A 0 A_SetScale (scalex * 1.25);
+          XSSO A 1 Bright Light("FDMachreaperGlow1") A_FadeTo (0, 0.15, 1);
+          TNT1 A 0 A_SetScale (scalex * 1.25);
+          XSSO B 1 Bright Light("FDMachreaperGlow2") A_FadeTo (0, 0.15, 1);
+          TNT1 A 0 A_SetScale (scalex * 1.25);
+          XSSO C 1 Bright Light("FDMachreaperGlow3") A_FadeTo (0, 0.15, 1);
+          TNT1 A 0 A_SetScale (scalex * 1.25);
+          XSSO D 1 Bright Light("FDMachreaperGlow4") A_FadeTo (0, 0.15, 1);
+          loop;
+      Death:
+          TNT1 A 1;
+          Stop;
+  }
+}
+
+
+
+
+
+
+Class FDBTSXSuperShotgunProjectile:Actor
+{
+    default {
+        Radius 4;
+        Height 4;
+        Speed 8;
+        Damage (5);
+        DamageType "Sonic";
+        Species "Player";
+        Renderstyle "Add";
+        Alpha 0.99;
+        Scale 0.4;
+        PROJECTILE;
+        +FORCEXYBILLBOARD;
+        +FORCEPAIN;
+        +THRUACTORS;
+        +THRUSPECIES;
+        +MTHRUSPECIES;
+        +DONTSPLASH;
+        +BLOODLESSIMPACT;
+    }
+
+    States
+    {
+        Spawn:
+            TNT1 A 0;
+            TNT1 A 0 A_SpawnItemEx("FDBTSXSuperShotgunRing", 0,0,0, velx,vely,velz, 0, SXF_NOCHECKPOSITION | SXF_TRANSFERSCALE | SXF_ABSOLUTEMOMENTUM | SXF_TRANSFERPOINTERS);
+
+
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+			
+            TNT1 A 0 A_SetScale (0.6);
+            TNT1 A 0 A_SpawnItemEx("FDBTSXSuperShotgunRing", 0,0,0, velx,vely,velz, 0, SXF_NOCHECKPOSITION | SXF_TRANSFERSCALE | SXF_ABSOLUTEMOMENTUM | SXF_TRANSFERPOINTERS);
+
+
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+			
+            TNT1 A 0 A_SetScale (0.9);
+            TNT1 A 0 A_SpawnItemEx("FDBTSXSuperShotgunRing", 0,0,0, velx,vely,velz, 0, SXF_NOCHECKPOSITION | SXF_TRANSFERSCALE | SXF_ABSOLUTEMOMENTUM | SXF_TRANSFERPOINTERS);
+
+
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+			
+            TNT1 A 0 A_SetScale (1.3);
+            TNT1 A 0 A_SpawnItemEx("FDBTSXSuperShotgunRing", 0,0,0, velx,vely,velz, 0, SXF_NOCHECKPOSITION | SXF_TRANSFERSCALE | SXF_ABSOLUTEMOMENTUM | SXF_TRANSFERPOINTERS);
+
+
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+			
+            TNT1 A 0 A_SetScale (1.8);
+            TNT1 A 0 A_ChangeFlag ("FORCEPAIN", 0);
+            TNT1 A 0 A_SpawnItemEx("FDBTSXSuperShotgunRing", 0,0,0, velx,vely,velz, 0, SXF_NOCHECKPOSITION | SXF_TRANSFERSCALE | SXF_ABSOLUTEMOMENTUM | SXF_TRANSFERPOINTERS);
+
+
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+			
+            TNT1 A 0 A_SetScale (2.4);
+            TNT1 A 0 A_SpawnItemEx("FDBTSXSuperShotgunRing", 0,0,0, velx,vely,velz, 0, SXF_NOCHECKPOSITION | SXF_TRANSFERSCALE | SXF_ABSOLUTEMOMENTUM | SXF_TRANSFERPOINTERS);
+
+
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+			
+            TNT1 A 0 A_SetScale (3.1);
+            TNT1 A 0 A_SpawnItemEx("FDBTSXSuperShotgunRing", 0,0,0, velx,vely,velz, 0, SXF_NOCHECKPOSITION | SXF_TRANSFERSCALE | SXF_ABSOLUTEMOMENTUM | SXF_TRANSFERPOINTERS);
+
+
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+			
+            TNT1 A 0 A_SetScale (3.9);
+            TNT1 A 0 A_SpawnItemEx("FDBTSXSuperShotgunRing", 0,0,0, velx,vely,velz, 0, SXF_NOCHECKPOSITION | SXF_TRANSFERSCALE | SXF_ABSOLUTEMOMENTUM | SXF_TRANSFERPOINTERS);
+
+
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+            TNT1 A 0 A_Warp(AAPTR_DEFAULT,velx,vely,velz,0,WARPF_ABSOLUTEOFFSET,1);
+            Goto DetectSolid;
+			
+        DetectSolid:
+            TNT1 AAAAA 1;
+            Stop;
+        Death:
+            TNT1 A 0;
+			Stop;
+   }
+}
+
+Class FDBTSXMachreaperPuff : BulletPuff
+{ 
+  default {
+    DamageType "Sonic";
+	Decal "";
+	Scale 0.6;
+	ProjectileKickback 100;
+	-NOEXTREMEDEATH;
+	+ALWAYSPUFF;
+	+BLOODLESSIMPACT;
+  }
+
+  States
+  {
+   Spawn:
+   XDeath:
+   Melee:
+   Crash:
+    TNT1 A 5;
+	Stop;
+  }
+}
+
+Class FDBTSXMachreaperClosePuff : FDBTSXMachreaperPuff
+{ 
+	default {
+	  +FORCEPAIN;
+		+EXTREMEDEATH;
+	}
+
+}

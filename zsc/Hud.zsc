@@ -26,6 +26,7 @@ Class VoyageHUD : BaseStatusBar {
 	Array<WeaponIcon> toDraw;
 	
 	static const String weapons[] = {
+//		"Machreaper",
 		"Nade",
 		"FireAxe",
 		"HandCannon",
@@ -38,6 +39,7 @@ Class VoyageHUD : BaseStatusBar {
 	};
 	
 	static const String ammos[] = {
+//		"SonicAmmo",
 		"NadeAmmo",
 		"Rage",
 		"Clip",
@@ -50,7 +52,8 @@ Class VoyageHUD : BaseStatusBar {
 	};
 	
 	static const String weaponIcons[] = {
-		"inade",
+// 		"imach",
+ 		"inade",
 		"iaxe",
 		"ijeri",
 		"ispas",
@@ -137,30 +140,36 @@ Class VoyageHUD : BaseStatusBar {
 				bool gotAmmo = false;
 				int ammoLeft = 0;
 				switch(i){
-					case 1:
+					case 2:
 						ammoLeft = GetAmount("Rage");
 						// always selectable, don't dim the icon
 						gotAmmo = true;
 						break;
-					case 2:
+					case 3:
 						ammoLeft = Max(GetAmount("PistolLoad"),GetAmount("Clip"));
 						if (ammoLeft){
 							gotAmmo = true;
 						}
 						break;
-					case 3:
+					case 4:
 						ammoLeft = Max(GetAmount("LoadedShell"),GetAmount("Shell"));
 						if (ammoLeft){
 							gotAmmo = true;
 						}
 						break;
-					case 4:
+					case 5:
 						ammoLeft = GetAmount("Shell");
 						if (ammoLeft >= 2){
 							gotAmmo = true;
 						}
 						break;
-					case 8:
+					case 7:
+						ammoLeft = GetAmount("Cell");
+						if (ammoLeft >= 10){
+							gotAmmo = true;
+						}
+						break;
+					case 9:
 						ammoLeft = GetAmount("Cell");
 						if (ammoLeft >= 40){
 							gotAmmo = true;
@@ -206,12 +215,15 @@ Class VoyageHUD : BaseStatusBar {
 			double x = width - totalWidth;
 
 			for (int i = toDrawNew.Size() -1; i >= 0; i--) {
-				if (toDrawNew[i]._active) {
+				icon = toDrawNew[i]._tex;
+	
+				if (icon=="imach" && GetAmount("SonicAmmo")>0) {
+					back = "ibackia";
+				} else if (toDrawNew[i]._active) {
 					back = "ibacka";
 				} else {
 					back = "ibacki";
 				}
-				icon = toDrawNew[i]._tex;
 				if (toDrawNew[i]._selectable){
 					if (toDrawNew[i]._active){
 						DrawImage(back, (xOffset - currentWidth, yOffset), DI_ITEM_LEFT_TOP|DI_SCREEN_RIGHT_BOTTOM, 1);
@@ -236,7 +248,7 @@ Class VoyageHUD : BaseStatusBar {
 				} else {
 					alpha = 170;
 				}
-				if (barHeight > 10 ){
+				if (barHeight > 10 || icon == "imach"){
 					barColor = Color(alpha, 0, 150, 70);
 				} else if (barHeight < 5) {
 					barColor = Color(alpha, 200, 20, 20);
@@ -248,6 +260,11 @@ Class VoyageHUD : BaseStatusBar {
 				currentWidth += iconwidth + distance;	
 			}
 		}
+
+	}
+	
+	void handleMachreaperBar() {
+
 
 	}
 	
@@ -273,6 +290,9 @@ Class VoyageHUD : BaseStatusBar {
 		}
 		if (ammoname=="Cell"){
 			return "icell";
+		}
+		if (ammoname=="SonicAmmo"){
+			return "isonic";
 		}
 		if (ammoname=="RocketAmmo"){
 			return "irock";
@@ -345,6 +365,9 @@ Class VoyageHUD : BaseStatusBar {
 			}
 			// weapons
 			handleWeaponsBar();
+			
+			// machreaper bar
+			handleMachreaperBar();
 			
 			// keys			
 			// this is basically just gzdoom.pk3 code, but i changed the flags, offsets and scale a bit
