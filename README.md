@@ -6,7 +6,7 @@ A GZDoom gameplay mod featuring custom weapons, sounds, visual effects, UI and g
 
 Hand-crafted sprite work, curated selection of sfx, emphasis on good feels.
 
-![](./screenshots/1.png)
+![](./screenshots/3.png)
 
 ### [Download from releases (latest .pk3 file)](https://github.com/lightrow/vidoom/releases)
 
@@ -18,7 +18,7 @@ Hand-crafted sprite work, curated selection of sfx, emphasis on good feels.
 
 # Credits
 
-![](./screenshots/2.png)
+![](./screenshots/1.png)
 
 
 Smooth Doom
@@ -74,3 +74,5 @@ Nash
 
 
 tools used: SLADE, Adobe Photoshop, Adobe Audition
+
+![](./screenshots/2.png)
