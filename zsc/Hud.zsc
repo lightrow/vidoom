@@ -163,12 +163,6 @@ Class VoyageHUD : BaseStatusBar {
 							gotAmmo = true;
 						}
 						break;
-					case 6:
-						ammoLeft = GetAmount("Cell");
-						if (ammoLeft >= 10){
-							gotAmmo = true;
-						}
-						break;
 					case 8:
 						ammoLeft = GetAmount("Cell");
 						if (ammoLeft >= 40){
